@@ -7,15 +7,17 @@
 </header>
 
 <body>
+    <form id="myForm">
+        
     <div class="form-body">
         <img id="logo-image" src="../../images/logo.png">
         <div class="form-column">
             <label class="head-text">Create an account</label></br>
             <label class="body-text">Enter your details below</label></br></br>
-            <input type="text" class="input" id="name" placeholder="Name">
-            <input type="email" id="email" class="input" placeholder="Email">
-            <input type="password" id="password" class="input" placeholder="Password"></br></br>
-            <button class="auth-button" id="createAccount">Create Account</button></br></br>
+            <input type="text" class="input" id="name" placeholder="Name" required>
+            <input type="email" id="email" class="input" placeholder="Email" required>
+            <input type="password" id="password" class="input" placeholder="Password" required></br></br>
+            <button class="auth-button" id="createAccount" type="submit">Create Account</button></br></br>
             <label class="have-create-account">Already have an account ?</label>
             <a href="./login.html">Login</a>
             <div class="loading-indicator" id="loader"></div>
@@ -24,6 +26,8 @@
     <div class="bottom"> hello
 
     </div>
+    </form>
+    
     <script src="./auth.js" type="module"></script>
 </body>
 

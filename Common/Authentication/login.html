@@ -6,22 +6,23 @@
 </header>
 
 <body>
-    <div class="form-body">
-        <img id="logo-image" src="../../images/logo.png">
-        <div class="form-column">
-            <label class="head-text">Welcome Back!</label></br>
-            <label class="body-text">Enter your details below</label></br></br>
-            <input type="email" id="email" class="input" placeholder="Email">
-            <input type="password" id="password" class="input" placeholder="Password"></br></br>
-            <button class="auth-button" id="login">Login</button></br></br>
-            <label class="have-create-account">Don't have account ?</label>
-            <a href="./register.html">Register</a>
-            <div class="loading-indicator" id="loader"></div>
+    <form id="myForm">
+        <div class="form-body">
+            <img id="logo-image" src="../../images/logo.png">
+            <div class="form-column">
+                <label class="head-text">Welcome Back!</label></br>
+                <label class="body-text">Enter your details below</label></br></br>
+                <input type="email" id="email" class="input" placeholder="Email" required>
+                <input type="password" id="password" class="input" placeholder="Password" required></br></br>
+                <button class="auth-button" id="login" type="submit">Login</button></br></br>
+                <label class="have-create-account">Don't have account ?</label>
+                <a href="./register.html">Register</a>
+                <div class="loading-indicator" id="loader"></div>
+            </div>
         </div>
-    </div>
-    <div class="bottom"> hello
-
-    </div>
+        <div class="bottom"> hello
+        </div>
+    </form>
     <script src="./auth.js" type="module"></script>
 </body>
 
