@@ -1,0 +1,517 @@
+#EHome {
+        width: 100%;
+        height: 2500px;
+        background-color: #ffffff;
+
+}
+
+#TopHeader {
+        width: 100%;
+        height: 1%;
+        background-color: #000000;
+        color: #ffffff;
+}
+
+#TopHeader a {
+        color: #ffffff;
+}
+
+#Header {
+        width: 80%;
+        height: 50px;
+        position: relative;
+        top: 30px;
+        left: 40px;
+}
+
+#Logo {
+        font-size: 150%;
+        width: 10%;
+        float: left;
+        position: relative;
+        bottom: 7px;
+        font-weight: bold;
+}
+
+.navLinks {
+
+        padding: 0 2%;
+        text-decoration: none;
+        color: #000000;
+        font-weight: bold;
+}
+
+#HeaderSearchsection {
+        position: relative;
+        float: right;
+        right: 150px;
+        border: solid 1px black;
+        background-color: #F5F5F5;
+        width: 200px;
+        height: 30px;
+        padding: 7px, 12px, 7px, 20px;
+        opacity: 0.5px;
+}
+
+#HeaderSearchInpute {
+        position: relative;
+        top: 2px;
+        border: none;
+        background-color: #F5F5F5;
+}
+
+#SearchIcon {
+        position: relative;
+        top: 2px;
+}
+
+#HeaderIcons {
+        float: right;
+        position: relative;
+        right: -120px;
+        top: 3px;
+}
+
+#HeaderIcons i {
+        padding: 0px 5px;
+}
+
+#LineAfterHeader {
+        position: relative;
+        top: 1.5%;
+}
+
+#AllSections {
+        position: relative;
+        top: 2%;
+        width: 80%;
+}
+
+#Section1 {
+        height: 12%;
+}
+
+aside {
+        float: left;
+        position: relative;
+        top: 5%;
+        left: 5%;
+        text-align: left;
+}
+
+aside a {
+        display: block;
+        color: #000000;
+}
+
+#IphoneAds {
+        color: #ffffff;
+        width: 60%;
+        height: 70%;
+        background-color: #000000;
+        float: right;
+        position: relative;
+        top: 5%;
+        right: 5%;
+}
+
+#leftDiv {
+        float: left;
+        position: inherit;
+        left: 7%;
+        top: 15%;
+}
+
+#IphoneIcone {
+        font-size: 250%;
+        float: left;
+}
+
+#IPhone14Series {
+        position: relative;
+        top: 12px;
+        left: 10px;
+        font-size: 100%;
+}
+
+#TextAfterIphoneIcone {
+        width: 165px;
+        font-size: 200%;
+}
+
+#leftDiv a {
+        position: relative;
+        bottom: 40px;
+        color: #ffffff;
+}
+
+#Iphone14Img {
+        width: 40%;
+        position: inherit;
+        right: -10%;
+        top: 10%;
+}
+
+#Section2 {
+        height: 12%;
+}
+
+#CategoriesTxt {
+        height: 40%;
+}
+
+#CategoriesHead {
+        float: left;
+}
+
+#CategoriesTopHead {
+        position: relative;
+        left: -40px;
+}
+
+#CategoriesHeadRec {
+        width: 10px;
+        height: 25px;
+        border-radius: 5px;
+        background-color: #DB4444;
+        display: inline-block;
+}
+
+#CategoriesWord {
+        display: inline-block;
+        position: relative;
+        top: -8px;
+        left: 5px;
+        color: #DB4444;
+        font-weight: bold;
+        font-size: 90%;
+}
+
+#BrowseByCategory {
+        position: relative;
+        top: 20px;
+        left: 60px;
+        color: #000000;
+        font-size: 150%;
+        font-weight: bold;
+}
+
+#CategoriesIcons {
+        float: right;
+        position: relative;
+        left: 235%;
+        width: 60px;
+        height: 20%;
+}
+
+#CircleArrowRight {
+        font-size: 120%;
+        float: right;
+        color: rgb(207, 192, 192);
+}
+
+#CircleArrowLeft {
+        font-size: 120%;
+        float: left;
+        color: rgb(207, 192, 192);
+}
+
+#Categories div {
+        display: inline-block;
+        width: 15%;
+        height: 40%;
+        margin: 0px 10px;
+        border: rgb(207, 192, 192) solid 1px;
+}
+
+#Categories div i {
+        font-size: 250%;
+        position: relative;
+        top: 20%;
+}
+
+#Categories div p {
+        position: relative;
+        top: 20%;
+}
+
+#Section3 {
+        height: 25%;
+}
+
+#ProductsTxt {
+        height: 20%;
+}
+
+#ProductsHead {
+        float: left;
+}
+
+#ProductsTopHead {
+        position: relative;
+        left: -40px;
+}
+
+#ProductsHeadRec {
+        width: 10px;
+        height: 25px;
+        border-radius: 5px;
+        background-color: #DB4444;
+        display: inline-block;
+}
+
+#ProductsWord {
+        display: inline-block;
+        position: relative;
+        top: -8px;
+        left: 5px;
+        color: #DB4444;
+        font-weight: bold;
+        font-size: 90%;
+}
+
+#ExploreOurProducts {
+        position: relative;
+        top: 20px;
+        left: 60px;
+        color: #000000;
+        font-size: 150%;
+        font-weight: bold;
+}
+
+#ProductsIcons {
+        float: right;
+        position: relative;
+        left: 220%;
+        width: 60px;
+        height: 20%;
+}
+
+#Products {
+        height: 80%;
+}
+
+#ProductsDiv1 {
+        height: 45%;
+}
+
+.DivProducts {
+        background-color: rgb(235, 228, 228);
+        width: 19%;
+        height: 95%;
+        display: inline-block;
+
+}
+
+.DivProducts img {
+        position: relative;
+        top: 7%;
+        left: 3%;
+        height: 60%;
+        width: 55%;
+}
+
+#AddToCart {
+        width: 100%;
+        height: 20%;
+        background-color: #000000;
+        position: relative;
+        bottom: -40px;
+        border-radius: 5px 5px 0 0;
+        color: #ffffff;
+}
+
+#AddToCart p {
+        display: inline-block;
+        position: relative;
+        top: -10px;
+}
+
+#ProductIcons {
+        float: right;
+        position: relative;
+        top: 5%;
+        right: 5%;
+}
+
+#ProductIcons i {
+        margin: 10px 0px;
+        display: block;
+}
+
+#ProductsDiv2 {
+        height: 45%;
+}
+
+#ViewAllProducts {
+        width: 17%;
+        height: 7%;
+        background-color: #DB4444;
+        color: #ffffff;
+        border-radius: 5px;
+        position: relative;
+        top: -70px;
+}
+
+#ViewAllProducts p {
+        position: relative;
+        top: 8px;
+}
+
+#Section4 {
+        height: 20%;
+}
+
+#FeaturedTxt {
+        height: 15%;
+}
+
+#FeaturedHead {
+        float: left;
+}
+
+#FeaturedTopHead {
+        position: relative;
+        left: 20px;
+}
+
+#FeaturedHeadRec {
+        width: 10px;
+        height: 25px;
+        border-radius: 5px;
+        background-color: #DB4444;
+        display: inline-block;
+}
+
+#FeaturedWord {
+        display: inline-block;
+        position: relative;
+        top: -8px;
+        left: 5px;
+        color: #DB4444;
+        font-weight: bold;
+        font-size: 90%;
+}
+
+#NewArrival {
+        position: relative;
+        top: 20px;
+        left: 60px;
+        color: #000000;
+        font-size: 150%;
+        font-weight: bold;
+}
+
+#NewArrivalDiv {
+        height: 70%;
+        width: 90%;
+        position: relative;
+        top: 10%;
+}
+
+#NewArrivalLeftDiv {
+        position: relative;
+        left: -80px;
+        top: -7px;
+        width: 45%;
+        height: 100%;
+        display: inline-block;
+        margin: 0px -30px;
+        background-color: #131212;
+}
+
+#NewArrivalRightDiv {
+        display: inline-block;
+        position: relative;
+        width: 45%;
+        height: 100%;
+        margin: 0px -30px;
+}
+
+#NewArrivalRightTopDiv {
+        background-color: #131212;
+        height: 48%;
+}
+
+#NewArrivalRightBottomDiv {
+        height: 48%;
+        position: relative;
+        top: 10px;
+}
+
+#NewArrivalRightRightBottomDiv {
+        width: 48%;
+        height: 100%;
+        float: left;
+        background-color: #131212;
+
+}
+
+#NewArrivalRightLeftBottomDiv {
+        width: 48%;
+        height: 100%;
+        float: right;
+        background-color: #131212;
+
+}
+
+#PlaystationImg {
+        display: inline-block;
+        width: 100%;
+}
+
+#WomanImg {
+        width: 57.5%;
+        float: right;
+        transform: scaleX(-1);
+}
+
+#AmazonImg {
+        width: 100%;
+        position: relative;
+        left: 15px;
+        top: 10px;
+}
+
+#GucciImg {
+        width: 90%;
+        position: relative;
+        left: 0px;
+        top: -15px;
+}
+
+#NewArrivalLeftDiv h4 {
+        position: relative;
+        top: -150px;
+        left: 30px;
+        float: left;
+        color: #ffffff;
+}
+
+#NewArrivalLeftDiv p{
+        position: relative;
+        top: -110px;
+        left: -70px;
+        float: left;
+        color: #ffffff;
+        font-size: 70%;
+        text-align: left;
+}
+
+#NewArrivalLeftDiv a{
+        position: relative;
+        top: -50px;
+        left: -240px;
+        float: left;
+        color: #ffffff;
+        font-size: 70%;
+}
+
+#NewArrivalRightTopDiv h5{
+        float: left;
+        position: relative;
+    
+        left: 20px;
+        color: #ffffff;
+}
+
