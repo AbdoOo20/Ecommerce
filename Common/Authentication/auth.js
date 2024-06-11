@@ -49,7 +49,11 @@ function logIn() {
             loader.style.display = 'none';
             document.getElementById('email').value = '';
             document.getElementById('password').value = '';
-            window.location.href = '../../User/home/home.html';
+            if (email === 'admin@yahoo.com') {
+                window.location.href = '../../Admin/home/home.html';
+            } else {
+                window.location.href = '../../User/home/home.html';
+            }
         })
         .catch((error) => {
             document.getElementById('email').value = '';
@@ -64,20 +68,20 @@ function checkValidation(type) {
     let isValid = true;
     let name;
     let nameRegex = /^[a-zA-Z\s'-]+$/;
+    let email = document.getElementById('email').value;
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let password = document.getElementById('password').value;
+    let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (type !== 'login') {
         name = document.getElementById('name').value;
     }
     if (!nameRegex.test(name) && type !== 'login') {
         isValid = false;
     }
-    let email = document.getElementById('email').value;
-    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
         isValid = false;
         alert('Invalid email format. Please enter a valid email address in the format: example@domain.com');
     }
-    let password = document.getElementById('password').value;
-    let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
         isValid = false;
         alert('Invalid password format. Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)');
@@ -100,9 +104,15 @@ function onLoadPage() {
     if (list[list.length - 1] === 'login.html') {
         document.getElementById('myForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            checkValidation('login');
+            logIn();
+            //checkValidation('login');
         });
     }
 }
 
 onLoadPage();
+
+
+// make cookies
+// check validation for login is need or not
+// action in form not play

@@ -1,0 +1,53 @@
+.parent {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.manage-item {
+    background-color: rgb(254, 250, 241);
+    width: 20%;
+    height: 40%;
+    border: 2px brown groove;
+    border-radius: 8px;
+    text-align: center;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.image-item {
+    width: 40%;
+    height: 40%;
+    object-fit: cover;
+}
+
+.manage-label {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    border-top: 2px brown groove;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    color: brown;
+    font-size: 20px;
+}
+
+.panel{
+    background-color: rgb(245, 232, 202);
+    font-weight: bold;
+    color: brown;
+    font-size: 40px;
+    margin: 10px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.logout{
+    width: 2.5%;
+    height: 2.5%;
+}
