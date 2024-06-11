@@ -68,7 +68,7 @@
 #HeaderIcons {
         float: right;
         position: relative;
-        right: -120px;
+        right: -150px;
         top: 3px;
 }
 
@@ -88,7 +88,7 @@
 }
 
 #Section1 {
-        height: 12%;
+        height: 15%;
 }
 
 aside {
@@ -488,7 +488,7 @@ aside a {
         color: #ffffff;
 }
 
-#NewArrivalLeftDiv p{
+#NewArrivalLeftDiv p {
         position: relative;
         top: -110px;
         left: -70px;
@@ -498,7 +498,7 @@ aside a {
         text-align: left;
 }
 
-#NewArrivalLeftDiv a{
+#NewArrivalLeftDiv a {
         position: relative;
         top: -50px;
         left: -240px;
@@ -507,11 +507,71 @@ aside a {
         font-size: 70%;
 }
 
-#NewArrivalRightTopDiv h5{
+#NewArrivalRightTopDiv h5 {
         float: left;
         position: relative;
-    
+
         left: 20px;
         color: #ffffff;
 }
 
+#Section5 {
+        height: 10%;
+}
+
+.services {
+        width: 25%;
+        height: 70%;
+        background-color: #F5F5F5;
+        display: inline-block;
+        margin: 0 25px;
+        position: relative;
+        top: 50px;
+        border-radius: 5px;
+}
+
+.services i {
+        position: relative;
+        top: 30px;
+        font-size: 220%;
+}
+
+.services p {
+        position: relative;
+        top: 50px;
+        margin: -10px 0;
+        color: #000000;
+}
+
+.services .PTitle {
+        font-weight: bold;
+        margin: 10px 0;
+}
+
+footer {
+        position: relative;
+        top: 150px;
+        height: 10%;
+        background-color: #000000;
+        color: #ffffff;
+}
+
+.FooterDivs {
+        display: inline-block;
+        margin: 0px 15px;
+        width: 20%;
+        height: 65%;
+        text-align: left;
+        vertical-align: top;
+}
+
+#ParcodeIcon {
+        font-size: 300%;
+}
+
+#Copyright,
+#CopyrightIcon,
+#CopyrightTxt {
+        display: inline-block;
+
+}
