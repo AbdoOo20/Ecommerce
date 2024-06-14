@@ -1,18 +1,28 @@
-import { storage, db, uploadBytes, ref, getDownloadURL, addDoc, collection, getDocs, deleteDoc, deleteObject, doc } from '../../Database/firebase-config.js';
+import { storage, db, uploadBytes, ref, getDownloadURL, addDoc, collection, getDocs, deleteDoc, deleteObject, doc, updateDoc } from '../../Database/firebase-config.js';
 
 const openDialogButton = document.getElementById('openDialogButton');
 const dialogOverlay = document.getElementById('dialogOverlay');
 const closeDialogButton = document.getElementById('closeDialogButton');
+const closeDialogEdit = document.getElementById('closeDialogEdit');
 const submitButton = document.getElementById('submit');
+const submitEditButton = document.getElementById('submitEdit');
 const bannerForm = document.getElementById('bannerForm');
+const editForm = document.getElementById('editForm');
+const selection = document.getElementById('nameEdit');
 var selectedImageName;
 var selectedID;
+var selectedPosition;
+var imageURL;
+const dialogEdit = document.getElementById('dialogEdit');
 
 openDialogButton.addEventListener('click', () => {
     dialogOverlay.style.display = 'flex';
 });
 closeDialogButton.addEventListener('click', () => {
     dialogOverlay.style.display = 'none';
+});
+closeDialogEdit.addEventListener('click', () => {
+    dialogEdit.style.display = 'none';
 });
 
 bannerForm.addEventListener('submit', async (event) => {
@@ -101,12 +111,12 @@ window.onload = () => {
                     selectBanner.innerHTML = '';
                     selectedID = doc.id;
                     selectedImageName = data.name;
+                    selectedPosition = data.position;
+                    imageURL = data.imageUrl
                     selectBanner.appendChild(document.createTextNode(`Selected Banner ID: ${doc.id}`));
                 });
                 // Parent
                 bannersDiv.appendChild(bannerDiv);
-
-
             });
         } catch (error) {
             console.error("Error: ", error);
@@ -148,8 +158,86 @@ function deleteBanner() {
     }
 }
 
+function editBanner() {
+    if (typeof selectedID === 'undefined') {
+        const notification = document.getElementById('notificationError');
+        notification.innerHTML = '';
+        notification.appendChild(document.createTextNode(`You must Select Banner`));
+        notification.classList.add('show');
+        setTimeout(() => {
+            notification.classList.add('hide');
+            setTimeout(() => {
+                notification.classList.remove('show', 'hide');
+            }, 500);
+        }, 2000);
+    }
+    else {
+        dialogEdit.style.display = 'flex';
+        const formData = new FormData(editForm);
+        formData.set('name', selectedPosition);
+        const position = formData.get('name');
+        selection.value = position;
+        editForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const data = new FormData(editForm);
+            const image = data.get('image');
+            var loader = document.querySelector('.loading-indicator');
+            loader.style.borderTopColor = 'rgb(255, 187, 0)';
+            loader.style.display = 'block';
+            submitEditButton.style.display = 'none';
+            closeDialogEdit.style.display = 'none';
+            if (typeof image === undefined) {
+                const docRef = doc(db, 'banners', selectedID);
+                await updateDoc(docRef, {
+                    position: selection.value
+                }).then(() => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'inline-block';
+                    closeDialogEdit.style.display = 'inline-block';
+                    window.location.reload();
+                }).catch((e) => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'flex';
+                    closeDialogEdit.style.display = 'flex';
+                    alert(e.message);
+                });
+            } else {
+                const deleteIMG = ref(storage, `Banners/${selectedImageName}`);
+                deleteObject(deleteIMG)
+                const storageRef = ref(storage, `Banners/${image.name}`);
+                await uploadBytes(storageRef, image);
+                const imageUrl = await getDownloadURL(storageRef);
+                const docRef = doc(db, 'banners', selectedID);
+                await updateDoc(docRef, {
+                    imageUrl: imageUrl,
+                    name: image.name,
+                    position: selection.value
+                }).then(() => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'inline-block';
+                    closeDialogEdit.style.display = 'inline-block';
+                    window.location.reload();
+                }).catch((e) => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'flex';
+                    closeDialogEdit.style.display = 'flex';
+                    alert(e.message);
+                });
+            }
+        });
+
+    }
+}
+
 document.getElementById('delete').addEventListener('click', function () {
     deleteBanner();
+});
+document.getElementById('editDialog').addEventListener('click', function () {
+    editBanner();
 });
 
 

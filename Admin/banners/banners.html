@@ -9,13 +9,13 @@
     <div class="banner"> Banners </div>
     <div class="btns">
         <button id="openDialogButton" class="add-banner">Add Banner</button>
-        <button class="edit-banner">Edit Banner</button>
+        <button id="editDialog" class="edit-banner">Edit Banner</button>
         <button class="delete-banner" id="delete">Delete Banner</button>
     </div>
     <div id="dialogOverlay" class="overlay">
         <div class="dialog">
             <form id="bannerForm">
-                <h1 class="title"> Add Banner</h1>
+                <h1 class="titleAdd"> Add Banner</h1>
                 <div class="form-group1">
                     <label for="name">Select Position:</label>
                     <select id="name" name="name" required>
@@ -31,6 +31,29 @@
                 <div class="form-group3">
                     <button type="submit" class="submit-button" id="submit">Submit</button>
                     <button type="button" id="closeDialogButton" class="submit-button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="dialogEdit" class="overlayEdit">
+        <div class="dialogEdit">
+            <form id="editForm">
+                <h1 class="titleEdit"> Edit Banner</h1>
+                <div class="form-group1">
+                    <label for="nameEdit">Edit Position:</label>
+                    <select id="nameEdit" name="name">
+                        <option> Top </option>
+                        <option> Bottom </option>
+                    </select>
+                    <label></label>
+                </div>
+                <div class="form-group2">
+                    <label for="imageEdit">Edit Image:</label>
+                    <input type="file" id="imageEdit" name="image">
+                </div>
+                <div class="form-group3">
+                    <button type="submit" class="submit-edit-button" id="submitEdit">Submit</button>
+                    <button type="button" id="closeDialogEdit" class="submit-edit-button">Cancel</button>
                 </div>
             </form>
         </div>
