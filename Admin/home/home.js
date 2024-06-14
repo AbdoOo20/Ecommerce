@@ -10,7 +10,7 @@ items.forEach(function (item, index) {
             window.location.href = '../categories/category.html';
         }
         if (index === 2) {
-            console.log('2');
+            window.location.href = '../products/products.html';
         }
     });
 });
