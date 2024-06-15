@@ -1,10 +1,81 @@
-.add-button {
-    width: 50%;
-    height: 8%;
-    background-color: green;
+.banner {
+    background-color: rgb(245, 245, 245);
+    font-weight: bold;
+    color: black;
+    font-size: 40px;
+    margin: 10px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 8px;
+    display: flex;
+    padding: 5px;
+    border: 4px rgba(245, 245, 245, 0.104) groove;
+}
+
+.loading-indicator {
+    display: none;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid green;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.add {
+    width: 20%;
+    height: 10%;
+    background-color: rgb(15, 178, 0);
     border: none;
     color: white;
     text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.edit {
+    width: 20%;
+    height: 10%;
+    background-color: rgb(255, 187, 0);
+    border: none;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.delete {
+    width: 20%;
+    height: 10%;
+    background-color: rgb(234, 67, 53);
+    border: none;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 20px;
+    margin-right: 10px;
+    font-weight: bold;
 }
 
 .submit-button {
@@ -19,48 +90,6 @@
     font-size: 20px;
     font-weight: bold;
     display: inline-block;
-}
-
-.add-banner {
-    width: 20%;
-    height: 10%;
-    background-color: rgb(15, 178, 0);
-    border: none;
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    padding: 10px;
-    font-size: 20px;
-    margin-left: 10px;
-    font-weight: bold;
-}
-
-.edit-banner {
-    width: 20%;
-    height: 10%;
-    background-color: rgb(255, 187, 0);
-    border: none;
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    padding: 10px;
-    font-size: 20px;
-    margin-left: 10px;
-    font-weight: bold;
-}
-
-.delete-banner {
-    width: 20%;
-    height: 10%;
-    background-color: rgb(234, 67, 53);
-    border: none;
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    padding: 10px;
-    font-size: 20px;
-    margin-right: 10px;
-    font-weight: bold;
 }
 
 .btns {
@@ -86,7 +115,6 @@
     border-radius: 5px;
     border: 2px green groove;
     width: 40%;
-    height: 30%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.341);
 }
 
@@ -126,42 +154,11 @@
     align-items: center;
 }
 
-.banner {
-    background-color: rgb(245, 245, 245);
-    font-weight: bold;
+.detailsProduct {
     color: black;
-    font-size: 40px;
-    margin: 10px;
-    text-align: center;
-    justify-content: center;
-    border-radius: 8px;
-    display: flex;
-    padding: 5px;
-    border: 4px rgba(245, 245, 245, 0.104) groove;
-}
-
-.loading-indicator {
-    display: none;
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top: 4px solid green;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    animation: spin 1s linear infinite;
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-@keyframes spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+    text-align: justify;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .notification {
@@ -197,7 +194,7 @@
     text-align: center;
 }
 
-#selectedBanner{
+#selectedBanner {
     display: flex;
     margin-left: 10px;
     margin-top: 10px;
@@ -268,4 +265,13 @@
 .titleEdit {
     color: rgb(255, 187, 0);
     text-align: center;
+}
+
+#categories{
+    width: 33%;
+}
+
+.area{
+    resize: none;
+    width: 40%;
 }

@@ -2,42 +2,27 @@
 
 <head>
     <title>Manage Banners</title>
-    <link rel="styleSheet" href="./product.css">
+    <link rel="styleSheet" href="./category.css">
 </head>
 
 <body>
-    <div class="banner"> Products </div>
+    <div class="banner"> Categories </div>
     <div class="btns">
-        <button id="add" class="add">Add Product</button>
-        <button id="edit" class="edit">Edit Product</button>
-        <button class="delete" id="delete">Delete Product</button>
+        <button id="add" class="add">Add Category</button>
+        <button id="edit" class="edit">Edit Category</button>
+        <button class="delete" id="delete">Delete Category</button>
     </div>
     <div id="addDialog" class="overlay">
         <div class="dialog">
             <form id="addForm">
-                <h1 class="titleAdd"> Add Product</h1>
+                <h1 class="titleAdd"> Add Category</h1>
                 <div class="form-group1">
-                    <label for="name">Name:</label>
+                    <label for="name">Title:</label>
                     <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group1">
-                    <label for="categories">Category:</label>
-                    <select id="categories" name="category"></select>
-                </div>
-                <div class="form-group1">
-                    <label for="price">Price:</label>
-                    <input type="number" id="price" name="price" required>
-                </div>
-                <div class="form-group1">
-                    <label for="description">Description:</label>
-                    <textarea type="text" id="description" name="description" class="area" rows="5" required></textarea>
-                </div>
-                <div class="form-group1">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" required>
+                    <label></label>
                 </div>
                 <div class="form-group2">
-                    <label for="image">Image:</label>
+                    <label for="image">Upload Image:</label>
                     <input type="file" id="image" name="image" required>
                 </div>
                 <div class="form-group3">
@@ -50,7 +35,7 @@
     <div id="editDialog" class="overlayEdit">
         <div class="dialogEdit">
             <form id="editForm">
-                <h1 class="titleEdit"> Edit Product</h1>
+                <h1 class="titleEdit"> Edit Category</h1>
                 <div class="form-group1">
                     <label for="nameEdit">Edit Title:</label>
                     <input type="text" id="nameEdit" name="nameEdit">
@@ -70,9 +55,9 @@
     <div class="loading-indicator" id="loader"></div>
     <div id="notification" class="notification"></div>
     <div id="notificationError" class="notificationError"></div>
-    <div id="selectedProduct"></div>
-    <div id="allProducts"></div>
-    <script src="./product.js" type="module"></script>
+    <div id="selectedCategory"></div>
+    <div id="allCategories"></div>
+    <script src="./category.js" type="module"></script>
 </body>
 
 </html>
