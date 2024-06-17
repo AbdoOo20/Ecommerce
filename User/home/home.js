@@ -7,6 +7,9 @@ const LogeOutIcon = document.getElementById("LogeOutIcon");
 LogeOutIcon.style.display = "none";
 
 
+const savedEmail = localStorage.getItem('email');
+const savedID = localStorage.getItem('id');
+
 
 //Section1 Change The Banners
 

@@ -11,6 +11,8 @@ function signUp() {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
+            localStorage.setItem('email', email);
+            localStorage.setItem('id', user.uid);
             setDoc(doc(db, "users", user.uid), {
                 email: email,
                 password: password,
@@ -22,7 +24,7 @@ function signUp() {
                 document.getElementById('password').value = '';
                 createAccountButton.style.display = 'block';
                 loader.style.display = 'none';
-                window.location.href = '../../User/home/home.html';
+                window.location.href = '../../User/home/index.html';
             });
         })
         .catch((error) => {
@@ -45,6 +47,9 @@ function logIn() {
     document.querySelector('.loading-indicator').style.top = '35%';
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+            const user = userCredential.user;
+            localStorage.setItem('email', email);
+            localStorage.setItem('id', user.uid);
             createAccountButton.style.display = 'block';
             loader.style.display = 'none';
             document.getElementById('email').value = '';
@@ -52,7 +57,7 @@ function logIn() {
             if (email === 'admin@yahoo.com') {
                 window.location.href = '../../Admin/home/home.html';
             } else {
-                window.location.href = '../../User/home/home.html';
+                window.location.href = '../../User/home/index.html';
             }
         })
         .catch((error) => {
@@ -92,6 +97,14 @@ function checkValidation(type) {
 }
 
 
+window.onload = () => {
+    const savedEmail = localStorage.getItem('email');
+    if (savedEmail && savedEmail == 'admin@yahoo.com') {
+        window.location.href = '../../Admin/home/home.html';
+    } else if (savedEmail && savedEmail != 'admin@yahoo.com') {
+        window.location.href = '../../User/home/index.html';
+    }
+}
 
 function onLoadPage() {
     var list = window.location.href.split('/');

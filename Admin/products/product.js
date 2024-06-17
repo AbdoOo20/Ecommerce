@@ -13,6 +13,10 @@ var selectedImageName;
 var selectedID;
 var selectedTitle;
 var imageURL;
+var category;
+var detailsSelected;
+var quantitySelected;
+var priceSelected;
 const categories = [];
 
 add.addEventListener('click', () => {
@@ -27,6 +31,7 @@ closeDialogEdit.addEventListener('click', () => {
 
 const getCategories = async () => {
     const selection = document.getElementById('categories');
+    const selectionEdit = document.getElementById('categoriesEdit');
     const categoriesRef = collection(db, 'categories');
     const snapshot = await getDocs(categoriesRef);
     snapshot.forEach(doc => {
@@ -35,6 +40,13 @@ const getCategories = async () => {
         const title = document.createTextNode(`${doc.data()['title']}`);
         option.appendChild(title);
         selection.appendChild(option);
+    });
+    snapshot.forEach(doc => {
+        categories.push(doc.data()['title']);
+        const option = document.createElement('option');
+        const title = document.createTextNode(`${doc.data()['title']}`);
+        option.appendChild(title);
+        selectionEdit.appendChild(option);
     });
 }
 getCategories();
@@ -154,6 +166,10 @@ window.onload = () => {
                     selectedImageName = data.name;
                     selectedTitle = data.title;
                     imageURL = data.imageUrl
+                    detailsSelected = data.description;
+                    category = data.category;
+                    quantitySelected = data.quantity;
+                    priceSelected = data.price;
                     selectedProduct.appendChild(document.createTextNode(`Selected Product ID: ${doc.id}`));
                 });
                 // Parent
@@ -202,4 +218,98 @@ function deleteProduct() {
 
 document.getElementById('delete').addEventListener('click', function () {
     deleteProduct();
+});
+
+function editProduct() {
+    if (typeof selectedID === 'undefined') {
+        const notification = document.getElementById('notificationError');
+        notification.innerHTML = '';
+        notification.appendChild(document.createTextNode(`You must Select Product`));
+        notification.classList.add('show');
+        setTimeout(() => {
+            notification.classList.add('hide');
+            setTimeout(() => {
+                notification.classList.remove('show', 'hide');
+            }, 500);
+        }, 2000);
+    }
+    else {
+        document.getElementById('nameEdit').value = selectedTitle;
+        document.getElementById('categoriesEdit').value = category;
+        document.getElementById('priceEdit').value = priceSelected;
+        document.getElementById('descriptionEdit').value = detailsSelected;
+        document.getElementById('quantityEdit').value = quantitySelected;
+        const formData = new FormData(editForm);
+        dialogEdit.style.display = 'flex';
+        editForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const data = new FormData(editForm);
+            const image = data.get('imageEdit');
+            const title = data.get('nameEdit');
+            const price = data.get('priceEdit');
+            const details = data.get('descriptionEdit');
+            const quantity = data.get('quantityEdit');
+            const cat = document.getElementById('categoriesEdit').value;
+            var loader = document.querySelector('.loading-indicator');
+            loader.style.borderTopColor = 'rgb(255, 187, 0)';
+            loader.style.display = 'block';
+            submitEditButton.style.display = 'none';
+            closeDialogEdit.style.display = 'none';
+            if (image.name === '' || typeof image === undefined) {
+                const docRef = doc(db, 'products', selectedID);
+                await updateDoc(docRef, {
+                    title: title,
+                    price: price,
+                    description: details,
+                    quantity: quantity,
+                    category: cat,
+                }).then(() => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'inline-block';
+                    closeDialogEdit.style.display = 'inline-block';
+                    window.location.reload();
+                }).catch((e) => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'flex';
+                    closeDialogEdit.style.display = 'flex';
+                    alert(e.message);
+                });
+            } else {
+                const deleteIMG = ref(storage, `Products/${selectedImageName}`);
+                deleteObject(deleteIMG)
+                const storageRef = ref(storage, `Products/${image.name}`);
+                await uploadBytes(storageRef, image);
+                const imageUrl = await getDownloadURL(storageRef);
+                const docRef = doc(db, 'products', selectedID);
+                await updateDoc(docRef, {
+                    imageUrl: imageUrl,
+                    name: image.name,
+                    title: title,
+                    price: price,
+                    description: details,
+                    quantity: quantity,
+                    category: cat
+                }).then(() => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'inline-block';
+                    closeDialogEdit.style.display = 'inline-block';
+                    window.location.reload();
+                }).catch((e) => {
+                    dialogEdit.style.display = 'none';
+                    loader.style.display = 'none';
+                    submitEditButton.style.display = 'flex';
+                    closeDialogEdit.style.display = 'flex';
+                    alert(e.message);
+                });
+            }
+        });
+
+    }
+}
+
+document.getElementById('edit').addEventListener('click', function () {
+    editProduct();
 });
