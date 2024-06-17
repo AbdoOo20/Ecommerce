@@ -72,8 +72,14 @@ let counterOfAddedCategories = 0;
                 div.style.position = "relative";
                 div.style.bottom = "10px";
                 div.style.display = "none";
+
+                //create Link 
+                const AForCategory = document.createElement("a");
+                AForCategory.append(div);
+                AForCategory.href = "./contact.html?categoy=" + doc.data()["title"];
+
                 //Add div to categories
-                document.getElementById("Categories").append(div);
+                document.getElementById("Categories").append(AForCategory);
 
         });
         return CategoriesCollection;
@@ -105,11 +111,11 @@ document.getElementById("CircleArrowLeft").addEventListener("click", () => {
 let counterOfAddedProducts = 0;
 let counterOfAddedProductsRow1 = 0;
 let counterOfAddedProductsRow2 = 0;
-
 (async function GetAllProducts() {
         const ProductsSnapshot = await getDocs(collection(db, "products"));
         ProductsSnapshot.forEach(doc => {
                 // category description imageUrl oldQuantity price quantity title
+                const ProdutcID = doc.id;
                 const category = doc.data()["category"];
                 const description = doc.data()["description"];
                 const imageUrl = doc.data()["imageUrl"];
@@ -158,6 +164,11 @@ let counterOfAddedProductsRow2 = 0;
 
                 //create Div For Prodect 
                 const ProductDiv = document.createElement("div");
+                ProductDiv.id = ProdutcID;
+                ProductDiv.setAttribute("category", category);
+                ProductDiv.setAttribute("oldQuantity", oldQuantity);
+                ProductDiv.setAttribute("quantity", quantity);
+                ProductDiv.setAttribute("description", description);
                 ProductDiv.append(IconsDiv);
                 ProductDiv.append(imgOfProduct);
                 ProductDiv.append(titleOfProduct);
@@ -165,11 +176,17 @@ let counterOfAddedProductsRow2 = 0;
                 ProductDiv.append(AddToCartBtn);
                 ProductDiv.classList.add("divproducts");
                 ProductDiv.style.display = "none";
+                //console.log(ProductDiv);
+
+                //create A For Product
+                const LinkForProduct = document.createElement("a");
+                LinkForProduct.append(ProductDiv);
+                LinkForProduct.href = "./contact.html?ID=" + ProdutcID;
                 if (counterOfAddedProducts % 2 == 0) {
-                        document.getElementById("ProductsRow1").appendChild(ProductDiv);
+                        document.getElementById("ProductsRow1").appendChild(LinkForProduct);
                         counterOfAddedProductsRow1++;
                 } else {
-                        document.getElementById("ProductsRow2").appendChild(ProductDiv);
+                        document.getElementById("ProductsRow2").appendChild(LinkForProduct);
                         counterOfAddedProductsRow2++;
                 }
                 counterOfAddedProducts++;
