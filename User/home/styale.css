@@ -1,3 +1,7 @@
+* {
+        font-family: Poppins;
+}
+
 #EHome {
         width: 100%;
         height: 2500px;
@@ -60,11 +64,6 @@
         background-color: #F5F5F5;
 }
 
-#SearchIcon {
-        position: relative;
-        top: 2px;
-}
-
 #HeaderIcons {
         float: right;
         position: relative;
@@ -104,52 +103,20 @@ aside a {
         color: #000000;
 }
 
-#IphoneAds {
+#TopBanner {
         color: #ffffff;
-        width: 60%;
+        width: 70%;
         height: 70%;
-        background-color: #000000;
         float: right;
         position: relative;
         top: 5%;
         right: 5%;
 }
 
-#leftDiv {
-        float: left;
-        position: inherit;
-        left: 7%;
-        top: 15%;
-}
+#TopBannerImg {
+        width: 100%;
+        height: 100%;
 
-#IphoneIcone {
-        font-size: 250%;
-        float: left;
-}
-
-#IPhone14Series {
-        position: relative;
-        top: 12px;
-        left: 10px;
-        font-size: 100%;
-}
-
-#TextAfterIphoneIcone {
-        width: 165px;
-        font-size: 200%;
-}
-
-#leftDiv a {
-        position: relative;
-        bottom: 40px;
-        color: #ffffff;
-}
-
-#Iphone14Img {
-        width: 40%;
-        position: inherit;
-        right: -10%;
-        top: 10%;
 }
 
 #Section2 {
@@ -287,60 +254,89 @@ aside a {
         height: 20%;
 }
 
+#CircleArrowRightForProdects {
+        font-size: 120%;
+        float: right;
+        color: rgb(207, 192, 192);
+}
+
+#CircleArrowLeftForProdects {
+        font-size: 120%;
+        float: left;
+        color: rgb(207, 192, 192);
+}
+
 #Products {
         height: 80%;
 }
 
-#ProductsDiv1 {
+.ProductsRow {
         height: 45%;
 }
 
 .DivProducts {
         background-color: rgb(235, 228, 228);
         width: 19%;
-        height: 95%;
+        height: 200px;
         display: inline-block;
 
+}
+
+.DivProducts:hover {
+        .AddToCart {
+                display: inline-block;
+        }
+
+        .AddToCart a {
+                color: #ffffff;
+                text-decoration: none;
+        }
 }
 
 .DivProducts img {
         position: relative;
         top: 7%;
         left: 3%;
-        height: 60%;
-        width: 55%;
+        height: 40%;
+        width: 80px;
 }
 
-#AddToCart {
+.titleOfProduct {
+        font-weight: bold;
+}
+
+.AddToCart {
         width: 100%;
         height: 20%;
         background-color: #000000;
-        position: relative;
-        bottom: -40px;
         border-radius: 5px 5px 0 0;
         color: #ffffff;
+        display: none;
 }
 
-#AddToCart p {
+.AddToCart p {
         display: inline-block;
         position: relative;
         top: -10px;
 }
 
-#ProductIcons {
+.ProductIcons {
         float: right;
         position: relative;
         top: 5%;
         right: 5%;
 }
 
-#ProductIcons i {
+.ProductIcons i {
         margin: 10px 0px;
         display: block;
 }
 
-#ProductsDiv2 {
-        height: 45%;
+.ProductIcons img {
+        width: 18px;
+        height: 20px;
+        display: block;
+        margin: 5px 0px;
 }
 
 #ViewAllProducts {
@@ -353,9 +349,11 @@ aside a {
         top: -70px;
 }
 
-#ViewAllProducts p {
+#ViewAllProducts a {
         position: relative;
         top: 8px;
+        color: #ffffff;
+        text-decoration: none;
 }
 
 #Section4 {
@@ -526,8 +524,13 @@ aside a {
         display: inline-block;
         margin: 0 25px;
         position: relative;
-        top: 50px;
+        top: 30px;
         border-radius: 5px;
+}
+
+#servic1 {
+        position: relative;
+        top: 55px;
 }
 
 .services i {

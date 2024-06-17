@@ -3,14 +3,17 @@
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Home</title>
         <link rel="stylesheet" href="./styale.css">
         <script src="https://kit.fontawesome.com/e3f4154824.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+                rel="stylesheet">
+
 </head>
 
-<body>
-        <!-- New comment-->
-         <!-- Anouther comment-->
+<body id="BodyID">
         <div id="EHome" align="center">
                 <header>
                         <!-- <div id="TopHeader">
@@ -20,9 +23,10 @@
                         <div id="Header">
                                 <span id="Logo">Ecommerce</span>
                                 <nav>
-                                        <a class="navLinks" href="">Home</a>
-                                        <a class="navLinks" href="">Contact</a>
-                                        <a class="navLinks" href="">About</a>
+                                        <a class="navLinks" href="./index.html">Home</a>
+                                        <a class="navLinks" href="./contact.html">Contact us</a>
+                                        <a class="navLinks" href="./about.html">About</a>
+                                        <a class="navLinks" href="../../Common/Authentication/login.html">Sign In</a>
                                         <div id="HeaderSearchsection">
                                                 <input id="HeaderSearchInpute" type="text"
                                                         placeholder="What are you looking for?">
@@ -31,7 +35,7 @@
                                         <div id="HeaderIcons">
                                                 <i class="fa-regular fa-heart"></i>
                                                 <i class="fa-solid fa-cart-shopping"></i>
-                                                <i class="fa-solid fa-right-from-bracket"></i>
+                                                <i id="LogeOutIcon" class="fa-solid fa-right-from-bracket"></i>
                                         </div>
 
                                 </nav>
@@ -52,14 +56,14 @@
                                         <a href=""> Groceries & Pets</a>
                                         <a href=""> Health & Beauty</a>
                                 </aside> -->
-                                <div id="IphoneAds">
-                                        <div id="leftDiv">
+                                <div id="TopBanner">
+                                        <!-- <div id="leftDiv">
                                                 <i id="IphoneIcone" class="fa-brands fa-apple"></i>
                                                 <span id="IPhone14Series">iPhone 14 Series</span>
                                                 <p id="TextAfterIphoneIcone">Up to 10% off Voucher</p>
                                                 <a href="./index.html">ShopNow</a>
-                                        </div>
-                                        <img id="Iphone14Img" src="./img/iphone.jpg" alt="">
+                                        </div> -->
+                                        <img id="TopBannerImg" src="./img/iphone.jpg" alt="Not Found">
 
                                 </div>
                         </section>
@@ -82,19 +86,19 @@
                                         </div>
                                 </div>
                                 <div id="Categories">
-                                        <div><i class="fa-solid fa-mobile-screen-button"></i>
+                                        <div class="Categories"><i class="fa-solid fa-mobile-screen-button"></i>
                                                 <p>Phones</p>
                                         </div>
-                                        <div><i class="fa-solid fa-computer"></i>
+                                        <div class="Categories"><i class="fa-solid fa-computer"></i>
                                                 <p>Computers</p>
                                         </div>
-                                        <div><i class="fa-solid fa-camera"></i>
+                                        <div class="Categories"><i class="fa-solid fa-camera"></i>
                                                 <p>Cameras</p>
                                         </div>
-                                        <div><i class="fa-solid fa-headphones"></i>
+                                        <div class="Categories"><i class="fa-solid fa-headphones"></i>
                                                 <p>Headphones</p>
                                         </div>
-                                        <div><i class="fa-solid fa-gamepad"></i>
+                                        <div class="Categories"><i class="fa-solid fa-gamepad"></i>
                                                 <p>Gaming</p>
                                         </div>
                                 </div>
@@ -109,130 +113,142 @@
                                                 <div id="ExploreOurProducts">
                                                         Explore Our Products
                                                         <div id="ProductsIcons">
-                                                                <i id="CircleArrowRight"
+                                                                <i id="CircleArrowRightForProdects"
                                                                         class="fa-solid fa-circle-arrow-right"></i>
-                                                                <i id="CircleArrowLeft"
+                                                                <i id="CircleArrowLeftForProdects"
                                                                         class="fa-solid fa-circle-arrow-left"></i>
                                                         </div>
                                                 </div>
                                         </div>
                                 </div>
                                 <div id="Products">
-                                        <div id="ProductsDiv1">
+                                        <div id="ProductsRow1" class="ProductsRow">
                                                 <div class="DivProducts">
                                                         <img src="./img/cat.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/jacket.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/camera.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/car.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/labtop.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                         </div>
-                                        <div id="ProductsDiv2">
+                                        <div id="ProductsRow2" class="ProductsRow">
                                                 <div class="DivProducts">
                                                         <img src="./img/Showergel.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/shows.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/videogamesaream.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/jacket2.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                                 <div class="DivProducts">
                                                         <img src="./img/pag.jpg">
-                                                        <div id="ProductIcons">
+                                                        <div class="ProductIcons">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 <i class="fa-regular fa-heart"></i>
                                                         </div>
-                                                        <div id="AddToCart">
-                                                                <p>Add To Cart</p>
+                                                        <p class="titleOfProduct">title</p>
+                                                        <p class="PriceOfProduct">1500$</p>
+                                                        <div class="AddToCart">
+                                                                <a href="">Add To Cart</a>
                                                         </div>
-
                                                 </div>
                                         </div>
                                 </div>
                                 <div id="ViewAllProducts">
-                                        <p>View All Products</p>
+                                        <a href="">View All Products</a>
                                 </div>
                         </section>
                         <section id="Section4">
@@ -276,7 +292,7 @@
                                 </div>
                         </section>
                         <section id="Section5">
-                                <div class="services">
+                                <div class="services" id="servic1">
                                         <i class="fa-solid fa-truck-fast"></i>
                                         <div>
                                                 <p class="PTitle">FREE AND FAST DELIVERY</p>
@@ -329,6 +345,7 @@
                         </div>
                 </footer>
         </div>
+        <script type="module" src="./home.js"></script>
 </body>
 
 </html>
