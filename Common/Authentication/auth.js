@@ -98,6 +98,7 @@ function checkValidation(type) {
 
 
 window.onload = () => {
+    localStorage.clear();
     const savedEmail = localStorage.getItem('email');
     if (savedEmail && savedEmail == 'admin@yahoo.com') {
         window.location.href = '../../Admin/home/home.html';
