@@ -1,12 +1,9 @@
 import { db, collection, getDocs } from '../../Database/firebase-config.js';
 
-
 //header
 
 const LogeOutIcon = document.getElementById("LogeOutIcon");
 LogeOutIcon.style.display = "none";
-
-
 
 //Section1 Change The Banners
 
@@ -15,8 +12,8 @@ let TopBannerImg = document.getElementById("TopBannerImg");
 async function GetBannersCollection() {
         const BannersSnapshot = await getDocs(collection(db, "banners"));
         const BannersCollection = [];
-        BannersSnapshot.forEach(doc => {
-                BannersCollection.push(doc.data());
+        BannersSnapshot.forEach(c => {
+                BannersCollection.push(c.data());
         });
         return BannersCollection;
 }
@@ -31,6 +28,7 @@ setInterval(() => {
                 i++;
         }).catch(() => false);
 }, 3000);
+
 let ChangeBanners;
 let counterForBanners = 0;
 TopBannerImg.addEventListener("mouseover", () => {
@@ -89,6 +87,7 @@ let Categories = document.getElementsByClassName("Categories");
 
 let rightCounterForCategories = Categories.length - counterOfAddedCategories;
 let leftCounterForCategories = 0;
+
 
 document.getElementById("CircleArrowRight").addEventListener("click", () => {
         if (rightCounterForCategories >= Categories.length) return false;
@@ -181,7 +180,7 @@ let counterOfAddedProductsRow2 = 0;
                 //create A For Product
                 const LinkForProduct = document.createElement("a");
                 LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "./contact.html?ID=" + ProdutcID;
+                LinkForProduct.href = "../../contactUs/contact.html??ID=" + ProdutcID;
                 if (counterOfAddedProducts % 2 == 0) {
                         document.getElementById("ProductsRow1").appendChild(LinkForProduct);
                         counterOfAddedProductsRow1++;
@@ -192,13 +191,19 @@ let counterOfAddedProductsRow2 = 0;
                 counterOfAddedProducts++;
 
         });
+        for (let i = 0, j = 5; i < 5; i++, j++) {
+                Products[i].style.display = "none";
+                Products[j].style.display = "inline-block";
+                Products[i + 10].style.display = "none";
+                Products[j + 10].style.display = "inline-block";
+        }
 })();
+
 
 let Products = document.getElementsByClassName("DivProducts");
 
 let leftCounter = 0;
 let RightCounter = 5;
-
 
 document.getElementById("CircleArrowRightForProdects").addEventListener("click", () => {
         if (RightCounter >= Products.length - 5 - counterOfAddedProductsRow2) return false;
