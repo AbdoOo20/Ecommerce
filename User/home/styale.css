@@ -73,6 +73,7 @@ a:visited {
 }
 
 #HeaderIcons {
+        display: none;
         float: right;
         position: relative;
         right: -150px;
@@ -374,6 +375,8 @@ aside a {
 
 #Section4 {
         height: 20%;
+        position: relative;
+        top: 50px;
 }
 
 #FeaturedTxt {
@@ -426,7 +429,7 @@ aside a {
 #NewArrivalLeftDiv {
         position: relative;
         left: -80px;
-        top: -7px;
+        bottom: 40px;
         width: 45%;
         height: 100%;
         display: inline-block;
@@ -524,13 +527,14 @@ aside a {
 #NewArrivalRightTopDiv h5 {
         float: left;
         position: relative;
-
         left: 20px;
         color: #ffffff;
 }
 
 #Section5 {
         height: 10%;
+        position: relative;
+        top: 50px;
 }
 
 .services {
@@ -542,11 +546,6 @@ aside a {
         position: relative;
         top: 30px;
         border-radius: 5px;
-}
-
-#servic1 {
-        position: relative;
-        top: 55px;
 }
 
 .services i {
@@ -592,5 +591,5 @@ footer {
 #CopyrightIcon,
 #CopyrightTxt {
         display: inline-block;
-        
+
 }

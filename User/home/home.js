@@ -2,8 +2,8 @@ import { db, collection, getDocs } from '../../Database/firebase-config.js';
 
 //header
 
-const LogeOutIcon = document.getElementById("LogeOutIcon");
-LogeOutIcon.style.display = "none";
+// const LogeOutIcon = document.getElementById("LogeOutIcon");
+// LogeOutIcon.style.display = "none";
 
 
 
@@ -55,7 +55,6 @@ TopBannerImg.addEventListener("mouseout", () => {
 let counterOfAddedCategories = 0;
 (async function GetCategoriesCollection() {
         const CategoriesSnapshot = await getDocs(collection(db, "categories"));
-        const CategoriesCollection = [];
         CategoriesSnapshot.forEach((doc) => {
                 counterOfAddedCategories++;
                 // title imageUrl
@@ -80,13 +79,16 @@ let counterOfAddedCategories = 0;
                 //create Link 
                 const AForCategory = document.createElement("a");
                 AForCategory.append(div);
-                AForCategory.href = "./contact.html?categoy=" + doc.data()["title"];
+                AForCategory.href = "../category/category.html?categoy=" + doc.data()["title"];
 
                 //Add div to categories
                 document.getElementById("Categories").append(AForCategory);
 
         });
-        return CategoriesCollection;
+        for (let i = 0; i < 5; i++) {
+                Categories[i].style.display = "none";
+                Categories[i + 5].style.display = "inline-block";
+        }
 })();
 
 let Categories = document.getElementsByClassName("Categories");
@@ -199,9 +201,9 @@ let counterOfAddedProductsRow2 = 0;
         });
         for (let i = 0, j = 5; i < 5; i++, j++) {
                 Products[i].style.display = "none";
-                Products[j].style.display = "inline-block";
+                Products[i + 5].style.display = "inline-block";
                 Products[i + 10].style.display = "none";
-                Products[j + 10].style.display = "inline-block";
+                Products[i + 15].style.display = "inline-block";
         }
 })();
 
