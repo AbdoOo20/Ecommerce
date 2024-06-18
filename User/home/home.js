@@ -5,6 +5,14 @@ import { db, collection, getDocs } from '../../Database/firebase-config.js';
 const LogeOutIcon = document.getElementById("LogeOutIcon");
 LogeOutIcon.style.display = "none";
 
+<<<<<<< HEAD
+=======
+
+const savedEmail = localStorage.getItem('email');
+const savedID = localStorage.getItem('id');
+
+
+>>>>>>> f2457c5c2052077b3a82a7939a039f9db2ad3bf1
 //Section1 Change The Banners
 
 let TopBannerImg = document.getElementById("TopBannerImg");

@@ -1,5 +1,5 @@
 
-
+import { auth, signOut } from '../../Database/firebase-config.js';
 var items = document.querySelectorAll('.manage-item');
 items.forEach(function (item, index) {
     item.addEventListener('click', function () {
@@ -12,5 +12,14 @@ items.forEach(function (item, index) {
         if (index === 2) {
             window.location.href = '../products/products.html';
         }
+    });
+});
+
+document.getElementById('logout').addEventListener('click', function () {
+    signOut(auth).then(() => {
+        localStorage.clear();
+        window.location.href = '../../Common/Authentication/login.html';
+    }).catch((error) => {
+        alert('Error signing out: ', error);
     });
 });

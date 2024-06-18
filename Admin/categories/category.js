@@ -93,7 +93,6 @@ window.onload = () => {
                 categoryData.appendChild(pos);
                 // Create div
                 const categoryDiv = document.createElement('div');
-                categoryDiv.style.width = '100%';
                 categoryDiv.style.justifyContent = 'start';
                 categoryDiv.classList.add('banner');
                 categoryDiv.appendChild(label);
