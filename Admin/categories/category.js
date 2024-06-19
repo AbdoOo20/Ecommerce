@@ -1,58 +1,55 @@
 import { storage, db, uploadBytes, ref, getDownloadURL, addDoc, collection, getDocs, deleteDoc, deleteObject, doc, updateDoc } from '../../Database/firebase-config.js';
 
-const openDialogButton = document.getElementById('openDialogButton');
-const dialogOverlay = document.getElementById('dialogOverlay');
-const closeDialogButton = document.getElementById('closeDialogButton');
-const closeDialogEdit = document.getElementById('closeDialogEdit');
+const add = document.getElementById('add');
+const addDialog = document.getElementById('addDialog');
+const dialogEdit = document.getElementById('editDialog');
+const closeDialogButton = document.getElementById('closeAddDialog');
+const closeDialogEdit = document.getElementById('closeEditDialog');
 const submitButton = document.getElementById('submit');
 const submitEditButton = document.getElementById('submitEdit');
-const bannerForm = document.getElementById('bannerForm');
+const addForm = document.getElementById('addForm');
 const editForm = document.getElementById('editForm');
-const selection = document.getElementById('nameEdit');
 var selectedImageName;
 var selectedID;
-var selectedPosition;
+var selectedTitle;
 var imageURL;
-const dialogEdit = document.getElementById('dialogEdit');
 
-openDialogButton.addEventListener('click', () => {
-    dialogOverlay.style.display = 'flex';
+add.addEventListener('click', () => {
+    addDialog.style.display = 'flex';
 });
 closeDialogButton.addEventListener('click', () => {
-    dialogOverlay.style.display = 'none';
+    addDialog.style.display = 'none';
 });
 closeDialogEdit.addEventListener('click', () => {
     dialogEdit.style.display = 'none';
 });
 
-bannerForm.addEventListener('submit', async (event) => {
+addForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     var loader = document.querySelector('.loading-indicator');
     loader.style.display = 'block';
     submitButton.style.display = 'none';
     closeDialogButton.style.display = 'none';
-    const formData = new FormData(bannerForm);
-    const position = formData.get('name');
+    const formData = new FormData(addForm);
+    const title = formData.get('name');
     const image = formData.get('image');
     const now = new Date();
-    const storageRef = ref(storage, `Banners/${image.name}`);
+    const storageRef = ref(storage, `Categories/${image.name}`);
     await uploadBytes(storageRef, image);
     const imageUrl = await getDownloadURL(storageRef);
-    await addDoc(collection(db, "banners"), {
+    await addDoc(collection(db, "categories"), {
         imageUrl: imageUrl,
-        position: position,
+        title: title,
         name: image.name,
         date: now,
     }).then(() => {
-        document.getElementById('image').value = '';
         loader.style.display = 'none';
         submitButton.style.display = 'inline-block';
         closeDialogButton.style.display = 'inline-block';
-        dialogOverlay.style.display = 'none';
+        addDialog.style.display = 'none';
         window.location.reload();
     }).catch((e) => {
         alert(e.message);
-        document.getElementById('image').value = '';
         loader.style.display = 'none';
         submitButton.style.display = 'inline-block';
         closeDialogButton.style.display = 'inline-block';
@@ -60,12 +57,12 @@ bannerForm.addEventListener('submit', async (event) => {
 });
 
 window.onload = () => {
-    const displayBanners = async () => {
-        const bannersDiv = document.getElementById('allBanners');
-        const selectBanner = document.getElementById('selectedBanner');
-        const bannersCollection = collection(db, "banners");
+    const displayCategories = async () => {
+        const categoriesDiv = document.getElementById('allCategories');
+        const selectedCategory = document.getElementById('selectedCategory');
+        const categoryCollection = collection(db, "categories");
         try {
-            const querySnapshot = await getDocs(bannersCollection);
+            const querySnapshot = await getDocs(categoryCollection);
             var index = 0;
             querySnapshot.forEach((doc) => {
                 index++;
@@ -86,50 +83,44 @@ window.onload = () => {
                 // Position & ID
                 const pos = document.createElement('label');
                 pos.classList.add('labelBanner');
-                const position = document.createTextNode(`${data.position}`);
-                pos.appendChild(position);
-                const id = document.createElement('label');
-                id.classList.add('labelBanner');
-                const bannerID = document.createTextNode(`${doc.id}`);
-                id.appendChild(bannerID);
-                const bannerData = document.createElement('div');
-                bannerData.style.display = 'flex';
-                bannerData.style.flexDirection = 'column';
-                bannerData.style.alignItems = 'flex-start';
-                bannerData.style.justifyContent = 'center';
-                bannerData.appendChild(pos);
-                bannerData.appendChild(id);
+                const title = document.createTextNode(`${data.title}`);
+                pos.appendChild(title);
+                const categoryData = document.createElement('div');
+                categoryData.style.display = 'flex';
+                categoryData.style.flexDirection = 'column';
+                categoryData.style.alignItems = 'flex-start';
+                categoryData.style.justifyContent = 'center';
+                categoryData.appendChild(pos);
                 // Create div
-                const bannerDiv = document.createElement('div');
-                bannerDiv.style.width = '100%';
-                bannerDiv.style.justifyContent = 'start';
-                bannerDiv.classList.add('banner');
-                bannerDiv.appendChild(label);
-                bannerDiv.appendChild(img);
-                bannerDiv.appendChild(bannerData);
-                bannerDiv.addEventListener('click', () => {
-                    selectBanner.innerHTML = '';
+                const categoryDiv = document.createElement('div');
+                categoryDiv.style.justifyContent = 'start';
+                categoryDiv.classList.add('banner');
+                categoryDiv.appendChild(label);
+                categoryDiv.appendChild(img);
+                categoryDiv.appendChild(categoryData);
+                categoryDiv.addEventListener('click', () => {
+                    selectedCategory.innerHTML = '';
                     selectedID = doc.id;
                     selectedImageName = data.name;
-                    selectedPosition = data.position;
+                    selectedTitle = data.title;
                     imageURL = data.imageUrl
-                    selectBanner.appendChild(document.createTextNode(`Selected Banner ID: ${doc.id}`));
+                    selectedCategory.appendChild(document.createTextNode(`Selected Category ID: ${doc.id}`));
                 });
                 // Parent
-                bannersDiv.appendChild(bannerDiv);
+                categoriesDiv.appendChild(categoryDiv);
             });
         } catch (error) {
             console.error("Error: ", error);
         }
     }
-    displayBanners();
+    displayCategories();
 };
 
-function deleteBanner() {
+function deleteCategory() {
     if (typeof selectedID === 'undefined') {
         const notification = document.getElementById('notificationError');
         notification.innerHTML = '';
-        notification.appendChild(document.createTextNode(`You must Select Banner`));
+        notification.appendChild(document.createTextNode(`You must Select Category`));
         notification.classList.add('show');
         setTimeout(() => {
             notification.classList.add('hide');
@@ -149,20 +140,20 @@ function deleteBanner() {
                 notification.classList.remove('show', 'hide');
             }, 500);
         }, 2000);
-        const storageRef = ref(storage, `Banners/${selectedImageName}`);
+        const storageRef = ref(storage, `Categories/${selectedImageName}`);
         deleteObject(storageRef)
-        const bannerDocRef = doc(db, "banners", selectedID);
-        deleteDoc(bannerDocRef).finally(() => {
+        const categoryDocRef = doc(db, "categories", selectedID);
+        deleteDoc(categoryDocRef).finally(() => {
             window.location.reload();
         });
     }
 }
 
-function editBanner() {
+function editCategory() {
     if (typeof selectedID === 'undefined') {
         const notification = document.getElementById('notificationError');
         notification.innerHTML = '';
-        notification.appendChild(document.createTextNode(`You must Select Banner`));
+        notification.appendChild(document.createTextNode(`You must Select Category`));
         notification.classList.add('show');
         setTimeout(() => {
             notification.classList.add('hide');
@@ -172,30 +163,28 @@ function editBanner() {
         }, 2000);
     }
     else {
+        document.getElementById('nameEdit').value = selectedTitle;
         dialogEdit.style.display = 'flex';
-        const formData = new FormData(editForm);
-        formData.set('name', selectedPosition);
-        const position = formData.get('name');
-        selection.value = position;
         editForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const data = new FormData(editForm);
-            const image = data.get('image');
+            const image = data.get('imageEdit');
+            const title = data.get('nameEdit');
             var loader = document.querySelector('.loading-indicator');
             loader.style.borderTopColor = 'rgb(255, 187, 0)';
             loader.style.display = 'block';
             submitEditButton.style.display = 'none';
             closeDialogEdit.style.display = 'none';
-            if (typeof image === undefined) {
-                const docRef = doc(db, 'banners', selectedID);
+            if (image.name === '' || typeof image === undefined) {
+                const docRef = doc(db, 'categories', selectedID);
                 await updateDoc(docRef, {
-                    position: selection.value
+                    title: title
                 }).then(() => {
                     dialogEdit.style.display = 'none';
                     loader.style.display = 'none';
                     submitEditButton.style.display = 'inline-block';
                     closeDialogEdit.style.display = 'inline-block';
-                    window.location.reload();
+                    //window.location.reload();
                 }).catch((e) => {
                     dialogEdit.style.display = 'none';
                     loader.style.display = 'none';
@@ -204,16 +193,16 @@ function editBanner() {
                     alert(e.message);
                 });
             } else {
-                const deleteIMG = ref(storage, `Banners/${selectedImageName}`);
+                const deleteIMG = ref(storage, `Categories/${selectedImageName}`);
                 deleteObject(deleteIMG)
-                const storageRef = ref(storage, `Banners/${image.name}`);
+                const storageRef = ref(storage, `Categories/${image.name}`);
                 await uploadBytes(storageRef, image);
                 const imageUrl = await getDownloadURL(storageRef);
-                const docRef = doc(db, 'banners', selectedID);
+                const docRef = doc(db, 'categories', selectedID);
                 await updateDoc(docRef, {
                     imageUrl: imageUrl,
                     name: image.name,
-                    position: selection.value
+                    title: title
                 }).then(() => {
                     dialogEdit.style.display = 'none';
                     loader.style.display = 'none';
@@ -234,10 +223,10 @@ function editBanner() {
 }
 
 document.getElementById('delete').addEventListener('click', function () {
-    deleteBanner();
+    deleteCategory();
 });
-document.getElementById('editDialog').addEventListener('click', function () {
-    editBanner();
+document.getElementById('edit').addEventListener('click', function () {
+    editCategory();
 });
 
 
