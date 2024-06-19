@@ -87,7 +87,7 @@ const ReqCategory = UrlParams.get("categoy");
                 //create A For Product
                 const LinkForProduct = document.createElement("a");
                 LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../User/product/Peoduct.html?ProdutcID=" + ProdutcID + "?UserID=" + savedID;
+                LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
                 if (doc.data()["category"] == ReqCategory.split("?")[0])
                         document.getElementById("row").appendChild(LinkForProduct)
         })

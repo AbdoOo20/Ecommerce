@@ -79,7 +79,7 @@ let counterOfAddedCategories = 0;
                 //create Link 
                 const AForCategory = document.createElement("a");
                 AForCategory.append(div);
-                AForCategory.href = "../category/category.html?categoy=" + doc.data()["title"] + "?UserID=" + savedID;
+                AForCategory.href = "../category/category.html?categoy=" + doc.data()["title"] + "&UserID=" + savedID;
 
                 //Add div to categories
                 document.getElementById("Categories").append(AForCategory);
@@ -153,7 +153,17 @@ let counterOfAddedProductsRow2 = 0;
                 const AForAddToCart = document.createElement("a");
                 AForAddToCart.innerText = "Add To Cart";
                 AForAddToCart.href = "";
-                AForAddToCart.addEventListener("click", AddToCart)
+                AForAddToCart.addEventListener("click", async () => {
+                        console.log("Hi");
+                        alert(doc.id);
+                        var ref = collection(db, "Cart");
+                        await addDoc(
+                                ref, {
+                                userId: savedID,
+                                quantity: "1",
+                                productId: doc.id
+                        }).then(() => alert("Added Successefully")).catch((error) => { alert(`Error${error}`) });
+                })
 
                 //create Add To Cart
                 const AddToCartBtn = document.createElement("div");
@@ -194,7 +204,7 @@ let counterOfAddedProductsRow2 = 0;
                 //create A For Product
                 const LinkForProduct = document.createElement("a");
                 LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "?UserID=" + savedID;
+                LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
                 if (counterOfAddedProducts % 2 == 0) {
                         document.getElementById("ProductsRow1").appendChild(LinkForProduct);
                         counterOfAddedProductsRow1++;
@@ -239,12 +249,3 @@ document.getElementById("CircleArrowLeftForProdects").addEventListener("click", 
         Products[RightCounter + 5 + counterOfAddedProductsRow1].style.display = "none";
 })
 
-async function AddToCart() {
-        var ref = collection(db, "Cart");
-        await addDoc(
-                ref, {
-                userId: savedID,
-                quantity: "1",
-                productId: PID
-        }).then(() => console.log(("Added Successefully"))).catch((error) => { alert(`Error${error}`) });
-}
