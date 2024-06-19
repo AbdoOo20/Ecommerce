@@ -1,13 +1,9 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-import { getDatabase, set, push, onValue
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, setDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import { getDatabase, set, push, onValue, update} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCdLjxezxSJ3hHNjoQ4L0QLY1dohdSD_oM",
@@ -25,8 +21,4 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 const database = getDatabase(app);
 
-export { 
-    app, db, auth, storage, deleteDoc, deleteObject, getDownloadURL, uploadBytes, signOut, database, set, push, onValue, 
-    createUserWithEmailAndPassword, signInWithEmailAndPassword, collection, addDoc, getDocs, setDoc, doc, ref, 
-    updateDoc, getDoc, getAuth, onAuthStateChanged,
-};
+export { app, db, auth, storage, update,getDoc, deleteDoc, deleteObject, getDownloadURL, uploadBytes, signOut, database, set, push, onValue, createUserWithEmailAndPassword, signInWithEmailAndPassword, collection, addDoc, getDocs, setDoc, doc, ref, updateDoc };
