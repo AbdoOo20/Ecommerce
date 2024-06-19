@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             title.appendChild(document.createTextNode(`${getProductData['title']}`));
             //create price
             const price = document.createElement('h4');
-            price.appendChild(document.createTextNode(`${getProductData['price']}`));
+            price.appendChild(document.createTextNode(`${getProductData['price']} EGP`));
             //append all
             divProduct.classList.add('product_list');
             divProduct.appendChild(divSmallProduct);

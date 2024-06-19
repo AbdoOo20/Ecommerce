@@ -56,10 +56,10 @@ const ReqCategory = UrlParams.get("categoy");
                 addToWishlistIcon.src = "../../images/heart.png"
 
                 // create Div For Icons Of Product
-                const IconsDiv = document.createElement("div");
-                IconsDiv.append(displayDitalsIcon);
-                IconsDiv.append(addToWishlistIcon);
-                IconsDiv.classList.add("ProductIcons");
+                // const IconsDiv = document.createElement("div");
+                // IconsDiv.append(displayDitalsIcon);
+                // IconsDiv.append(addToWishlistIcon);
+                // IconsDiv.classList.add("ProductIcons");
 
                 //create Link For Add To Create
                 const AForAddToCart = document.createElement("a");
@@ -99,7 +99,7 @@ const ReqCategory = UrlParams.get("categoy");
                 ProductDiv.setAttribute("oldQuantity", oldQuantity);
                 ProductDiv.setAttribute("quantity", quantity);
                 ProductDiv.setAttribute("description", description);
-                ProductDiv.append(IconsDiv);
+                //ProductDiv.append(IconsDiv);
                 ProductDiv.append(imgOfProduct);
                 ProductDiv.append(titleOfProduct);
                 ProductDiv.append(priceOfProduct);
@@ -112,6 +112,8 @@ const ReqCategory = UrlParams.get("categoy");
                 // LinkForProduct.append(ProductDiv);
                 // LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
                 if (doc.data()["category"] == ReqCategory.split("?")[0])
+                        document.getElementById("row").appendChild(ProductDiv)
+                if (ReqCategory.split("?")[0] == "all")
                         document.getElementById("row").appendChild(ProductDiv)
         })
 })()

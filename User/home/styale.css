@@ -113,18 +113,38 @@ aside a {
 
 #TopBanner {
         color: #ffffff;
-        width: 70%;
+        width: 100%;
         height: 70%;
         float: right;
         position: relative;
         top: 5%;
-        right: 5%;
+        left: 2%;
+        border-radius: 8px;
+}
+
+#BottomBanner {
+        color: #ffffff;
+        width: 100%;
+        height: 70%;
+        float: right;
+        position: relative;
+        top: 20%;
+        left: 2%;
+        border-radius: 8px;
 }
 
 #TopBannerImg {
         width: 100%;
         height: 100%;
+        border-radius: 8px;
+        border: 1px black groove;
+}
 
+#BottomBannerImg {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        border: 1px black groove;
 }
 
 #Section2 {
@@ -291,11 +311,13 @@ aside a {
 }
 
 .DivProducts {
-        background-color: rgb(235, 228, 228);
+        background-color: white;
         width: 19%;
         height: 200px;
         display: inline-block;
-
+        border: 1px black groove;
+        margin-left: 5px;
+        border-radius: 8px;
 }
 
 .DivProducts:hover {
@@ -376,7 +398,7 @@ aside a {
 #Section4 {
         height: 20%;
         position: relative;
-        top: 50px;
+        top: 10%;
 }
 
 #FeaturedTxt {
@@ -423,7 +445,7 @@ aside a {
         height: 70%;
         width: 90%;
         position: relative;
-        top: 10%;
+        top: 20%;
 }
 
 #NewArrivalLeftDiv {
@@ -544,7 +566,7 @@ aside a {
         display: inline-block;
         margin: 0 25px;
         position: relative;
-        top: 30px;
+        top: 40%;
         border-radius: 5px;
 }
 

@@ -26,6 +26,7 @@ const productSnapshot = await getDoc(productDetails);
 
 if(productSnapshot.exists()) {
     productImage.src = productSnapshot.data().imageUrl;
+    productImage.style.objectFit = 'contain';
     productName.textContent = productSnapshot.data().title;
     paragraphAfterNav.textContent = `Shop / ${productSnapshot.data().title}`   
     productPrice.textContent = `$ ${productSnapshot.data().price}`;

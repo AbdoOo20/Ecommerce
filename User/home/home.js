@@ -1,4 +1,4 @@
-import { db, collection, getDocs, addDoc } from '../../Database/firebase-config.js';
+import { db, collection, getDocs, addDoc, signOut, auth } from '../../Database/firebase-config.js';
 
 //header
 
@@ -14,6 +14,7 @@ const WishlistIcon = document.getElementById("WishlistIcon");
 const CartIcon = document.getElementById("CartIcon");
 const LogeOutIcon = document.getElementById("LogeOutIcon");
 const SignInBtn = document.getElementById("SignInBtn");
+const allProducts = document.getElementById("ViewAllProducts");
 let flage = true;
 if (!savedID) {
         flage = false;
@@ -33,33 +34,64 @@ if (!flage) {
                 window.location.href = "../../User/cart/cart.html"
         })
         LogeOutIcon.style.display = "inline-block";
+        LogeOutIcon.addEventListener('click', function () {
+                signOut(auth).then(() => {
+                        localStorage.clear();
+                        window.location.href = '../../Common/Authentication/login.html';
+                }).catch((error) => {
+                        alert('Error signing out: ', error);
+                });
+        });
         SignInBtn.style.display = "none";
 }
+
+//view all products
+function showProducts() { 
+        const allProductsBTN = document.createElement("a");
+        allProductsBTN.innerText = "View All Products";
+        allProductsBTN.href = "../category/category.html?categoy=" + "all" + "&UserID=" + savedID;
+        allProducts.append(allProductsBTN);
+}
+showProducts();
 
 
 //Section1 Change The Banners
 
 let TopBannerImg = document.getElementById("TopBannerImg");
+let BottomBannerImg = document.getElementById("BottomBannerImg");
 
-async function GetBannersCollection() {
+var topBanners = [];
+var bottomBanners = [];
+async function getBannersCollection() {
         const BannersSnapshot = await getDocs(collection(db, "banners"));
-        const BannersCollection = [];
         BannersSnapshot.forEach(c => {
-                BannersCollection.push(c.data());
+                if (c.data()['position'] == 'Top') {
+                        topBanners.push(c.data()['imageUrl']);
+                } else {
+                        bottomBanners.push(c.data()['imageUrl']);
+                }
         });
-        return BannersCollection;
+}
+getBannersCollection();
+
+var i = 0;
+var x = 0;
+function getTopBanners() {
+        setInterval(() => {
+                TopBannerImg.src = topBanners[i];
+                BottomBannerImg.src = bottomBanners[i];
+                i++;
+                x++;
+                if (i == topBanners.length) {
+                        i = 0;
+                }
+                if (x == bottomBanners.length) {
+                        x = 0;
+                }
+        }, 1500);
 }
 
-let TopBannerImgs = [];
-TopBannerImgs.push(TopBannerImg.src)
-var i = 0;
-setInterval(() => {
-        GetBannersCollection().then((result) => {
-                TopBannerImg.src = result[i]["imageUrl"];
-                TopBannerImgs.push(result[i]["imageUrl"]);
-                i++;
-        }).catch(() => false);
-}, 3000);
+getTopBanners();
 
 let ChangeBanners;
 let counterForBanners = 0;
@@ -73,9 +105,9 @@ TopBannerImg.addEventListener("mouseover", () => {
         }, 3000)
 })
 
-TopBannerImg.addEventListener("mouseout", () => {
-        clearInterval(ChangeBanners);
-})
+// TopBannerImg.addEventListener("mouseout", () => {
+//         clearInterval(ChangeBanners);
+// })
 
 //Section2 Categories
 let counterOfAddedCategories = 0;
@@ -218,7 +250,7 @@ let counterOfAddedProductsRow2 = 0;
                                         notification.appendChild(document.createTextNode(`You must Sign in !!`));
                                 else
                                         notification.appendChild(document.createTextNode(`Product Already Exist in favouites`));
-                                                                notification.classList.add('show');
+                                notification.classList.add('show');
                                 setTimeout(() => {
                                         notification.classList.add('hide');
                                         setTimeout(() => {
@@ -305,6 +337,7 @@ let counterOfAddedProductsRow2 = 0;
                 //create Img Of Product
                 const imgOfProduct = document.createElement("img");
                 imgOfProduct.src = imageUrl;
+                imgOfProduct.style.objectFit = 'contain';
                 imgOfProduct.addEventListener("click", () => {
                         window.location.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
                 })
@@ -317,7 +350,7 @@ let counterOfAddedProductsRow2 = 0;
 
                 //create p For price 
                 const priceOfProduct = document.createElement("p");
-                priceOfProduct.innerText = price;
+                priceOfProduct.innerText = `${price} EGP`;
                 priceOfProduct.classList.add("PriceOfProduct");
 
                 //create Div For Prodect 

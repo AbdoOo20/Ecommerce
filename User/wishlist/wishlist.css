@@ -15,9 +15,9 @@
 
 #wish {
     font-size: 30px;
-    float: right;
     font-weight: bold;
-    
+    margin-left: 8%;
+    margin-top: 2%;
 }
 
 h3 {
