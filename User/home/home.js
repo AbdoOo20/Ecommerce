@@ -1,4 +1,4 @@
-import { db, collection, getDocs } from '../../Database/firebase-config.js';
+import { db, collection, getDocs, addDoc } from '../../Database/firebase-config.js';
 
 //header
 
@@ -135,9 +135,64 @@ let counterOfAddedProductsRow2 = 0;
                 const displayDitalsIcon = document.createElement("img");
                 displayDitalsIcon.src = "./img/eye.png"
 
+
                 //create Add To  Wishlist Icon
                 const addToWishlistIcon = document.createElement("img");
                 addToWishlistIcon.src = "./img/heart.png"
+                addToWishlistIcon.addEventListener('click', async function () {
+                        var productExist = false;
+                        const favouites = collection(db, 'favourites');
+                        const snapshot = await getDocs(favouites);
+                        snapshot.forEach(doc => {
+                                if (doc.data()['userID'] === savedID && doc.data()['productID'] === ProdutcID) {
+                                        productExist = true;
+                                }
+                        });
+                        if (productExist == false) {
+                                await addDoc(collection(db, "favourites"), {
+                                        userID: savedID,
+                                        productID: ProdutcID,
+                                }).then(() => {
+                                        const notification = document.getElementById('notification');
+                                        notification.innerHTML = '';
+                                        notification.style.backgroundColor = 'green';
+                                        notification.appendChild(document.createTextNode(`Product added to favouites successfully`));
+                                        notification.classList.add('show');
+                                        setTimeout(() => {
+                                                notification.classList.add('hide');
+                                                setTimeout(() => {
+                                                        notification.classList.remove('show', 'hide');
+                                                }, 500);
+                                        }, 2000);
+                                }).catch((e) => {
+                                        const notification = document.getElementById('notification');
+                                        notification.innerHTML = '';
+                                        notification.style.backgroundColor = 'red';
+                                        notification.appendChild(document.createTextNode(`Not able to add to favouites, ${e}`));
+                                        notification.classList.add('show');
+                                        setTimeout(() => {
+                                                notification.classList.add('hide');
+                                                setTimeout(() => {
+                                                        notification.classList.remove('show', 'hide');
+                                                }, 500);
+                                        }, 2000);
+                                });
+                        } else {
+                                const notification = document.getElementById('notification');
+                                notification.innerHTML = '';
+                                notification.style.backgroundColor = 'red';
+                                notification.appendChild(document.createTextNode(`Product Already Exist in Favourites`));
+                                notification.classList.add('show');
+                                setTimeout(() => {
+                                        notification.classList.add('hide');
+                                        setTimeout(() => {
+                                                notification.classList.remove('show', 'hide');
+                                        }, 500);
+                                }, 2000);
+                                productExist = false;
+                        }
+                });
+
 
                 // create Div For Icons Of Product
                 const IconsDiv = document.createElement("div");
@@ -188,7 +243,7 @@ let counterOfAddedProductsRow2 = 0;
                 //create A For Product
                 const LinkForProduct = document.createElement("a");
                 LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../contactUs/contact.html??ID=" + ProdutcID;
+                // LinkForProduct.href = "../../contactUs/contact.html??ID=" + ProdutcID;
                 if (counterOfAddedProducts % 2 == 0) {
                         document.getElementById("ProductsRow1").appendChild(LinkForProduct);
                         counterOfAddedProductsRow1++;
