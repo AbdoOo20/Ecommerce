@@ -194,7 +194,7 @@ let counterOfAddedProductsRow2 = 0;
                 //create A For Product
                 const LinkForProduct = document.createElement("a");
                 LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../User/product/Peoduct.html?ProdutcID=" + ProdutcID + "?UserID=" + savedID;
+                LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "?UserID=" + savedID;
                 if (counterOfAddedProducts % 2 == 0) {
                         document.getElementById("ProductsRow1").appendChild(LinkForProduct);
                         counterOfAddedProductsRow1++;
