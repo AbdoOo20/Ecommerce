@@ -237,8 +237,5 @@ reviews.forEach((review) => {
     const user = review.data().user;
 
       // create Div For Icons Of Product
-      const IconsDiv = document.createElement("div");
-      IconsDiv.append(displayDitalsIcon);
-      IconsDiv.append(addToWishlistIcon);
-      IconsDiv.classList.add("ProductIcons");
+      
 })
