@@ -1,21 +1,26 @@
 import { db, collection, addDoc } from '../../Database/firebase-config.js';
 
+document.getElementById("SubmitBtn").addEventListener("click", SendAMessage)
 
-const Firstname = document.getElementById("Firstname");
-const Lastname = document.getElementById("Lastname");
-const EmailAddress = document.getElementById("EmailAddress");
-const Phonenumber = document.getElementById("Phonenumber");
-const Message = document.getElementById("Message");
-
-document.getElementById("SubmitBtn").addEventListener("click", AddMessage())
-async function AddMessage() {
-        if (Firstname.value != "null" && Lastname.value != "null" && EmailAddress.value != "null" && Message.value != "null") {
-                await addDoc(
-                        collection(db, "contact"), {
-                        Fullname: Firstname.value + Lastname.value,
-                        Email: EmailAddress.value,
-                        Phone: Phonenumber.value,
-                        Msg: Message.value
-                }).then(() => alert("Added Successefully")).catch((error) => { alert(`Error${error}`) });
+async function SendAMessage() {
+        const Firstname = document.getElementById("Firstname");
+        const Lastname = document.getElementById("Lastname");
+        const EmailAddress = document.getElementById("EmailAddress");
+        const Phonenumber = document.getElementById("Phonenumber");
+        const Message = document.getElementById("Message");
+        await addDoc(
+                collection(db, "contact"), {
+                Fullname: Firstname.value + Lastname.value,
+                Email: EmailAddress.value,
+                Phone: Phonenumber.value,
+                Msg: Message.value
+        }).then(() => {
+                alert("sent Message Successefully :)")
+                Firstname.value = "";
+                Lastname.value = "";
+                EmailAddress.value = "";
+                Phonenumber.value = "";
+                Message.value = "";
         }
+        ).catch((error) => { alert(`Error${error}`) });
 }

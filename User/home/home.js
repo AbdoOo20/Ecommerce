@@ -46,7 +46,7 @@ if (!flage) {
 }
 
 //view all products
-function showProducts() { 
+function showProducts() {
         const allProductsBTN = document.createElement("a");
         allProductsBTN.innerText = "View All Products";
         allProductsBTN.href = "../category/category.html?categoy=" + "all" + "&UserID=" + savedID;
@@ -144,8 +144,7 @@ let counterOfAddedCategories = 0;
 
         });
         for (let i = 0; i < 5; i++) {
-                Categories[i].style.display = "none";
-                Categories[i + 5].style.display = "inline-block";
+                Categories[i].style.display = "inline-block";
         }
 })();
 

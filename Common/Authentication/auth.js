@@ -54,7 +54,8 @@ function logIn() {
             loader.style.display = 'none';
             document.getElementById('email').value = '';
             document.getElementById('password').value = '';
-            if (email === 'admin@yahoo.com') {
+            //if (email === 'admin@yahoo.com') {
+            if (email === "admin@admin.com") {
                 window.location.href = '../../Admin/home/home.html';
             } else {
                 window.location.href = '../../User/home/index.html';

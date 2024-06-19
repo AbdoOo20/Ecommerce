@@ -11,46 +11,39 @@
 
 <body>
         <div style="margin-top: 10px;" class="container">
-                <form>
-                        <!-- 2 column grid layout with text inputs for the first and last names -->
-                        <div class="row mb-4">
-                                <div class="col">
-                                        <div data-mdb-input-init class="form-outline">
-                                                <label class="form-label" for="Firstname">First name</label>
-                                                <input type="text" id="Firstname" class="form-control" required />
-                                        </div>
-                                </div>
-                                <div class="col">
-                                        <div data-mdb-input-init class="form-outline">
-                                                <label class="form-label" for="Lastname">Last name</label>
-                                                <input type="text" id="Lastname" class="form-control" required />
-                                        </div>
+                <div class="row mb-4">
+                        <div class="col">
+                                <div class="form-outline">
+                                        <label class="form-label" for="Firstname">First name</label>
+                                        <input type="text" id="Firstname" class="form-control" required />
                                 </div>
                         </div>
-
-                        <!-- Email input -->
-                        <div data-mdb-input-init class="form-outline mb-4">
-                                <label class="form-label" for="EmailAddress">Email</label>
-                                <input type="email" id="EmailAddress" class="form-control" required />
+                        <div class="col">
+                                <div class="form-outline">
+                                        <label class="form-label" for="Lastname">Last name</label>
+                                        <input type="text" id="Lastname" class="form-control" required />
+                                </div>
                         </div>
+                </div>
 
-                        <!-- Phone input -->
-                        <div data-mdb-input-init class="form-outline mb-4">
-                                <label class="form-label" for="Phonenumber">Phone</label>
-                                <input type="tel" id="Phonenumber" class="form-control" />
-                        </div>
+                <div class="form-outline mb-4">
+                        <label class="form-label" for="EmailAddress">Email</label>
+                        <input type="email" id="EmailAddress" class="form-control" required />
+                </div>
 
-                        <!-- Message input -->
-                        <div data-mdb-input-init class="form-outline mb-4">
-                                <label class="form-label" for="Message">Complaints and suggestions</label>
-                                <textarea class="form-control" id="Message" rows="4" required></textarea>
-                        </div>
+                <div class="form-outline mb-4">
+                        <label class="form-label" for="Phonenumber">Phone</label>
+                        <input type="tel" id="Phonenumber" class="form-control" />
+                </div>
 
-                        <!-- Submit button -->
-                        <button id="SubmitBtn" type="submit" class="btn btn-primary btn-block mb-4">
-                                Send message
-                        </button>
-                </form>
+                <div class="form-outline mb-4">
+                        <label class="form-label" for="Message">Complaints and suggestions</label>
+                        <textarea class="form-control" id="Message" rows="4" required></textarea>
+                </div>
+
+                <button id="SubmitBtn" class="btn btn-primary btn-block mb-4">
+                        Send message
+                </button>
         </div>
         <script type="module" src="./contact.js"></script>
 </body>
