@@ -50,12 +50,12 @@
     <div class="container">
 
         <div id="divAfterNav">
-            <p id="paragraphAfterNav">Shop / Havic HV G-92 Gamepad</p>
+            <p id="paragraphAfterNav"></p>
         </div>
 
         <div class="d-flex">
             <div style="width: 40%;">
-                <img id="productImage" width="90%" height="80%">
+                <img id="productImage" width="500px" height="400px">
             </div>
             <div style="width: 60%;">
                  <h4 id="productName"></h4>
@@ -81,28 +81,42 @@
                 </div>
             </div>
         </div>
-              
-        <div>
-            <div class="rating">
-                <span id="rating">0</span>/5
+        
+        <div class="d-flex">
+            <div>
+                <div class="rating">
+                    <span id="rating">0</span>/5
+                </div>
+                <div class="stars" id="stars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <p>Share your review:</p>
+                <textarea id="review"
+                          placeholder="Write your review here">
+                </textarea>
+                <button id="submit">Submit</button>
+                <div class="reviews" id="reviews">
+                </div>
             </div>
-            <div class="stars" id="stars">
-                <span class="star" data-value="1">★</span>
-                <span class="star" data-value="2">★</span>
-                <span class="star" data-value="3">★</span>
-                <span class="star" data-value="4">★</span>
-                <span class="star" data-value="5">★</span>
-            </div>
-            <p>Share your review:</p>
-            <textarea id="review"
-                      placeholder="Write your review here">
-            </textarea>
-            <button id="submit">Submit</button>
-            <div class="reviews" id="reviews">
+            <div id="reviews"> 
+                <img id="customerId" width="50px" height="50px">
+                <p id="customerName"></p>
+                <div>
+                    <div class="stars" id="stars">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    <p id="customerComment"></p>
+                </div>
             </div>
         </div>
-        <div id="reviews"> </div>
-
     </div>
 
     <script src="Product.js" type="module"></script>
