@@ -1,5 +1,7 @@
 import { db, collection, getDocs } from '../../Database/firebase-config.js';
 
+const savedEmail = localStorage.getItem('email');
+const savedID = localStorage.getItem('id');
 
 const HeaderIcons = document.getElementById("HeaderIcons");
 HeaderIcons.style.display = "inline-block";
@@ -85,8 +87,8 @@ const ReqCategory = UrlParams.get("categoy");
                 //create A For Product
                 const LinkForProduct = document.createElement("a");
                 LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../contactUs/contact.html??ID=" + ProdutcID;
-                if (doc.data()["category"] == ReqCategory)
+                LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
+                if (doc.data()["category"] == ReqCategory.split("?")[0])
                         document.getElementById("row").appendChild(LinkForProduct)
         })
 })()
