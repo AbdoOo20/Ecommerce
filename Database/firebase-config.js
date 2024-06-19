@@ -21,4 +21,4 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 const database = getDatabase(app);
 
-export { app, db, auth, storage, getDoc, deleteDoc, deleteObject, getDownloadURL, uploadBytes, signOut, database, set, push, onValue, createUserWithEmailAndPassword, signInWithEmailAndPassword, collection, addDoc, getDocs, setDoc, doc, ref, updateDoc };
+export { app, db, auth, storage, update,getDoc, deleteDoc, deleteObject, getDownloadURL, uploadBytes, signOut, database, set, push, onValue, createUserWithEmailAndPassword, signInWithEmailAndPassword, collection, addDoc, getDocs, setDoc, doc, ref, updateDoc };
