@@ -73,7 +73,6 @@ a:visited {
 }
 
 #HeaderIcons {
-        display: none;
         float: right;
         position: relative;
         right: -150px;
@@ -308,6 +307,8 @@ aside a {
                 color: #ffffff;
                 text-decoration: none;
         }
+
+    
 }
 
 .DivProducts img {
@@ -362,8 +363,7 @@ aside a {
         background-color: #DB4444;
         color: #ffffff;
         border-radius: 5px;
-        position: relative;
-        top: -70px;
+        
 }
 
 #ViewAllProducts a {

@@ -10,6 +10,32 @@ import { db, collection, getDocs, addDoc } from '../../Database/firebase-config.
 const savedEmail = localStorage.getItem('email');
 const savedID = localStorage.getItem('id');
 
+const WishlistIcon = document.getElementById("WishlistIcon");
+const CartIcon = document.getElementById("CartIcon");
+const LogeOutIcon = document.getElementById("LogeOutIcon");
+const SignInBtn = document.getElementById("SignInBtn");
+let flage = true;
+if (!savedID) {
+        flage = false;
+}
+if (!flage) {
+        WishlistIcon.style.display = "none";
+        CartIcon.style.display = "none";
+        LogeOutIcon.style.display = "none";
+        SignInBtn.style.display = "inline-block";
+} else if (flage) {
+        WishlistIcon.style.display = "inline-block";
+        WishlistIcon.addEventListener("click", () => {
+                window.location.href = "../../User/wishlist/index.html"
+        })
+        CartIcon.style.display = "inline-block";
+        CartIcon.addEventListener("click", () => {
+                window.location.href = "../../User/cart/cart.html"
+        })
+        LogeOutIcon.style.display = "inline-block";
+        SignInBtn.style.display = "none";
+}
+
 
 //Section1 Change The Banners
 
@@ -138,6 +164,9 @@ let counterOfAddedProductsRow2 = 0;
                 //create display Ditals Icon
                 const displayDitalsIcon = document.createElement("img");
                 displayDitalsIcon.src = "./img/eye.png"
+                displayDitalsIcon.addEventListener("click", () => {
+                        window.location.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
+                })
 
 
                 //create Add To  Wishlist Icon
@@ -152,7 +181,7 @@ let counterOfAddedProductsRow2 = 0;
                                         productExist = true;
                                 }
                         });
-                        if (productExist == false) {
+                        if (productExist == false && flage) {
                                 await addDoc(collection(db, "favourites"), {
                                         userID: savedID,
                                         productID: ProdutcID,
@@ -185,8 +214,11 @@ let counterOfAddedProductsRow2 = 0;
                                 const notification = document.getElementById('notification');
                                 notification.innerHTML = '';
                                 notification.style.backgroundColor = 'red';
-                                notification.appendChild(document.createTextNode(`Product Already Exist in Favourites`));
-                                notification.classList.add('show');
+                                if (!flage)
+                                        notification.appendChild(document.createTextNode(`You must Sign in !!`));
+                                else
+                                        notification.appendChild(document.createTextNode(`Product Already Exist in favouites`));
+                                                                notification.classList.add('show');
                                 setTimeout(() => {
                                         notification.classList.add('hide');
                                         setTimeout(() => {
@@ -207,17 +239,62 @@ let counterOfAddedProductsRow2 = 0;
                 //create Link For Add To Create
                 const AForAddToCart = document.createElement("a");
                 AForAddToCart.innerText = "Add To Cart";
-                AForAddToCart.href = "";
                 AForAddToCart.addEventListener("click", async () => {
-                        console.log("Hi");
-                        alert(doc.id);
-                        var ref = collection(db, "Cart");
-                        await addDoc(
-                                ref, {
-                                userId: savedID,
-                                quantity: "1",
-                                productId: doc.id
-                        }).then(() => alert("Added Successefully")).catch((error) => { alert(`Error${error}`) });
+                        var CartExist = false;
+                        const Carts = collection(db, 'cart');
+                        const CartsSnapshot = await getDocs(Carts);
+                        CartsSnapshot.forEach(doc => {
+                                if (doc.data()['userID'] === savedID && doc.data()['productID'] === ProdutcID) {
+                                        CartExist = true;
+                                }
+                        });
+                        if (!CartExist && flage) {
+                                await addDoc(collection(db, "cart"), {
+                                        userID: savedID,
+                                        quantity: "1",
+                                        productID: ProdutcID,
+                                }).then(() => {
+                                        const notification = document.getElementById('notification');
+                                        notification.innerHTML = '';
+                                        notification.style.backgroundColor = 'green';
+                                        notification.appendChild(document.createTextNode(`Product added to Cart successfully`));
+                                        notification.classList.add('show');
+                                        setTimeout(() => {
+                                                notification.classList.add('hide');
+                                                setTimeout(() => {
+                                                        notification.classList.remove('show', 'hide');
+                                                }, 500);
+                                        }, 2000);
+                                }).catch((e) => {
+                                        const notification = document.getElementById('notification');
+                                        notification.innerHTML = '';
+                                        notification.style.backgroundColor = 'red';
+                                        notification.appendChild(document.createTextNode(`Not able to add to Cart, ${e}`));
+                                        notification.classList.add('show');
+                                        setTimeout(() => {
+                                                notification.classList.add('hide');
+                                                setTimeout(() => {
+                                                        notification.classList.remove('show', 'hide');
+                                                }, 500);
+                                        }, 2000);
+                                });
+                        } else {
+                                const notification = document.getElementById('notification');
+                                notification.innerHTML = '';
+                                notification.style.backgroundColor = 'red';
+                                if (!flage)
+                                        notification.appendChild(document.createTextNode(`You must Sign in !!`));
+                                else
+                                        notification.appendChild(document.createTextNode(`Product Already Exist in Cart`));
+                                notification.classList.add('show');
+                                setTimeout(() => {
+                                        notification.classList.add('hide');
+                                        setTimeout(() => {
+                                                notification.classList.remove('show', 'hide');
+                                        }, 500);
+                                }, 2000);
+                                CartExist = false;
+                        }
                 })
 
                 //create Add To Cart
@@ -228,6 +305,9 @@ let counterOfAddedProductsRow2 = 0;
                 //create Img Of Product
                 const imgOfProduct = document.createElement("img");
                 imgOfProduct.src = imageUrl;
+                imgOfProduct.addEventListener("click", () => {
+                        window.location.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
+                })
 
                 //create P For Title 
                 const titleOfProduct = document.createElement("p");
@@ -257,14 +337,14 @@ let counterOfAddedProductsRow2 = 0;
                 //console.log(ProductDiv);
 
                 //create A For Product
-                const LinkForProduct = document.createElement("a");
-                LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
+                // const LinkForProduct = document.createElement("a");
+                // LinkForProduct.append(ProductDiv);
+                // LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
                 if (counterOfAddedProducts % 2 == 0) {
-                        document.getElementById("ProductsRow1").appendChild(LinkForProduct);
+                        document.getElementById("ProductsRow1").appendChild(ProductDiv);
                         counterOfAddedProductsRow1++;
                 } else {
-                        document.getElementById("ProductsRow2").appendChild(LinkForProduct);
+                        document.getElementById("ProductsRow2").appendChild(ProductDiv);
                         counterOfAddedProductsRow2++;
                 }
                 counterOfAddedProducts++;
