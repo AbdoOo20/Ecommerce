@@ -1,4 +1,4 @@
-import { db, collection, getDocs } from '../../Database/firebase-config.js';
+import { db, collection, getDocs, addDoc } from '../../Database/firebase-config.js';
 
 //header
 
@@ -79,7 +79,7 @@ let counterOfAddedCategories = 0;
                 //create Link 
                 const AForCategory = document.createElement("a");
                 AForCategory.append(div);
-                AForCategory.href = "../category/category.html?categoy=" + doc.data()["title"];
+                AForCategory.href = "../category/category.html?categoy=" + doc.data()["title"] + "?UserID=" + savedID;
 
                 //Add div to categories
                 document.getElementById("Categories").append(AForCategory);
@@ -115,6 +115,9 @@ document.getElementById("CircleArrowLeft").addEventListener("click", () => {
 
 
 //Section3 Products
+
+let PID;
+
 let counterOfAddedProducts = 0;
 let counterOfAddedProductsRow1 = 0;
 let counterOfAddedProductsRow2 = 0;
@@ -123,6 +126,7 @@ let counterOfAddedProductsRow2 = 0;
         ProductsSnapshot.forEach(doc => {
                 // category description imageUrl oldQuantity price quantity title
                 const ProdutcID = doc.id;
+                PID = doc.id;
                 const category = doc.data()["category"];
                 const description = doc.data()["description"];
                 const imageUrl = doc.data()["imageUrl"];
@@ -149,6 +153,8 @@ let counterOfAddedProductsRow2 = 0;
                 const AForAddToCart = document.createElement("a");
                 AForAddToCart.innerText = "Add To Cart";
                 AForAddToCart.href = "";
+                AForAddToCart.addEventListener("click", AddToCart)
+
                 //create Add To Cart
                 const AddToCartBtn = document.createElement("div");
                 AddToCartBtn.append(AForAddToCart);
@@ -188,7 +194,7 @@ let counterOfAddedProductsRow2 = 0;
                 //create A For Product
                 const LinkForProduct = document.createElement("a");
                 LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../contactUs/contact.html??ID=" + ProdutcID;
+                LinkForProduct.href = "../../User/product/Peoduct.html?ProdutcID=" + ProdutcID + "?UserID=" + savedID;
                 if (counterOfAddedProducts % 2 == 0) {
                         document.getElementById("ProductsRow1").appendChild(LinkForProduct);
                         counterOfAddedProductsRow1++;
@@ -232,3 +238,13 @@ document.getElementById("CircleArrowLeftForProdects").addEventListener("click", 
         Products[leftCounter + 5 + counterOfAddedProductsRow1].style.display = "inline-block";
         Products[RightCounter + 5 + counterOfAddedProductsRow1].style.display = "none";
 })
+
+async function AddToCart() {
+        var ref = collection(db, "Cart");
+        await addDoc(
+                ref, {
+                userId: savedID,
+                quantity: "1",
+                productId: PID
+        }).then(() => console.log(("Added Successefully"))).catch((error) => { alert(`Error${error}`) });
+}
