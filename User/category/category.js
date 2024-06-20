@@ -3,10 +3,30 @@ import { db, collection, getDocs } from '../../Database/firebase-config.js';
 const savedEmail = localStorage.getItem('email');
 const savedID = localStorage.getItem('id');
 
-const HeaderIcons = document.getElementById("HeaderIcons");
-HeaderIcons.style.display = "inline-block";
-HeaderIcons.style.position = "relative";
-HeaderIcons.style.right = "10px";
+let flage = true;
+if (!savedID) {
+        flage = false;
+}
+if (!flage) {
+        WishlistIcon.style.display = "none";
+        CartIcon.style.display = "none";
+        LogeOutIcon.style.display = "none";
+        SignInBtn.style.display = "inline-block";
+} else if (flage) {
+        document.getElementById("HeaderIcons").style.position = "relative";
+        document.getElementById("HeaderIcons").style.right = "10px";
+
+        WishlistIcon.style.display = "inline-block";
+        WishlistIcon.addEventListener("click", () => {
+                window.location.href = "../../User/wishlist/index.html"
+        })
+        CartIcon.style.display = "inline-block";
+        CartIcon.addEventListener("click", () => {
+                window.location.href = "../../User/cart/cart.html"
+        })
+        LogeOutIcon.style.display = "inline-block";
+        SignInBtn.style.display = "none";
+}
 
 
 const queryString = window.location.search;
@@ -36,10 +56,10 @@ const ReqCategory = UrlParams.get("categoy");
                 addToWishlistIcon.src = "../../images/heart.png"
 
                 // create Div For Icons Of Product
-                const IconsDiv = document.createElement("div");
-                IconsDiv.append(displayDitalsIcon);
-                IconsDiv.append(addToWishlistIcon);
-                IconsDiv.classList.add("ProductIcons");
+                // const IconsDiv = document.createElement("div");
+                // IconsDiv.append(displayDitalsIcon);
+                // IconsDiv.append(addToWishlistIcon);
+                // IconsDiv.classList.add("ProductIcons");
 
                 //create Link For Add To Create
                 const AForAddToCart = document.createElement("a");
@@ -53,6 +73,9 @@ const ReqCategory = UrlParams.get("categoy");
                 //create Img Of Product
                 const imgOfProduct = document.createElement("img");
                 imgOfProduct.src = imageUrl;
+                imgOfProduct.addEventListener("click", () => {
+                        window.location.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
+                })
 
                 //create P For Title 
                 const titleOfProduct = document.createElement("p");
@@ -76,19 +99,21 @@ const ReqCategory = UrlParams.get("categoy");
                 ProductDiv.setAttribute("oldQuantity", oldQuantity);
                 ProductDiv.setAttribute("quantity", quantity);
                 ProductDiv.setAttribute("description", description);
-                ProductDiv.append(IconsDiv);
+                //ProductDiv.append(IconsDiv);
                 ProductDiv.append(imgOfProduct);
                 ProductDiv.append(titleOfProduct);
                 ProductDiv.append(priceOfProduct);
-                ProductDiv.append(AddToCartBtn);
+                // ProductDiv.append(AddToCartBtn);
                 ProductDiv.classList.add("divproducts");
                 ProductDiv.style.margin = "5px"
                 ProductDiv.style.display = "inline-block"
                 //create A For Product
-                const LinkForProduct = document.createElement("a");
-                LinkForProduct.append(ProductDiv);
-                LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
+                // const LinkForProduct = document.createElement("a");
+                // LinkForProduct.append(ProductDiv);
+                // LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
                 if (doc.data()["category"] == ReqCategory.split("?")[0])
-                        document.getElementById("row").appendChild(LinkForProduct)
+                        document.getElementById("row").appendChild(ProductDiv)
+                if (ReqCategory.split("?")[0] == "all")
+                        document.getElementById("row").appendChild(ProductDiv)
         })
 })()
