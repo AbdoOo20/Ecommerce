@@ -272,15 +272,15 @@ let counterOfAddedProductsRow2 = 0;
                         const Carts = collection(db, 'cart');
                         const CartsSnapshot = await getDocs(Carts);
                         CartsSnapshot.forEach(doc => {
-                                if (doc.data()['userID'] === savedID && doc.data()['productID'] === ProdutcID) {
+                                if (doc.data()['userId'] === savedID && doc.data()['productId'] === ProdutcID) {
                                         CartExist = true;
                                 }
                         });
                         if (!CartExist && flage) {
                                 await addDoc(collection(db, "cart"), {
-                                        userID: savedID,
+                                        userId: savedID,
                                         quantity: "1",
-                                        productID: ProdutcID,
+                                        productId: ProdutcID,
                                 }).then(() => {
                                         const notification = document.getElementById('notification');
                                         notification.innerHTML = '';
