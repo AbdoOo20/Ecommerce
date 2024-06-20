@@ -1,0 +1,124 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<link rel="stylesheet" href="style.css">
+
+
+<style>
+   
+</style>
+
+<body>
+
+    
+    
+    <div class="container  "  >
+    <div class="billing-form " >
+    <form action=""  method="POST" ></form >
+    <form   class="billing-form">
+        <h1>billing details</h1>
+        <label for="full-name">full-name <span>*</span></label>
+        <br>
+        <input class="i" type="text" id="full-name" name="full-name" required>
+        <br><br>
+
+
+        <label for=" address"> address <span>*</span></label>
+        <br>
+        <input type="text" id=" address" name=" address" required>
+
+        <br><br>
+
+        
+       <label for="Phane Number">phane number  <span>*</span></label>
+       <br>
+
+        <input type="number" id="phane number" name="phane number" required>
+
+        <br><br>
+
+
+
+</div>
+
+<br><br>
+
+<div  class="billing-summary"   >
+    <form action="" method="post">
+
+      
+        <span class="subtotal ">subtotal</span>
+        <span class="price ">$1750</span>
+        <hr>
+        <span class="subtotal ">shipping</span>
+        <span class="price"> free</span>
+        <hr>
+        <span  class="subtotal">total</span>
+        
+        <br>
+        <br>
+        <img class="paypalimg" src="paypal.PNG" alt="">
+        
+
+        <div>
+
+           
+        </div>
+        
+       
+    <form>
+        <label class="paypal" for="paypal">
+            <input type="radio" id="paypal" name="payment">
+            PayPal
+        </label>
+
+        <img class="img2" src="img2.PNG" alt="">
+
+        <br><br>
+
+        <label for="visa">
+            <input type="radio" id="visa" name="payment">
+            Visa or MasterCard
+        </label>
+
+        <br><br>
+
+        <input class="ploce" type="submit" value="Place Order">
+    </form>
+
+    <<div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="paypal-form" style="display:none;">
+                <h2>Enter PayPal Information:</h2>
+                <label for="paypal-email">PayPal Email:</label>
+                <input type="email" id="paypal-email">
+                <br><br>
+            </div>
+            <div id="visa-form" style="display:none;">
+                <h2>Enter Card Information:</h2>
+                <label for="card-number">Card Number:</label>
+                <input type="number" id="card-number">
+                <br><br>
+                <label for="expiry-date">Expiry Date:</label>
+                <input type="text" id="expiry-date">
+                <br><br>
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv">
+                <br><br>
+            </div>
+            <button id="submitBtn">Submit</button>
+        </div>
+    </div>
+   
+
+
+ 
+
+<script src="biliing.js"></script>
+</body>
+</html>
