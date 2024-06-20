@@ -1,8 +1,9 @@
 import { 
-    getAuth, db, ref, addDoc, collection, getDoc, getDocs, doc, onAuthStateChanged,
+    getAuth, db, addDoc, collection, getDoc, getDocs, doc, onAuthStateChanged,
+    query, where, getCountFromServer, ref
 } from '../../Database/firebase-config.js';
 
-////////////////////////Get ProductID and UserId from url params
+//////////////////////Get ProductID and UserId from url params
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const productId = urlParams.get('ProdutcID');
@@ -41,22 +42,12 @@ if(quantity > 0 ) {
 } else {
     stockValue.textContent = "Out stock"
 }
-//////////////////get rating data from firebase//////////////////////
-let ratingOfProduct = collection(db, "rating");
-const productRating = await getDocs(ratingOfProduct);
-let reviewCount = 0;
+//////////////////get count of rating for this product data //////
+const coll = collection(db, "rating");
+const q = query(coll, where("productId", "==", productId));
+const snapshot = await getCountFromServer(q);
 
-productRating.forEach((doc) => {
-    let productId = doc.data().productId;
-    if(productId === productId) {
-        var review = doc.data().comment;
-        if(review) {
-            reviewCount++;
-        }
-    }  
-})
-
-numberOfReviews.textContent = `( ${reviewCount} Reviews )`
+numberOfReviews.textContent = `( ${snapshot.data().count} Reviews )`
 ////////////////////////Increase Quantity////////////////
 btnIncreaseQuantity.addEventListener("click", function() {
     let quantityValue = inputOfQuantity.value;
@@ -184,7 +175,7 @@ submitBtn.addEventListener("click", () => {
  
     if (userRating > 0) {
         const reviewElement = document.createElement("div");
-        reviewElement.classList.add("review");
+        // reviewElement.classList.add("review");
         reviewElement.innerHTML = `<p><strong>Rating: ${userRating}/5</strong></p><p>${review}</p>`;
         reviewsContainer.appendChild(reviewElement);
  
@@ -205,8 +196,9 @@ submitBtn.addEventListener("click", () => {
         refRating, {
             comment: review,
             productId: productId,
-            productId: uid,
-            rating: userRating, 
+            userId: uid,
+            rating: userRating,
+            date:""
         }
     ) 
     alert("Review added successfully");
@@ -229,14 +221,51 @@ function getStarColorClass(value) {
     }
 }
 /////////////////Get all reviews/////////
-let refReviews = collection(db, "rating");
-const reviews = await getDocs(refReviews);
-reviews.forEach((review) => {
-    const customerComment = review.data().comment;
-    const product = review.data().productId;
-    const rating = review.data().rating;
-    const user = review.data().user;
+const reviewsDiv = document.getElementById("reviewsContainer");
 
-      // create Div For Icons Of Product
-      
+const queryReviews = query(collection(db, "rating"), where("productId", "==", productId));
+const reviewSnapshot = await getDocs(queryReviews);
+reviewSnapshot.forEach(async (doc) => {
+    const comment = doc.data().comment;
+    const rating = doc.data().rating;
+    const date = doc.data().date;
+    const user = doc.data().userId;
+    ///// Get the name of customer
+    let refUser = collection(db, "users");
+    const userSnapshot = await getDocs(refUser);
+    var name;
+    userSnapshot.forEach((doc)=> {
+        if(doc.data().id == user) {
+             name = doc.data().name; 
+        }
+    })
+    /////Create customet image
+    const customerDiv = document.createElement("div");
+    const customerImg = document.createElement("img");
+    customerImg.classList.add("customerImg");
+    customerImg.src = "../../images/profile.jpeg";
+    customerDiv.appendChild(customerImg);
+    /////Create span for customer name
+    const userDetails = document.createElement("div");
+    const customerName  = document.createElement("span");
+    customerName.append(name);
+    userDetails.appendChild(customerName)  
+    //Create paragraph for date of rating
+    const milliseconds = date.seconds * 1000 + Math.floor(date.nanoseconds / 1000000);
+    const dateObject = new Date(milliseconds);
+    const formattedDate = dateObject.toLocaleDateString('en-US', 
+        { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    const ratingDate  = document.createElement("p");
+    ratingDate.append(formattedDate);
+    ratingDate.classList.add("dateOfRating");
+    userDetails.appendChild(ratingDate)
+    customerDiv.appendChild(userDetails);
+    customerDiv.style.display = "flex";
+
+    reviewsDiv.appendChild(customerDiv);
+    //////////Create parag for customer comment
+    const customerComment = document.createElement("p");
+    customerComment.append(comment);
+    reviewsDiv.appendChild(customerComment)
 })
