@@ -27,7 +27,7 @@ const productSnapshot = await getDoc(productDetails);
 
 if(productSnapshot.exists()) {
     productImage.src = productSnapshot.data().imageUrl;
-    productImage.style.objectFit = 'contain';
+    productImage.classList.add('image');
     productName.textContent = productSnapshot.data().title;
     paragraphAfterNav.textContent = `Shop / ${productSnapshot.data().title}`   
     productPrice.textContent = `$ ${productSnapshot.data().price}`;
@@ -111,16 +111,57 @@ function addToCart() {
 document.getElementById("addToCart").addEventListener("click", addToCart);
 ////////////////////Add to wishlist//////////////////////
 async function addToWishlist() {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
             let refWishList = collection(db, "favourites");
-            addDoc(refWishList, {
-                productID: productId,
-                userID: uid
-            })
-            alert("Product added successfully to wishlist!");
+            var productExist = false;
+            const snapshot = await getDocs(refWishList);
+            snapshot.forEach(doc => {
+                if (doc.data()['userID'] === uid && doc.data()['productID'] === productId) {
+                    productExist = true;
+                }
+            });
+            if (productExist == false) {
+                addDoc(refWishList, {
+                    productID: productId,
+                    userID: uid
+                });
+                const notification = document.getElementById('notification');
+                notification.innerHTML = '';
+                notification.style.backgroundColor = 'green';
+                notification.appendChild(document.createTextNode(`Product added to favouites successfully`));
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.add('hide');
+                    setTimeout(() => {
+                        notification.classList.remove('show', 'hide');
+                    }, 500);
+                }, 2000);
+            } else { 
+                const notification = document.getElementById('notification');
+                notification.innerHTML = '';
+                notification.style.backgroundColor = 'red';
+                notification.appendChild(document.createTextNode(`Product Already Exist in favouites`));
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.add('hide');
+                    setTimeout(() => {
+                        notification.classList.remove('show', 'hide');
+                    }, 500);
+                }, 2000);
+            }
         } else {
-            alert("Please, Sign in")
+            const notification = document.getElementById('notification');
+            notification.innerHTML = '';
+            notification.style.backgroundColor = 'red';
+            notification.appendChild(document.createTextNode(`Please, Sign in`));
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.add('hide');
+                setTimeout(() => {
+                    notification.classList.remove('show', 'hide');
+                }, 500);
+            }, 2000);
         }
     });    
 }

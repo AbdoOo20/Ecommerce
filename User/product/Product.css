@@ -107,13 +107,20 @@ span a {
 
 #quantityInput {
     width: 10%;
-    height: 30%;
+    height: 35%;
+    border: 1px rgba(128, 128, 128, 0.567) groove;
+    border-radius: 5px;
+    top: 3.5%;
+    position: relative;
+    text-align: center;
 }
 
 .btnSize {
     font-weight:bolder;
-    height: 30%;
-    width: 10%;
+    padding: 0.5% 3%;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 
 #addToCart {
@@ -233,4 +240,38 @@ ul.footrUl li a {
 
 div.links i {
     font-size: 30px;
+}
+
+.review{
+    resize: none;
+}
+
+.image{
+    width: 400px;
+    height: 300px;
+    object-fit: contain;
+    margin-right: 20px;
+}
+
+.notification {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: 40%;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification.show {
+    display: block;
+    opacity: 1;
+}
+
+.notification.hide {
+    opacity: 0;
 }
