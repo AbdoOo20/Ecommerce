@@ -7,26 +7,26 @@ import { getDatabase, set, push, onValue, update } from "https://www.gstatic.com
 
 
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCx4SOlmhgw5VfFlBO7xWQZMGvxIZa_TWw",
-    authDomain: "my-ecommerce-743d4.firebaseapp.com",
-    projectId: "my-ecommerce-743d4",
-    storageBucket: "my-ecommerce-743d4.appspot.com",
-    messagingSenderId: "63574676290",
-    appId: "1:63574676290:web:8da17c5925247814c2eedb",
-    measurementId: "G-PS4S1WDJ9T"
-};
-
-
 // const firebaseConfig = {
-//     apiKey: "AIzaSyCdLjxezxSJ3hHNjoQ4L0QLY1dohdSD_oM",
-//     authDomain: "ecommerce-2fbcb.firebaseapp.com",
-//     projectId: "ecommerce-2fbcb",
-//     storageBucket: "ecommerce-2fbcb.appspot.com",
-//     messagingSenderId: "746486198725",
-//     appId: "1:746486198725:web:31cbbd6d6cdd1b8ddbdbac",
-//     measurementId: "G-7ZCZZ4RC6R"
+//     apiKey: "AIzaSyCx4SOlmhgw5VfFlBO7xWQZMGvxIZa_TWw",
+//     authDomain: "my-ecommerce-743d4.firebaseapp.com",
+//     projectId: "my-ecommerce-743d4",
+//     storageBucket: "my-ecommerce-743d4.appspot.com",
+//     messagingSenderId: "63574676290",
+//     appId: "1:63574676290:web:8da17c5925247814c2eedb",
+//     measurementId: "G-PS4S1WDJ9T"
 // };
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCdLjxezxSJ3hHNjoQ4L0QLY1dohdSD_oM",
+    authDomain: "ecommerce-2fbcb.firebaseapp.com",
+    projectId: "ecommerce-2fbcb",
+    storageBucket: "ecommerce-2fbcb.appspot.com",
+    messagingSenderId: "746486198725",
+    appId: "1:746486198725:web:31cbbd6d6cdd1b8ddbdbac",
+    measurementId: "G-7ZCZZ4RC6R"
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
