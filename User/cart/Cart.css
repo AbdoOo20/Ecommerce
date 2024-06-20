@@ -100,7 +100,7 @@ table thead tr {
 }
 
 table tbody tr.tableRow {
-    height: 100px;
+    height: 90px;
 }
 
 table tbody tr.emptyRow {
@@ -116,17 +116,20 @@ table tbody tr.emptyRow {
 }
 
 .divAfterTable {
+    margin-top: 5%;
     width: 80%; 
     margin-left: 130px;
 }
 
-.spanButton {
+.anchorButton {
     border: 1px solid #000000;
     border-radius: 4px;
     width: 150px;
     height: 45px;
     text-align: center;
     padding-top: 5px;
+    text-decoration: none;
+    color: #000000;
 }
 
 .cart {

@@ -27,7 +27,7 @@
             </span>
             <span>
                 <ul>
-                    <li><a class="active" href="#home">Home</a></li>
+                    <li><a class="active" href="../../User/home/index.html">Home</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li><a href="#about">About</a></li>
                 </ul>
@@ -53,7 +53,7 @@
         </div>
 
         <div id="tableContainer">
-            <table class="table">
+            <table class="table" id="myTable">
                 <thead>
                     <tr>
                         <th class="ps-5 widThirty">Product</th>
@@ -63,43 +63,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="emptyRow"></tr>
-                    <tr class="tableRow">
-                        <td class="ps-5 widThirty">
-                            <img src="../../images/product1.png" width="50px" height="50px">
-                            <span>LCD Monitor</span>
-                        </td>
-                        <td class="wid ps-5">550$</td>
-                        <td class="wid ps-5">
-                            <input type="number" name="quantity" value="1" min="1" max="5">
-                        </td>
-                        <td class="pe-5 text-end widThirty">550$</td>
-                    </tr>
-                    <tr class="emptyRow"></tr>
-                    <tr class="tableRow">
-                        <td class="ps-5 widThirty">
-                            <img src="../../images/product2.png" width="50px" height="50px">
-                            <span>H1 Gamepad</span></td>
-                        <td class="wid ps-5">560$</td>
-                        <td class="wid ps-5">
-                            <input type="number" name="quantity" value="1" min="1" max="5">
-                        </td>
-                        <td class="pe-5 text-end widThirty">560$</td>    
-                    </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="divAfterTable">
-            <span class="spanButton" type="button" class="btn btn-light">Return To Shop</span>
-            <span class="spanButton float-end" type="button" class="btn btn-light">Delete Product</span>
+            <a href="../../User/home/index.html" class="anchorButton" type="button" 
+            class="btn btn-light">Return To Shop</a>
+            <span style="color:white" type="button" id="btnDelete" 
+            class="float-end anchorButton btn btn-danger">Delete Product</span>
         </div>
 
         <div class="float-end cart">
             <h3>Cart Total</h3>
             <div class="subtotal">
                 <span>Subtotal:</span>
-                <span class="float-end">$1750</span>
+                <span class="float-end" id="subtotal"></span>
             </div>
             <div class="subtotal">
                 <span>Shipping:</span>
@@ -107,7 +86,7 @@
             </div>
             <div class="total">
                 <span>Total:</span>
-                <span class="float-end">$1750</span>
+                <span class="float-end" id="total"></span>
             </div>
             <button type="button" class="btn btn-danger cartBtn">Procees to checkout</button>
         </div>
@@ -160,5 +139,7 @@
             </div>
         </div>   
     </footer>
+
+    <script src="Cart.js" type="module"></script>
 </body>
 </html>
