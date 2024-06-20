@@ -114,7 +114,6 @@ let counterOfAddedCategories = 0;
 (async function GetCategoriesCollection() {
         const CategoriesSnapshot = await getDocs(collection(db, "categories"));
         CategoriesSnapshot.forEach((doc) => {
-                counterOfAddedCategories++;
                 // title imageUrl
                 //create Image 
                 const img = document.createElement("img");
@@ -150,7 +149,7 @@ let counterOfAddedCategories = 0;
 
 let Categories = document.getElementsByClassName("Categories");
 
-let rightCounterForCategories = Categories.length - counterOfAddedCategories;
+let rightCounterForCategories = 5;
 let leftCounterForCategories = 0;
 
 
@@ -173,7 +172,6 @@ document.getElementById("CircleArrowLeft").addEventListener("click", () => {
 
 //Section3 Products
 
-let PID;
 
 let counterOfAddedProducts = 0;
 let counterOfAddedProductsRow1 = 0;
@@ -183,7 +181,6 @@ let counterOfAddedProductsRow2 = 0;
         ProductsSnapshot.forEach(doc => {
                 // category description imageUrl oldQuantity price quantity title
                 const ProdutcID = doc.id;
-                PID = doc.id;
                 const category = doc.data()["category"];
                 const description = doc.data()["description"];
                 const imageUrl = doc.data()["imageUrl"];
@@ -193,11 +190,11 @@ let counterOfAddedProductsRow2 = 0;
                 const title = doc.data()["title"];
 
                 //create display Ditals Icon
-                const displayDitalsIcon = document.createElement("img");
-                displayDitalsIcon.src = "./img/eye.png"
-                displayDitalsIcon.addEventListener("click", () => {
-                        window.location.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
-                })
+                // const displayDitalsIcon = document.createElement("img");
+                // displayDitalsIcon.src = "./img/eye.png"
+                // displayDitalsIcon.addEventListener("click", () => {
+                //         window.location.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
+                // })
 
 
                 //create Add To  Wishlist Icon
@@ -263,7 +260,7 @@ let counterOfAddedProductsRow2 = 0;
 
                 // create Div For Icons Of Product
                 const IconsDiv = document.createElement("div");
-                IconsDiv.append(displayDitalsIcon);
+                // IconsDiv.append(displayDitalsIcon);
                 IconsDiv.append(addToWishlistIcon);
                 IconsDiv.classList.add("ProductIcons");
 
@@ -382,37 +379,33 @@ let counterOfAddedProductsRow2 = 0;
                 counterOfAddedProducts++;
 
         });
-        for (let i = 0, j = 5; i < 5; i++, j++) {
-                Products[i].style.display = "none";
-                Products[i + 5].style.display = "inline-block";
-                Products[i + 10].style.display = "none";
-                Products[i + 15].style.display = "inline-block";
+
+        for (let i = 0; i < 5; i++) {
+                Products[i].style.display = "inline-block";
+                Products[i + Products.length / 2].style.display = "inline-block";
         }
 })();
 
 
 let Products = document.getElementsByClassName("DivProducts");
 
-let leftCounter = 0;
-let RightCounter = 5;
+let CounterOfProducts = 0;
 
 document.getElementById("CircleArrowRightForProdects").addEventListener("click", () => {
-        if (RightCounter >= Products.length - 5 - counterOfAddedProductsRow2) return false;
-        Products[leftCounter].style.display = "none";
-        Products[RightCounter].style.display = "inline-block";
-        Products[leftCounter + 5 + counterOfAddedProductsRow1].style.display = "none";
-        Products[RightCounter + 5 + counterOfAddedProductsRow1].style.display = "inline-block";
-        leftCounter++;
-        RightCounter++;
+        if (CounterOfProducts + 5 >= Products.length / 2) return false;
+        Products[CounterOfProducts].style.display = "none";
+        Products[CounterOfProducts + 5].style.display = "inline-block";
+        Products[CounterOfProducts + Products.length / 2].style.display = "none";
+        Products[CounterOfProducts + 5 + Products.length / 2].style.display = "inline-block";
+        CounterOfProducts++;
 })
 
 document.getElementById("CircleArrowLeftForProdects").addEventListener("click", () => {
-        if (leftCounter <= 0) return false;
-        RightCounter--;
-        leftCounter--;
-        Products[RightCounter].style.display = "none";
-        Products[leftCounter].style.display = "inline-block";
-        Products[leftCounter + 5 + counterOfAddedProductsRow1].style.display = "inline-block";
-        Products[RightCounter + 5 + counterOfAddedProductsRow1].style.display = "none";
+        if (CounterOfProducts <= 0) return false;
+        CounterOfProducts--;
+        Products[CounterOfProducts].style.display = "inline-block";
+        Products[CounterOfProducts + 5].style.display = "none";
+        Products[CounterOfProducts + Products.length / 2].style.display = "inline-block";
+        Products[CounterOfProducts + 5 + Products.length / 2].style.display = "none";
 })
 
