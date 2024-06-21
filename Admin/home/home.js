@@ -17,6 +17,9 @@ items.forEach(function (item, index) {
         if (index === 3) {
             window.location.href = '../order/order.html';
         }
+        if (index === 4) {
+            window.location.href = '../messages/message.html';
+        }
     });
 });
 
