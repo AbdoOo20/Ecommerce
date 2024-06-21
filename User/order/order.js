@@ -4,21 +4,16 @@ import {
 } from '../../Database/firebase-config.js';
 
 const auth = getAuth();
-var uid;
 var total = 0;
-var orderIds = [];
 ////// Get data from cart
 onAuthStateChanged(auth, async(user) => {
     if (user) {
-        uid = user.uid;
+        const uid = user.uid;
         const q = query(collection(db, "orders"), where("userId", "==", uid));
         const ordersSnapshot = await getDocs(q);
-        ordersSnapshot.forEach(async (order) => {
-            orderIds.push(order.id);
+        ordersSnapshot.forEach(async (order) => {          
             const data = order.data();
             const status = order.data().status;
-            const btnBuy = document.getElementById("btnBuy");
-            
             var price;
             var checkBox;
             var tbodyRef;          
@@ -86,8 +81,26 @@ onAuthStateChanged(auth, async(user) => {
         });
     }
 });
-console.log(orderIds);
-btnBuy.href = "../../User/billing/billing.html?orderIds=" + orderIds;
+
+//// Pass the Ids of orders to billing
+var userID = localStorage.getItem("id");
+var orderIds = [];
+
+async function getorderIds(userID) {
+    const q = query(collection(db, "orders"), where("userId", "==", userID));
+        const ordersSnapshot = await getDocs(q);
+        ordersSnapshot.forEach(async (order) => {
+            const status = order.data().status;
+            if(status == "accepted") {
+                orderIds.push(order.id);
+            }
+        });
+        // const json = JSON.stringify(orderIds);
+        const arrString = orderIds.join(',');
+        // const test = encodeURIComponent(json);
+        btnBuy.href = '../../User/billing/billing.html?orderIds=' + encodeURIComponent(arrString);
+}
+getorderIds(userID);
 
 const btnDelete = document.getElementById("btnDelete");
 btnDelete.addEventListener("click", deleteProductFromOrder);
