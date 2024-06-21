@@ -1,5 +1,5 @@
 import { 
-    getAuth, db, collection, setDoc, getDocs, doc, onAuthStateChanged,
+    getAuth, db, collection, getDoc, getDocs, doc, onAuthStateChanged,
     query, where, deleteDoc
 } from '../../Database/firebase-config.js';
 
@@ -11,78 +11,77 @@ var checkStatus = false;
 onAuthStateChanged(auth, async(user) => {
     if (user) {
         uid = user.uid;
-        const q = query(collection(db, "Orders"), where("userId", "==", uid));
+        const q = query(collection(db, "orders"), where("userId", "==", uid));
         const ordersSnapshot = await getDocs(q);
-        ordersSnapshot.forEach(async (doc) => {
-            const productId = doc.data().productId;
-            const status = doc.data().status;
-            var img;
+        ordersSnapshot.forEach(async (order) => {
+            const data = order.data();
+            const status = order.data().status;
             var price;
-            var title;
-            const collProducts = collection(db, "products");
-            const products = await getDocs(collProducts);
-            products.forEach((doc) => {
-                if(doc.id == productId) {
-                    img = doc.data().imageUrl;
-                    price = doc.data().price;
-                    title = doc.data().title;
+            var checkBox;
+            var tbodyRef;          
+            data['products'].forEach(async (id) => {                
+                const docProduct = doc(db, "products", id); 
+                const product = await getDoc(docProduct);
+                const img = product.data().imageUrl;
+                price = product.data().price;
+                const title = product.data().title;
+
+                 //Create td inside table
+                tbodyRef = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+                const emptyRow = tbodyRef.insertRow(0);
+                emptyRow.classList.add("emptyRow");
+
+                const tableRow = tbodyRef.insertRow(1);
+                tableRow.classList.add("tableRow");
+
+                const tableDataOfProductDetails = tableRow.insertCell(0);
+                const tableDataOfProductPrice = tableRow.insertCell(1);
+                const tableDataOfProductQuantity = tableRow.insertCell(2);
+                checkBox = tableRow.insertCell(3);
+
+                tableDataOfProductQuantity.style.paddingLeft = "50px";
+                tableDataOfProductQuantity.classList.add("wid");
+
+                tableDataOfProductDetails.style.padding = "10px 30px"
+                tableDataOfProductDetails.classList.add("widThirty");
+    
+                tableDataOfProductPrice.style.paddingLeft = "40px";
+                tableDataOfProductPrice.classList.add("wid");
+    
+                const productImg = document.createElement("img");
+                productImg.style.width = "50px";
+                productImg.style.height = "50px";
+
+                const productName = document.createElement("span");
+                productName.style.paddingLeft = "10px";
+
+                const productPrice = document.createElement("span");
+                productImg.src = img
+                productName.append(title);
+                productPrice.append(price);
+                
+                tableRow.setAttribute("data-rowid", order.id);
+                tableDataOfProductDetails.appendChild(productImg);
+                tableDataOfProductDetails.appendChild(productName);
+                tableDataOfProductPrice.appendChild(productPrice);
+                tableDataOfProductQuantity.append(status);
+                
+                let inputCheck = document.createElement("INPUT");
+                inputCheck.setAttribute("type", "checkbox");
+                checkBox.appendChild(inputCheck);
+                inputCheck.classList.add("row-checkbox");
+
+                if(status == "accepted") {
+                    var p = (price * 1)
+                    total += p;
+                    document.getElementById("btnCheckout").disabled = false;
                 }
+                 // Assum total value in cart            
+                document.getElementById("subtotal").textContent = `$${total}`;
+                document.getElementById("total").textContent = `$${total}`;
             });
-
-            //Create td inside table
-            var tbodyRef = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-            const emptyRow = tbodyRef.insertRow(0);
-            emptyRow.classList.add("emptyRow");
-
-            const tableRow = tbodyRef.insertRow(1);
-            tableRow.classList.add("tableRow");
-            tableRow.setAttribute("data-rowid", doc.id);
-
-            const tableDataOfProductDetails = tableRow.insertCell(0);
-            const tableDataOfProductPrice = tableRow.insertCell(1);
-            const tableDataOfProductQuantity = tableRow.insertCell(2);
-            const checkBox = tableRow.insertCell(3);
-
-            tableDataOfProductDetails.style.padding = "10px 30px"
-            tableDataOfProductDetails.classList.add("widThirty");
-
-            tableDataOfProductPrice.style.paddingLeft = "40px";
-            tableDataOfProductPrice.classList.add("wid");
-
-            tableDataOfProductQuantity.style.paddingLeft = "50px";
-            tableDataOfProductQuantity.classList.add("wid");
-
-            const productImg = document.createElement("img");
-            productImg.style.width = "50px";
-            productImg.style.height = "50px";
-            productImg.src = img
-
-            const productName = document.createElement("span");
-            productName.style.paddingLeft = "10px"
-            productName.append(title);
-
-            tableDataOfProductDetails.appendChild(productImg);
-            tableDataOfProductDetails.appendChild(productName);
-            tableDataOfProductPrice.append(price);
-            tableDataOfProductQuantity.append(status);
-            
-            if(status == "approved") {
-                checkStatus = true;
-            }
-
-            if(checkStatus) {
-                document.getElementById("btnCheckout").disabled = false;
-            }
-            // Assum total value in cart
-            var p = (price * 1)
-            total += p;
-            document.getElementById("subtotal").textContent = `$${total}`;
-            document.getElementById("total").textContent = `$${total}`;
-
-            let inputCheck = document.createElement("INPUT");
-            inputCheck.setAttribute("type", "checkbox");
-            checkBox.appendChild(inputCheck);
-            inputCheck.classList.add("row-checkbox");
+            // const hr = document.createElement("hr");
+            // tbodyRef.insertRow();   
         });
     }
 });
@@ -106,7 +105,7 @@ function deleteProductFromOrder() {
         const rowId = selectedRows[i];
 
         try {
-            deleteDoc(doc(db, "Orders", rowId));
+            deleteDoc(doc(db, "orders", rowId));
             
         } catch (error) {
             alert(`Error deleting document with ID ${rowId}:`, error);
