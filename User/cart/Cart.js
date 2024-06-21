@@ -1,4 +1,4 @@
-import { 
+import {
     getAuth, db, collection, setDoc, getDocs, doc, onAuthStateChanged,
     query, where, deleteDoc
 } from '../../Database/firebase-config.js';
@@ -8,7 +8,7 @@ var uid;
 var subTotal;
 var total = 0;
 ////// Get data from cart
-onAuthStateChanged(auth, async(user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
         uid = user.uid;
         const q = query(collection(db, "cart"), where("userId", "==", uid));
@@ -22,7 +22,7 @@ onAuthStateChanged(auth, async(user) => {
             const collProducts = collection(db, "products");
             const products = await getDocs(collProducts);
             products.forEach((doc) => {
-                if(doc.id == productId) {
+                if (doc.id == productId) {
                     img = doc.data().imageUrl;
                     price = doc.data().price;
                     title = doc.data().title;
@@ -73,7 +73,7 @@ onAuthStateChanged(auth, async(user) => {
             tableDataOfProductSubtotal.append(price * quantity)
             subTotal = (price * quantity);
             total += subTotal;
-            
+
             // Assum total value in cart
             document.getElementById("subtotal").textContent = `$${total}`
             document.getElementById("total").textContent = `$${total}`
@@ -103,14 +103,16 @@ function deleteProductFromCart() {
     // Delete the selected rows from Firestore
     for (let i = 0; i < selectedRows.length; i++) {
         const rowId = selectedRows[i];
-
         try {
-            deleteDoc(doc(db, "cart", rowId));
-            
+            deleteDoc(doc(db, "cart", rowId)).then(() => {
+                window.location.reload();
+            });
+
         } catch (error) {
             alert(`Error deleting document with ID ${rowId}:`, error);
         }
     }
+
 }
 
 const btnCheckout = document.getElementById("btnCheckout");
@@ -119,20 +121,28 @@ btnCheckout.addEventListener("click", processCheckout);
 async function processCheckout() {
     alert("Your order is in pending status");
     const q = query(collection(db, "cart"), where("userId", "==", uid));
-    try{
+    try {
+        var allProducts = [];
+        var allQuantities = [];
+        var allCarts = [];
         const cartsSnapshot = await getDocs(q);
+        const orderCollection = doc(collection(db, "orders"));
         cartsSnapshot.forEach(async (snap) => {
-            const orderCollection = doc(collection(db, "Orders"));
-            const productId = snap.data().productId;
-            await setDoc(orderCollection, {
-                productId : snap.data().productId,
-                userId :snap.data().userId,
-                status : "pendding"
-            });
-            await deleteDoc(doc(db, "cart", snap.id));
+            allProducts.push(snap.data().productId);
+            allQuantities.push(snap.data().quantity);
+            allCarts.push(snap.id);
         });
-    } catch(e) {
+        await setDoc(orderCollection, {
+            products: allProducts,
+            quantity: allQuantities,
+            userId: uid,
+            status: "pendding"
+        });
+        allCarts.forEach(async (id) => {
+            await deleteDoc(doc(db, "cart", id));
+        });
+    } catch (e) {
         alert(e);
-    }   
+    }
 }
 

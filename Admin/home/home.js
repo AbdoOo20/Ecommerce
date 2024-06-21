@@ -1,6 +1,8 @@
 
 import { auth, signOut } from '../../Database/firebase-config.js';
+
 var items = document.querySelectorAll('.manage-item');
+
 items.forEach(function (item, index) {
     item.addEventListener('click', function () {
         if (index === 0) {
@@ -11,6 +13,9 @@ items.forEach(function (item, index) {
         }
         if (index === 2) {
             window.location.href = '../products/products.html';
+        }
+        if (index === 3) {
+            window.location.href = '../order/order.html';
         }
     });
 });
