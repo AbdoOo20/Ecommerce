@@ -20,6 +20,7 @@ const btnDecreaseQuantity = document.getElementById("decreaseQuantity");
 const inputOfQuantity = document.getElementById("quantityInput");
 const btnAddToWishlist = document.getElementById("addToWishlist");
 const paragraphAfterNav = document.getElementById("paragraphAfterNav");
+const btnAddToCart = document.getElementById("addToCart");
 var quantity;
 
 let productDetails = doc(db, "products", productId);
@@ -42,6 +43,10 @@ if (quantity > 0) {
 } else {
     stockValue.textContent = "Out stock"
 }
+
+if(stockValue.textContent == "Out stock") {
+    btnAddToCart.disabled = false;
+}
 //////////////////get count of rating for this product data //////
 const coll = collection(db, "rating");
 const q = query(coll, where("productId", "==", productId));
@@ -52,7 +57,7 @@ numberOfReviews.textContent = `( ${snapshot.data().count} Reviews )`
 btnIncreaseQuantity.addEventListener("click", function () {
     let quantityValue = inputOfQuantity.value;
 
-    if (quantityValue >= productSnapshot.data().remainingQuantity) {
+    if (quantityValue >= productSnapshot.data().quantity) {
         btnIncreaseQuantity.disabled = true;
     } else {
         quantityValue++;
@@ -65,7 +70,7 @@ btnIncreaseQuantity.addEventListener("click", function () {
 btnDecreaseQuantity.addEventListener("click", function () {
     let quantityValue = inputOfQuantity.value;
 
-    if (quantityValue <= 0) {
+    if (quantityValue <= 1) {
         btnDecreaseQuantity.disabled = true;
     } else {
         quantityValue--;
@@ -108,7 +113,7 @@ function addToCart() {
     });
 }
 
-document.getElementById("addToCart").addEventListener("click", addToCart);
+btnAddToCart.addEventListener("click", addToCart);
 ////////////////////Add to wishlist//////////////////////
 async function addToWishlist() {
     onAuthStateChanged(auth, async (user) => {
