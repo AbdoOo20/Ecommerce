@@ -77,6 +77,7 @@ addForm.addEventListener('submit', async (event) => {
         description: description,
         price: price,
         quantity: quantity,
+        remainingQuantity: 0,
     }).then(() => {
         loader.style.display = 'none';
         submitButton.style.display = 'inline-block';

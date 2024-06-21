@@ -136,7 +136,8 @@ async function processCheckout() {
             products: allProducts,
             quantity: allQuantities,
             userId: uid,
-            status: "pendding"
+            status: "pendding",
+            returnOrder: false
         });
         allCarts.forEach(async (id) => {
             await deleteDoc(doc(db, "cart", id));

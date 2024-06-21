@@ -1,4 +1,4 @@
-import { db, collection, getDocs, doc, getDoc } from '../../Database/firebase-config.js';
+import { db, collection, getDocs, doc, getDoc, updateDoc } from '../../Database/firebase-config.js';
 
 
 window.onload = () => {
@@ -7,56 +7,103 @@ window.onload = () => {
         const orderCollection = collection(db, "orders");
         try {
             const querySnapshot = await getDocs(orderCollection);
-            var index = 0;
             querySnapshot.forEach((order) => {
-                index++;
-                const data = order.data();
+                const orderData = order.data();
                 const orderImages = document.createElement('div');
                 orderImages.classList.add('parent-div');
-                data['products'].forEach(async (id) => { 
+                var state;
+                if (orderData['status'] == 'pendding') {
+                    state = 'Pending';
+                }
+                if (orderData['status'] == 'accepted') {
+                    state = 'Accepted';
+                    orderImages.style.borderColor = 'green';
+                }
+                if (orderData['status'] == 'rejected') {
+                    state = 'Rejected';
+                    orderImages.style.borderColor = 'red';
+                }
+                var p = [];
+                p = orderData['products'];
+                orderData['products'].forEach(async (id, index) => {
+                    const orderImage = document.createElement('div');
+                    const titles = document.createElement('div');
+                    orderImage.classList.add('div-image');
                     const productsCollection = doc(db, "products", id);
                     const docSnap = await getDoc(productsCollection);
                     const data = docSnap.data();
-                    // Create image
+                    // create label name
+                    var pos = document.createElement('label');
+                    pos.classList.add('labelProduct');
+                    const title = document.createTextNode(`${data['title']}`);
+                    pos.appendChild(title);
+                    // create label quantity
+                    var quantitiyDiv = document.createElement('label');
+                    quantitiyDiv.classList.add('labelProduct');
+                    const q = document.createTextNode(`Quantity: ${orderData['quantity'][index]}`);
+                    quantitiyDiv.appendChild(q);
+                    // create image
                     const img = document.createElement('img');
                     img.src = data['imageUrl'];
                     img.alt = "Product Image";
                     img.classList.add('image');
-                    orderImages.appendChild(img);
+                    titles.appendChild(pos);
+                    titles.appendChild(document.createElement('br'));
+                    titles.appendChild(quantitiyDiv);
+                    orderImage.appendChild(img);
+                    orderImage.appendChild(titles);
+                    orderImages.appendChild(orderImage);
+                    if (index === p.length - 1) {
+                        // accept & reject button
+                        const btns = document.createElement('div');
+                        btns.style.display = 'flex';
+                        var acceptLabel = document.createElement('p');
+                        acceptLabel.classList.add('buttonAccept');
+                        const acc = document.createTextNode(`Accept Order`);
+                        acceptLabel.appendChild(acc);
+                        var rejectLabel = document.createElement('p');
+                        rejectLabel.classList.add('buttonReject');
+                        const rej = document.createTextNode(`Reject Order`);
+                        rejectLabel.appendChild(rej);
+                        const docRef = doc(db, 'orders', id);
+                        acceptLabel.addEventListener('click', async function () {
+                            const docRef = doc(db, 'orders', order.id);
+                            await updateDoc(docRef, {
+                                status: 'accepted'
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        });
+                        rejectLabel.addEventListener('click', async function () {
+                            const docRef = doc(db, 'orders', order.id);
+                            console.log(id);
+                            await updateDoc(docRef, {
+                                status: 'rejected'
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                         });
+                        btns.appendChild(rejectLabel);
+                        btns.appendChild(acceptLabel);
+                        orderImages.appendChild(btns);
+                    }
                 });
-                
-                // // create label
-                // const label = document.createElement('label');
-                // label.classList.add('labelBanner');
-                // const textNode = document.createTextNode(`(${index})`);
-                // label.appendChild(textNode);
-                // // Position & ID
-                // const pos = document.createElement('label');
-                // pos.classList.add('labelBanner');
-                // const title = document.createTextNode(`${data.title}`);
-                // pos.appendChild(title);
-                // const categoryData = document.createElement('div');
-                // categoryData.style.display = 'flex';
-                // categoryData.style.flexDirection = 'column';
-                // categoryData.style.alignItems = 'flex-start';
-                // categoryData.style.justifyContent = 'center';
-                // categoryData.appendChild(pos);
-                // // Create div
-                // const categoryDiv = document.createElement('div');
-                // categoryDiv.style.justifyContent = 'start';
-                // categoryDiv.classList.add('banner');
-                // categoryDiv.appendChild(label);
-                
-                // categoryDiv.appendChild(categoryData);
-                // categoryDiv.addEventListener('click', () => {
-                //     selectedCategory.innerHTML = '';
-                //     selectedID = doc.id;
-                //     selectedImageName = data.name;
-                //     selectedTitle = data.title;
-                //     imageURL = data.imageUrl
-                //     selectedCategory.appendChild(document.createTextNode(`Selected Category ID: ${doc.id}`));
-                // });
-                // // Parent
+                // create label status
+                var statuslabel = document.createElement('label');
+                var statusDiv = document.createElement('div');
+                statusDiv.classList.add('status');
+                statuslabel.classList.add('labelProduct');
+                if (orderData['status'] == 'accepted') {
+                    statuslabel.style.backgroundColor = 'green';
+                }
+                if (orderData['status'] == 'rejected') {
+                    statuslabel.style.backgroundColor = 'red';
+                }
+                const s = document.createTextNode(`${state}`);
+                statuslabel.appendChild(s);
+                statusDiv.appendChild(statuslabel);
+                orderImages.appendChild(statusDiv);
+                // parent
                 ordersDiv.appendChild(orderImages);
             });
         } catch (error) {
