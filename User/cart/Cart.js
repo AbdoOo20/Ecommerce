@@ -1,17 +1,17 @@
 import { 
-    getAuth, db, collection, getDoc, getDocs, doc, onAuthStateChanged,
-    query, where, getCountFromServer, deleteDoc
+    getAuth, db, collection, setDoc, getDocs, doc, onAuthStateChanged,
+    query, where, deleteDoc
 } from '../../Database/firebase-config.js';
 
 const auth = getAuth();
+var uid;
 var subTotal;
 var total = 0;
 ////// Get data from cart
 onAuthStateChanged(auth, async(user) => {
     if (user) {
-        const uid = user.uid;
+        uid = user.uid;
         const q = query(collection(db, "cart"), where("userId", "==", uid));
-        const snapshot = await getCountFromServer(q);
         const cartSnapshot = await getDocs(q);
         cartSnapshot.forEach(async (doc) => {
             const productId = doc.data().productId;
@@ -100,7 +100,6 @@ function deleteProductFromCart() {
             selectedRows.push(rowId);
         }
     }
-
     // Delete the selected rows from Firestore
     for (let i = 0; i < selectedRows.length; i++) {
         const rowId = selectedRows[i];
@@ -114,4 +113,26 @@ function deleteProductFromCart() {
     }
 }
 
+const btnCheckout = document.getElementById("btnCheckout");
+btnCheckout.addEventListener("click", processCheckout);
+
+async function processCheckout() {
+    alert("Your order is in pending status");
+    const q = query(collection(db, "cart"), where("userId", "==", uid));
+    try{
+        const cartsSnapshot = await getDocs(q);
+        cartsSnapshot.forEach(async (snap) => {
+            const orderCollection = doc(collection(db, "Orders"));
+            const productId = snap.data().productId;
+            await setDoc(orderCollection, {
+                productId : snap.data().productId,
+                userId :snap.data().userId,
+                status : "pendding"
+            });
+            await deleteDoc(doc(db, "cart", snap.id));
+        });
+    } catch(e) {
+        alert(e);
+    }   
+}
 
