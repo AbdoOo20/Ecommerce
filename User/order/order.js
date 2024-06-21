@@ -6,7 +6,7 @@ import {
 const auth = getAuth();
 var uid;
 var total = 0;
-var checkStatus = false;
+var orderIds = [];
 ////// Get data from cart
 onAuthStateChanged(auth, async(user) => {
     if (user) {
@@ -14,8 +14,11 @@ onAuthStateChanged(auth, async(user) => {
         const q = query(collection(db, "orders"), where("userId", "==", uid));
         const ordersSnapshot = await getDocs(q);
         ordersSnapshot.forEach(async (order) => {
+            orderIds.push(order.id);
             const data = order.data();
             const status = order.data().status;
+            const btnBuy = document.getElementById("btnBuy");
+            
             var price;
             var checkBox;
             var tbodyRef;          
@@ -74,17 +77,17 @@ onAuthStateChanged(auth, async(user) => {
                 if(status == "accepted") {
                     var p = (price * 1)
                     total += p;
-                    document.getElementById("btnCheckout").disabled = false;
+                    document.getElementById("btnBuy").disabled = false;
                 }
                  // Assum total value in cart            
                 document.getElementById("subtotal").textContent = `$${total}`;
                 document.getElementById("total").textContent = `$${total}`;
-            });
-            // const hr = document.createElement("hr");
-            // tbodyRef.insertRow();   
+            });   
         });
     }
 });
+console.log(orderIds);
+btnBuy.href = "../../User/billing/billing.html?orderIds=" + orderIds;
 
 const btnDelete = document.getElementById("btnDelete");
 btnDelete.addEventListener("click", deleteProductFromOrder);
