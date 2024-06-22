@@ -3,13 +3,15 @@ import { db, collection, getDocs, addDoc, signOut, auth } from '../../Database/f
 const savedID = localStorage.getItem('id');
 const WishlistIcon = document.getElementById("WishlistIcon");
 const CartIcon = document.getElementById("CartIcon");
+const OrderIcon = document.getElementById("OrderIcon");
 const LogeOutIcon = document.getElementById("LogeOutIcon");
 const SignInBtn = document.getElementById("SignInBtn");
 const allProducts = document.getElementById("ViewAllProducts");
-
+//<a href="../../User/order/order.html">
 if (!savedID) {
         WishlistIcon.style.display = "none";
         CartIcon.style.display = "none";
+        OrderIcon.style.display = "none";
         LogeOutIcon.style.display = "none";
         SignInBtn.style.display = "inline-block";
 } else if (savedID) {
@@ -20,6 +22,10 @@ if (!savedID) {
         CartIcon.style.display = "inline-block";
         CartIcon.addEventListener("click", () => {
                 window.location.href = "../../User/cart/cart.html"
+        })
+        OrderIcon.style.display = "inline-block";
+        OrderIcon.addEventListener("click", () => {
+                window.location.href = "../../User/order/order.html";
         })
         LogeOutIcon.style.display = "inline-block";
         LogeOutIcon.addEventListener('click', function () {
@@ -74,7 +80,7 @@ var x = 0;
                         x = 0;
                 }
         }, 1500);
-}) ();
+})();
 
 //Section2 Categories
 (async function GetCategoriesCollection() {
