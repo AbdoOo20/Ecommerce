@@ -77,10 +77,8 @@ function checkValidation(type) {
         alert("Invalid CVV. Please enter a valid 3-digit CVV.");
     }
     if (isValid) {
-        console.log('hereeeeeeeeeeeeeeeeeeeeeeeeeee');
-        // SetBillingData();
-        // UpdateStatus();
-        // window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
+        SetBillingData();
+        UpdateStatus();
     }
 }
 
@@ -121,6 +119,7 @@ async function SetBillingData() {
             cardNumber.value = "";
             date.value = "";
             cvv.value = "";
+            window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
         }).catch((error) => { alert(`Error${error}`) });
     } else if (visaRadio.checked) {
         await addDoc(
@@ -136,6 +135,7 @@ async function SetBillingData() {
             cardNumber.value = "";
             date.value = "";
             cvv.value = "";
+            window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
         }
         ).catch((error) => { alert(`Error${error}`) });
     }
