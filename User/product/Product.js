@@ -41,11 +41,8 @@ if (productSnapshot.exists()) {
 if (quantity > 0) {
     stockValue.textContent = "In stock"
 } else {
-    stockValue.textContent = "Out stock"
-}
-
-if(stockValue.textContent == "Out stock") {
-    btnAddToCart.disabled = false;
+    stockValue.textContent = "Out stock";
+    btnAddToCart.disabled = true;
 }
 //////////////////get count of rating for this product data //////
 const coll = collection(db, "rating");

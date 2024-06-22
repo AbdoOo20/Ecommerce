@@ -27,48 +27,58 @@ closeVisa.onclick = function () {
     document.getElementById("visaForm").style.display = "none";
 }
 
+<<<<<<< HEAD
+=======
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+>>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
 function checkValidation(type) {
     name = document.getElementById('full-name');
     address = document.getElementById('address');
     phone = document.getElementById('phone-number');
     paypalEmail = document.getElementById('paypal-email');
     let isValid = true;
-    let fullNamePattern = /^[a-zA-Z]+(?:\s+[a-zA-Z]+)+$/;
+    let fullNamePattern = /^[A-Z][a-z]+\s[A-Z][a-z]+$/;
     let addressPattern = /^[a-zA-Z0-9\s,.'-]{3,}$/;
-    let egyptPhonePattern = /^(?:\(?02\)?|\(?03\)?)?(\d{8}|\d{11})$/;
+    let egyptPhonePattern = /^01[0125][0-9]{8}$/;
     let emailPaypalPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     let visaCardPattern = /^4[0-9]{12}(?:[0-9]{3})?(?:[0-9]{3})?$/;
     let cvvPattern = /^[0-9]{3}$/;
     let expiryDatePattern = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
-    if (!fullNamePattern.test(name)) {
+    if (!fullNamePattern.test(name.value)) {
         isValid = false;
         alert("Invalid full name. Please enter a valid full name with at least two parts, consisting of alphabetic characters only, separated by spaces.");
     }
-    if (!egyptPhonePattern.test(phone)) {
+    if (!egyptPhonePattern.test(phone.value)) {
         isValid = false;
         alert("Invalid phone number. Please enter a valid Egyptian phone number. Examples: (02) 12345678, 01012345678.");
     }
-    if (!addressPattern.test(address)) {
+    if (!addressPattern.test(address.value)) {
         isValid = false;
-        alert("Invalid address. Please enter a valid address with at least 3 characters, including numbers and letters.");
+        alert("Invalid address. Please enter a valid address with at least 3 characters, including numbers and letters (123 Main St.).");
     }
-    if (type === 'paypal' && !emailPaypalPattern.test(paypalEmail)) {
+    if (type === 'paypal' && !emailPaypalPattern.test(paypalEmail.value)) {
         isValid = false;
         alert("Invalid email address. Please enter a valid PayPal email address.");
     }
-    if (type === 'visa' && !visaCardPattern.test(cardNumber)) {
+    if (type === 'visa' && !visaCardPattern.test(cardNumber.value)) {
         isValid = false;
         alert("Invalid Visa card number. Please enter a valid 13 to 19-digit Visa card number starting with 4.");
     }
-    if (type === 'visa' && !expiryDatePattern.test(date)) {
+    if (type === 'visa' && !expiryDatePattern.test(date.value)) {
         isValid = false;
         alert("Invalid expiration date. Please enter a valid expiration date in MM/YY format.");
     }
-    if (type === 'visa' && !cvvPattern.test(cvv)) {
+    if (type === 'visa' && !cvvPattern.test(cvv.value)) {
         isValid = false;
         alert("Invalid CVV. Please enter a valid 3-digit CVV.");
     }
     if (isValid) {
+        console.log('Valid');
         // code for submit payment here
         // SetBillingData();
         // UpdateStatus();
@@ -88,6 +98,10 @@ submitVisa.addEventListener('click', function () {
     UpdateStatus();
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
 //const savedEmail = localStorage.getItem('email');
 const savedID = localStorage.getItem('id');
 const queryString = window.location.search;
@@ -114,6 +128,17 @@ if (ReqorderIds) {
 
 }
 
+<<<<<<< HEAD
+=======
+//console.log(OrderIds);
+
+
+
+// document.getElementById("PlaceOrder").addEventListener("click", () => {
+//     SetBillingData();
+//     UpdateStatus();
+// })
+>>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
 
 
 async function SetBillingData() {
@@ -156,6 +181,14 @@ async function SetBillingData() {
         }
         ).catch((error) => { alert(`Error${error}`) });
     }
+<<<<<<< HEAD
+=======
+
+    const querySnapshot = await getDocs(collection(db, "orders"), where("userId", "==", savedID))
+    querySnapshot.forEach(function (doc) {
+
+    });
+>>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
 }
 
 async function UpdateStatus() {
