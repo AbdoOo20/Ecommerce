@@ -13,6 +13,13 @@ var paypalEmail = document.getElementById('paypal-email');
 var cardNumber = document.getElementById('card-number');
 var date = document.getElementById('expiry-date');
 var cvv = document.getElementById('cvv');
+const savedID = localStorage.getItem('id');
+const queryString = window.location.search;
+const UrlParams = new URLSearchParams(queryString);
+const ReqorderIds = UrlParams.get("orderIds");
+const Reqtotal = UrlParams.get("total");
+const subtotal = document.getElementById("subtotal");
+const total = document.getElementById("total");
 
 paypalRadio.onclick = function () {
     document.getElementById("paypalForm").style.display = "block";
@@ -27,15 +34,6 @@ closeVisa.onclick = function () {
     document.getElementById("visaForm").style.display = "none";
 }
 
-<<<<<<< HEAD
-=======
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
->>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
 function checkValidation(type) {
     name = document.getElementById('full-name');
     address = document.getElementById('address');
@@ -78,42 +76,18 @@ function checkValidation(type) {
         alert("Invalid CVV. Please enter a valid 3-digit CVV.");
     }
     if (isValid) {
-        console.log('Valid');
-        // code for submit payment here
-        // SetBillingData();
-        // UpdateStatus();
+        SetBillingData();
+        UpdateStatus();
+        window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
     }
 }
 
 submitPaypal.addEventListener('click', function () {
-    //checkValidation('paypal');
-    window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
-    SetBillingData();
-    UpdateStatus();
+    checkValidation('paypal');
 });
 submitVisa.addEventListener('click', function () {
-    //checkValidation('visa');
-    window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
-    SetBillingData();
-    UpdateStatus();
+    checkValidation('visa');
 });
-
-<<<<<<< HEAD
-=======
-
->>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
-//const savedEmail = localStorage.getItem('email');
-const savedID = localStorage.getItem('id');
-const queryString = window.location.search;
-const UrlParams = new URLSearchParams(queryString);
-const ReqorderIds = UrlParams.get("orderIds");
-const Reqtotal = UrlParams.get("total");
-const subtotal = document.getElementById("subtotal");
-const total = document.getElementById("total");
-const PaypalEmail = document.getElementById("paypal-email");
-const CardNumber = document.getElementById("card-number");
-const ExpiryDate = document.getElementById("expiry-date");
-const Cvv = document.getElementById("cvv");
 
 let OrderIds = [];
 if (ReqorderIds) {
@@ -128,67 +102,41 @@ if (ReqorderIds) {
 
 }
 
-<<<<<<< HEAD
-=======
-//console.log(OrderIds);
-
-
-
-// document.getElementById("PlaceOrder").addEventListener("click", () => {
-//     SetBillingData();
-//     UpdateStatus();
-// })
->>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
-
 
 async function SetBillingData() {
-    alert("hi from SetBillingData");
     if (paypalRadio.checked) {
-        console.log("inside if of SetBillingData");
-        alert("inside if of SetBillingData");
-
-        await addDoc(
-            collection(db, "billing"), {
+        const docRef = collection(db, "billing");
+        addDoc(
+            docRef, {
             UserID: savedID,
             OrderIds: OrderIds,
-            PaypalEmail: PaypalEmail.value,
+            PaypalEmail: paypalEmail.value,
             CardNumber: "",
             ExpiryDate: "",
             Cvv: ""
         }).then(() => {
-            alert("Payment completed successfully:)")
-            PaypalEmail.value = "";
-            CardNumber.value = "";
-            ExpiryDate.value = "";
-            Cvv.value = "";
-        }
-        ).catch((error) => { alert(`Error${error}`) });
+            paypalEmail.value = "";
+            cardNumber.value = "";
+            date.value = "";
+            cvv.value = "";
+        }).catch((error) => { alert(`Error${error}`) });
     } else if (visaRadio.checked) {
         await addDoc(
             collection(db, "billing"), {
             UserID: savedID,
             OrderIds: OrderIds,
             PaypalEmail: "",
-            CardNumber: CardNumber.value,
-            ExpiryDate: ExpiryDate.value,
-            Cvv: Cvv.value
+            CardNumber: cardNumber.value,
+            ExpiryDate: date.value,
+            Cvv: cvv.value
         }).then(() => {
-            alert("Payment completed successfully :)")
-            PaypalEmail.value = "";
-            CardNumber.value = "";
-            ExpiryDate.value = "";
-            Cvv.value = "";
+            paypalEmail.value = "";
+            cardNumber.value = "";
+            date.value = "";
+            cvv.value = "";
         }
         ).catch((error) => { alert(`Error${error}`) });
     }
-<<<<<<< HEAD
-=======
-
-    const querySnapshot = await getDocs(collection(db, "orders"), where("userId", "==", savedID))
-    querySnapshot.forEach(function (doc) {
-
-    });
->>>>>>> b1b7c142fae827b576114c56a6549bc81091d4ab
 }
 
 async function UpdateStatus() {
