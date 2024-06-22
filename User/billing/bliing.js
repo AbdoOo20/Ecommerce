@@ -1,6 +1,5 @@
 import { db, collection, addDoc, updateDoc, doc } from '../../Database/firebase-config.js';
 
-var modal = document.getElementById("myModal");
 var paypalRadio = document.getElementById("paypal");
 var closePaypal = document.getElementById("closePaypal");
 var closeVisa = document.getElementById("closeVisa");
@@ -26,17 +25,6 @@ visaRadio.onclick = function () {
 }
 closeVisa.onclick = function () {
     document.getElementById("visaForm").style.display = "none";
-}
-
-
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
 }
 
 function checkValidation(type) {
@@ -82,29 +70,23 @@ function checkValidation(type) {
     }
     if (isValid) {
         // code for submit payment here
+        // SetBillingData();
+        // UpdateStatus();
     }
 }
 
 submitPaypal.addEventListener('click', function () {
-    checkValidation('paypal');
+    //checkValidation('paypal');
+    window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
+    SetBillingData();
+    UpdateStatus();
 });
 submitVisa.addEventListener('click', function () {
-    checkValidation('visa');
+    //checkValidation('visa');
+    window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
+    SetBillingData();
+    UpdateStatus();
 });
-
-submitBtn.onclick = function () {
-    if (paypalRadio.checked) {
-        var paypalEmail = document.getElementById("paypal-email").value;
-        alert("PayPal Email: " + paypalEmail);
-    } else if (visaRadio.checked) {
-        var cardNumber = document.getElementById("card-number").value;
-        var expiryDate = document.getElementById("expiry-date").value;
-        var cvv = document.getElementById("cvv").value;
-        alert("Card Number: " + cardNumber + ", Expiry Date: " + expiryDate + ", CVV: " + cvv);
-    }
-    modal.style.display = "none";
-}
-
 
 //const savedEmail = localStorage.getItem('email');
 const savedID = localStorage.getItem('id');
@@ -120,22 +102,26 @@ const ExpiryDate = document.getElementById("expiry-date");
 const Cvv = document.getElementById("cvv");
 
 let OrderIds = [];
-for (let i = 0; i < ReqorderIds.split(",").length; i++) {
-    OrderIds.push(ReqorderIds.split(",")[i])
+if (ReqorderIds) {
+    if (ReqorderIds.includes(","))
+        for (let i = 0; i < ReqorderIds.split(",").length; i++) {
+            OrderIds.push(ReqorderIds.split(",")[i])
+            console.log(OrderIds);
+        } else {
+        OrderIds.push(ReqorderIds)
+        console.log(OrderIds);
+    }
+
 }
 
-//console.log(OrderIds);
-
-
-
-document.getElementById("PlaceOrder").addEventListener("click", () => {
-    SetBillingData();
-    UpdateStatus();
-})
 
 
 async function SetBillingData() {
+    alert("hi from SetBillingData");
     if (paypalRadio.checked) {
+        console.log("inside if of SetBillingData");
+        alert("inside if of SetBillingData");
+
         await addDoc(
             collection(db, "billing"), {
             UserID: savedID,
@@ -145,7 +131,7 @@ async function SetBillingData() {
             ExpiryDate: "",
             Cvv: ""
         }).then(() => {
-            alert("Successefully :)")
+            alert("Payment completed successfully:)")
             PaypalEmail.value = "";
             CardNumber.value = "";
             ExpiryDate.value = "";
@@ -162,7 +148,7 @@ async function SetBillingData() {
             ExpiryDate: ExpiryDate.value,
             Cvv: Cvv.value
         }).then(() => {
-            alert("Successefully :)")
+            alert("Payment completed successfully :)")
             PaypalEmail.value = "";
             CardNumber.value = "";
             ExpiryDate.value = "";
@@ -170,13 +156,6 @@ async function SetBillingData() {
         }
         ).catch((error) => { alert(`Error${error}`) });
     }
-<<<<<<< HEAD
-=======
-    const querySnapshot = await getDocs(collection(db, "orders"), where("userId", "==", savedID))
-    querySnapshot.forEach(function (doc) {
-
-    });
->>>>>>> 52c322347378961e06e4fdc9bbd4d09def4d6ca4
 }
 
 async function UpdateStatus() {
