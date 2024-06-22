@@ -1,7 +1,11 @@
 import { db, collection, getDocs } from '../../Database/firebase-config.js';
 
-const savedEmail = localStorage.getItem('email');
 const savedID = localStorage.getItem('id');
+const WishlistIcon = document.getElementById("WishlistIcon");
+const CartIcon = document.getElementById("CartIcon");
+const OrderIcon = document.getElementById("OrderIcon");
+const LogeOutIcon = document.getElementById("LogeOutIcon");
+const SignInBtn = document.getElementById("SignInBtn");
 
 let flage = true;
 if (!savedID) {
@@ -10,6 +14,7 @@ if (!savedID) {
 if (!flage) {
         WishlistIcon.style.display = "none";
         CartIcon.style.display = "none";
+        OrderIcon.style.display = "none";
         LogeOutIcon.style.display = "none";
         SignInBtn.style.display = "inline-block";
 } else if (flage) {
@@ -24,7 +29,19 @@ if (!flage) {
         CartIcon.addEventListener("click", () => {
                 window.location.href = "../../User/cart/cart.html"
         })
+        OrderIcon.style.display = "inline-block";
+        OrderIcon.addEventListener("click", () => {
+                window.location.href = "../../User/order/order.html";
+        })
         LogeOutIcon.style.display = "inline-block";
+        LogeOutIcon.addEventListener('click', function () {
+                signOut(auth).then(() => {
+                        localStorage.clear();
+                        window.location.href = '../../Common/Authentication/login.html';
+                }).catch((error) => {
+                        alert('Error signing out: ', error);
+                });
+        });
         SignInBtn.style.display = "none";
 }
 
@@ -45,21 +62,6 @@ const ReqCategory = UrlParams.get("categoy");
                 const price = doc.data()["price"];
                 const quantity = doc.data()["quantity"];
                 const title = doc.data()["title"];
-
-                //create display Ditals Icon
-                const displayDitalsIcon = document.createElement("img");
-                displayDitalsIcon.src = "../../images/eye.png";
-                displayDitalsIcon.alt = "Di"
-
-                //create Add To  Wishlist Icon
-                const addToWishlistIcon = document.createElement("img");
-                addToWishlistIcon.src = "../../images/heart.png"
-
-                // create Div For Icons Of Product
-                // const IconsDiv = document.createElement("div");
-                // IconsDiv.append(displayDitalsIcon);
-                // IconsDiv.append(addToWishlistIcon);
-                // IconsDiv.classList.add("ProductIcons");
 
                 //create Link For Add To Create
                 const AForAddToCart = document.createElement("a");
@@ -99,19 +101,14 @@ const ReqCategory = UrlParams.get("categoy");
                 ProductDiv.setAttribute("oldQuantity", oldQuantity);
                 ProductDiv.setAttribute("quantity", quantity);
                 ProductDiv.setAttribute("description", description);
-                //ProductDiv.append(IconsDiv);
                 ProductDiv.append(imgOfProduct);
                 ProductDiv.append(titleOfProduct);
                 ProductDiv.append(priceOfProduct);
-                // ProductDiv.append(AddToCartBtn);
                 ProductDiv.classList.add("divproducts");
                 ProductDiv.style.margin = "5px"
                 ProductDiv.style.display = "inline-block"
-                //create A For Product
-                // const LinkForProduct = document.createElement("a");
-                // LinkForProduct.append(ProductDiv);
-                // LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
-                if (doc.data()["category"] == ReqCategory.split("?")[0])
+                
+                 if (doc.data()["category"] == ReqCategory.split("?")[0])
                         document.getElementById("row").appendChild(ProductDiv)
                 if (ReqCategory.split("?")[0] == "all")
                         document.getElementById("row").appendChild(ProductDiv)

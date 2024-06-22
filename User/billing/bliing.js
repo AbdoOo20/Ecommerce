@@ -18,9 +18,11 @@ const queryString = window.location.search;
 const UrlParams = new URLSearchParams(queryString);
 const ReqorderIds = UrlParams.get("orderIds");
 const Reqtotal = UrlParams.get("total");
-const subtotal = document.getElementById("subtotal");
 const total = document.getElementById("total");
 
+window.onload = () => {
+    total.innerText = Reqtotal;
+}
 paypalRadio.onclick = function () {
     document.getElementById("paypalForm").style.display = "block";
 }
@@ -94,10 +96,8 @@ if (ReqorderIds) {
     if (ReqorderIds.includes(","))
         for (let i = 0; i < ReqorderIds.split(",").length; i++) {
             OrderIds.push(ReqorderIds.split(",")[i])
-            console.log(OrderIds);
         } else {
         OrderIds.push(ReqorderIds)
-        console.log(OrderIds);
     }
 }
 
