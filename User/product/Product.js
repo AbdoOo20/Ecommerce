@@ -1,6 +1,6 @@
 import {
     getAuth, db, addDoc, collection, getDoc, getDocs, doc, onAuthStateChanged,
-    query, where, getCountFromServer,
+    query, where, getCountFromServer,signOut
 } from '../../Database/firebase-config.js';
 
 //////////////////////Get ProductID and UserId from url params
@@ -152,6 +152,17 @@ async function addToWishlist() {
                     }, 500);
                 }, 2000);
             }
+            // SingOut
+            const LogeOutIcon = document.getElementById("LogeOutIcon");   
+            LogeOutIcon.style.display = "inline-block";
+            LogeOutIcon.addEventListener('click', function () {
+                signOut(auth).then(() => {
+                    localStorage.clear();
+                    window.location.href = '../../Common/Authentication/login.html';
+                }).catch((error) => {
+                    alert('Error signing out: ', error);
+                });
+            });
         } else {
             const notification = document.getElementById('notification');
             notification.innerHTML = '';

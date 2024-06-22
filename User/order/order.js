@@ -1,22 +1,34 @@
 import { 
     getAuth, db, collection, getDoc, getDocs, doc, onAuthStateChanged,
-    query, where, deleteDoc
+    query, where, signOut
 } from '../../Database/firebase-config.js';
 
 const auth = getAuth();
-var total = 0;
 ////// Get data from cart
 onAuthStateChanged(auth, async(user) => {
     if (user) {
+        var total = 0;
+        var price ;
         const uid = user.uid;
         const q = query(collection(db, "orders"), where("userId", "==", uid));
         const ordersSnapshot = await getDocs(q);
         ordersSnapshot.forEach(async (order) => {          
             const data = order.data();
             const status = order.data().status;
-            var price;
-            var checkBox;
-            var tbodyRef;          
+            
+            //Create tr inside table
+            const tbodyRef = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+            const emptyRow = tbodyRef.insertRow(0);
+            emptyRow.classList.add("emptyRow");
+
+            var tableRow = tbodyRef.insertRow(1);
+            tableRow.classList.add("tableRow");
+            //Create td inside tr
+            const tableDataOfProductDetails = tableRow.insertCell();
+            const tableDataOfProductPrice = tableRow.insertCell();
+            const tableDataOfProductStatus = tableRow.insertCell();
+            const quantityCell = tableRow.insertCell(); 
+            //Get products of orders        
             data['products'].forEach(async (id) => {                
                 const docProduct = doc(db, "products", id); 
                 const product = await getDoc(docProduct);
@@ -24,21 +36,8 @@ onAuthStateChanged(auth, async(user) => {
                 price = product.data().price;
                 const title = product.data().title;
 
-                 //Create td inside table
-                tbodyRef = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-                const emptyRow = tbodyRef.insertRow(0);
-                emptyRow.classList.add("emptyRow");
-
-                const tableRow = tbodyRef.insertRow(1);
-                tableRow.classList.add("tableRow");
-
-                const tableDataOfProductDetails = tableRow.insertCell(0);
-                const tableDataOfProductPrice = tableRow.insertCell(1);
-                const tableDataOfProductQuantity = tableRow.insertCell(2);
-                checkBox = tableRow.insertCell(3);
-
-                tableDataOfProductQuantity.style.paddingLeft = "50px";
-                tableDataOfProductQuantity.classList.add("wid");
+                tableDataOfProductStatus.style.paddingLeft = "50px";
+                tableDataOfProductStatus.classList.add("wid");
 
                 tableDataOfProductDetails.style.padding = "10px 30px"
                 tableDataOfProductDetails.classList.add("widThirty");
@@ -46,6 +45,8 @@ onAuthStateChanged(auth, async(user) => {
                 tableDataOfProductPrice.style.paddingLeft = "40px";
                 tableDataOfProductPrice.classList.add("wid");
     
+                quantityCell.classList.add("widThirty");
+
                 const productImg = document.createElement("img");
                 productImg.style.width = "50px";
                 productImg.style.height = "50px";
@@ -53,21 +54,24 @@ onAuthStateChanged(auth, async(user) => {
                 const productName = document.createElement("span");
                 productName.style.paddingLeft = "10px";
 
-                const productPrice = document.createElement("span");
+                const productDetails = document.createElement("div");
+                productDetails.style.marginTop = "10px"
+                const productPrice = document.createElement("div");
+                productPrice.style.marginTop = "20px"
+                const productStatus = document.createElement("div");
+                productStatus.style.marginTop = "20px"
+                
                 productImg.src = img
                 productName.append(title);
+                productDetails.appendChild(productImg);
+                productDetails.appendChild(productName);
                 productPrice.append(price);
+                productStatus.append(status);                
                 
                 tableRow.setAttribute("data-rowid", order.id);
-                tableDataOfProductDetails.appendChild(productImg);
-                tableDataOfProductDetails.appendChild(productName);
+                tableDataOfProductDetails.appendChild(productDetails);
                 tableDataOfProductPrice.appendChild(productPrice);
-                tableDataOfProductQuantity.append(status);
-                
-                let inputCheck = document.createElement("INPUT");
-                inputCheck.setAttribute("type", "checkbox");
-                checkBox.appendChild(inputCheck);
-                inputCheck.classList.add("row-checkbox");
+                tableDataOfProductStatus.appendChild(productStatus);
 
                 if(status == "accepted") {
                     var p = (price * 1)
@@ -77,54 +81,50 @@ onAuthStateChanged(auth, async(user) => {
                  // Assum total value in cart            
                 document.getElementById("subtotal").textContent = `$${total}`;
                 document.getElementById("total").textContent = `$${total}`;
-            });   
+            });
+            //// Get quantities of orders
+            data['quantity'].forEach( async(q) => {
+                const productQuantity  = document.createElement("div");
+                productQuantity.style.marginTop = "20px";
+                productQuantity.append(q);                              
+                quantityCell.appendChild(productQuantity);                
+            });
+        });
+        console.log(price);
+        //// Pass the Ids of orders to billing
+        var userID = localStorage.getItem("id");
+        var orderIds = [];
+
+        async function getorderIds(userID) {
+            const q = query(collection(db, "orders"), where("userId", "==", userID));
+                const ordersSnapshot = await getDocs(q);
+                ordersSnapshot.forEach(async (order) => {
+                    const status = order.data().status;
+                    if(status == "accepted") {
+                        orderIds.push(order.id);
+                    }
+                });
+                orderIds.forEach((id) => {
+                    const orderRef = doc(db, "orders", id);
+                    const order = getDoc(orderRef);
+                    console.log(order);
+                })
+
+                const arrString = orderIds.join(',');
+                btnBuy.href = '../../User/billing/billing.html?orderIds=' + encodeURIComponent(arrString);
+        }
+        getorderIds(userID);
+
+        const LogeOutIcon = document.getElementById("LogeOutIcon");   
+        LogeOutIcon.style.display = "inline-block";
+        LogeOutIcon.addEventListener('click', function () {
+            signOut(auth).then(() => {
+                localStorage.clear();
+                window.location.href = '../../Common/Authentication/login.html';
+            }).catch((error) => {
+                alert('Error signing out: ', error);
+            });
         });
     }
 });
 
-//// Pass the Ids of orders to billing
-var userID = localStorage.getItem("id");
-var orderIds = [];
-
-async function getorderIds(userID) {
-    const q = query(collection(db, "orders"), where("userId", "==", userID));
-        const ordersSnapshot = await getDocs(q);
-        ordersSnapshot.forEach(async (order) => {
-            const status = order.data().status;
-            if(status == "accepted") {
-                orderIds.push(order.id);
-            }
-        });
-        // const json = JSON.stringify(orderIds);
-        const arrString = orderIds.join(',');
-        // const test = encodeURIComponent(json);
-        btnBuy.href = '../../User/billing/billing.html?orderIds=' + encodeURIComponent(arrString);
-}
-getorderIds(userID);
-
-const btnDelete = document.getElementById("btnDelete");
-btnDelete.addEventListener("click", deleteProductFromOrder);
-
-function deleteProductFromOrder() {
-    const checkboxes = document.getElementsByClassName('row-checkbox');
-    const selectedRows = [];
-    // Iterate over the checkboxes and find the selected rows
-    for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            const row = checkboxes[i].parentNode.parentNode;
-            const rowId = row.dataset.rowid;
-            selectedRows.push(rowId);
-        }
-    }
-    // Delete the selected rows from Firestore
-    for (let i = 0; i < selectedRows.length; i++) {
-        const rowId = selectedRows[i];
-
-        try {
-            deleteDoc(doc(db, "orders", rowId));
-            
-        } catch (error) {
-            alert(`Error deleting document with ID ${rowId}:`, error);
-        }
-    }
-}

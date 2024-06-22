@@ -1,6 +1,6 @@
 import {
     getAuth, db, collection, setDoc, getDocs, doc, onAuthStateChanged,
-    query, where, deleteDoc
+    query, where, deleteDoc, signOut
 } from '../../Database/firebase-config.js';
 
 const auth = getAuth();
@@ -82,6 +82,17 @@ onAuthStateChanged(auth, async (user) => {
             inputCheck.setAttribute("type", "checkbox");
             checkBox.appendChild(inputCheck);
             inputCheck.classList.add("row-checkbox");
+        });
+        // SingOut
+        const LogeOutIcon = document.getElementById("LogeOutIcon");   
+        LogeOutIcon.style.display = "inline-block";
+        LogeOutIcon.addEventListener('click', function () {
+            signOut(auth).then(() => {
+                localStorage.clear();
+                window.location.href = '../../Common/Authentication/login.html';
+            }).catch((error) => {
+                alert('Error signing out: ', error);
+            });
         });
     }
 });
