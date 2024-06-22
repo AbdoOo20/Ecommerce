@@ -96,7 +96,6 @@ btnDecreaseQuantity.addEventListener("click", function () {
 })
 ////////////////////////Add to cart /////////////////////////
 const user = auth.currentUser;
-// const uid = user.uid;
 var checkProduct = 0;
 let refCart = collection(db, "cart");
 const productsOfCart = await getDocs(refCart);
