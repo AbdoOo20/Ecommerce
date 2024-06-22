@@ -1,4 +1,4 @@
-import { db, collection, addDoc, where, getDocs, update } from '../../Database/firebase-config.js';
+import { db, collection, addDoc, updateDoc, doc } from '../../Database/firebase-config.js';
 
 var modal = document.getElementById("myModal");
 var paypalRadio = document.getElementById("paypal");
@@ -65,7 +65,10 @@ for (let i = 0; i < ReqorderIds.split(",").length; i++) {
 
 
 
-document.getElementById("PlaceOrder").addEventListener("click", SetBillingData)
+document.getElementById("PlaceOrder").addEventListener("click", () => {
+    SetBillingData();
+    UpdateStatus();
+})
 
 
 async function SetBillingData() {
@@ -88,7 +91,7 @@ async function SetBillingData() {
         ).catch((error) => { alert(`Error${error}`) });
     } else if (visaRadio.checked) {
         await addDoc(
-            collection(db, "Billing"), {
+            collection(db, "billing"), {
             UserID: savedID,
             OrderIds: OrderIds,
             PaypalEmail: "",
@@ -104,19 +107,15 @@ async function SetBillingData() {
         }
         ).catch((error) => { alert(`Error${error}`) });
     }
-    const querySnapshot = await getDocs(collection(db, "orders"), where("userId", "==", savedID))
-    querySnapshot.forEach(function (doc) {
-        
-    });
 }
 
+async function UpdateStatus() {
+    for (let i = 0; i < OrderIds.length; i++) {
+        console.log(OrderIds);
+        const orderRef = doc(db, "orders", OrderIds[i])
+        await updateDoc(orderRef, {
+            status: "completed"
+        })
 
-
-
-
-
-
-
-
-
-
+    }
+}
