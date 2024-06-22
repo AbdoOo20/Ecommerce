@@ -119,7 +119,6 @@ async function SetBillingData() {
             cardNumber.value = "";
             date.value = "";
             cvv.value = "";
-            window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
         }).catch((error) => { alert(`Error${error}`) });
     } else if (visaRadio.checked) {
         await addDoc(
@@ -135,7 +134,6 @@ async function SetBillingData() {
             cardNumber.value = "";
             date.value = "";
             cvv.value = "";
-            window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
         }
         ).catch((error) => { alert(`Error${error}`) });
     }
@@ -143,11 +141,28 @@ async function SetBillingData() {
 
 async function UpdateStatus() {
     for (let i = 0; i < OrderIds.length; i++) {
-        console.log(OrderIds);
         const orderRef = doc(db, "orders", OrderIds[i])
         await updateDoc(orderRef, {
             status: "completed"
-        })
-
+        });
+        const document = await getDoc(orderRef);
+        var allProductsID = document.data()['products'];
+        var allQuantity = document.data()['quantity'];
+        for (let x = 0; x < allProductsID.length; x++) {
+            const product = doc(db, "products", allProductsID[x])
+            const productData = await getDoc(product);
+            let num1 = Number(productData.data()['quantity']);
+            let num2 = Number(allQuantity[x]);
+            let num3 = Number(productData.data()['remainingQuantity']);
+            var updatedQuantity = num1 - num2;
+            var updateRemaining = Number(num3) + Number(allQuantity[x]);
+            await updateDoc(product, {
+                quantity: updatedQuantity.toString(),
+                remainingQuantity: Number(updateRemaining)
+            });
+        }
+        if (i == OrderIds.length - 1) {
+            window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
+        }
     }
 }
