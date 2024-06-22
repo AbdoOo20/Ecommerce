@@ -1,30 +1,18 @@
 import { db, collection, getDocs, addDoc, signOut, auth } from '../../Database/firebase-config.js';
 
-//header
-
-// const LogeOutIcon = document.getElementById("LogeOutIcon");
-// LogeOutIcon.style.display = "none";
-
-
-
-const savedEmail = localStorage.getItem('email');
 const savedID = localStorage.getItem('id');
-
 const WishlistIcon = document.getElementById("WishlistIcon");
 const CartIcon = document.getElementById("CartIcon");
 const LogeOutIcon = document.getElementById("LogeOutIcon");
 const SignInBtn = document.getElementById("SignInBtn");
 const allProducts = document.getElementById("ViewAllProducts");
-let flage = true;
+
 if (!savedID) {
-        flage = false;
-}
-if (!flage) {
         WishlistIcon.style.display = "none";
         CartIcon.style.display = "none";
         LogeOutIcon.style.display = "none";
         SignInBtn.style.display = "inline-block";
-} else if (flage) {
+} else if (savedID) {
         WishlistIcon.style.display = "inline-block";
         WishlistIcon.addEventListener("click", () => {
                 window.location.href = "../../User/wishlist/index.html"
@@ -46,14 +34,12 @@ if (!flage) {
 }
 
 //view all products
-function showProducts() {
+(function showProducts() {
         const allProductsBTN = document.createElement("a");
         allProductsBTN.innerText = "View All Products";
         allProductsBTN.href = "../category/category.html?categoy=" + "all" + "&UserID=" + savedID;
         allProducts.append(allProductsBTN);
-}
-showProducts();
-
+})();
 
 //Section1 Change The Banners
 
@@ -62,7 +48,7 @@ let BottomBannerImg = document.getElementById("BottomBannerImg");
 
 var topBanners = [];
 var bottomBanners = [];
-async function getBannersCollection() {
+(async function getBannersCollection() {
         const BannersSnapshot = await getDocs(collection(db, "banners"));
         BannersSnapshot.forEach(c => {
                 if (c.data()['position'] == 'Top') {
@@ -71,12 +57,11 @@ async function getBannersCollection() {
                         bottomBanners.push(c.data()['imageUrl']);
                 }
         });
-}
-getBannersCollection();
+})();
 
 var i = 0;
 var x = 0;
-function getTopBanners() {
+(function getTopBanners() {
         setInterval(() => {
                 TopBannerImg.src = topBanners[i];
                 BottomBannerImg.src = bottomBanners[i];
@@ -89,32 +74,12 @@ function getTopBanners() {
                         x = 0;
                 }
         }, 1500);
-}
-
-getTopBanners();
-
-let ChangeBanners;
-let counterForBanners = 0;
-TopBannerImg.addEventListener("mouseover", () => {
-        ChangeBanners = setInterval(() => {
-                if (counterForBanners < TopBannerImgs.length) {
-                        TopBannerImg.src = TopBannerImgs[counterForBanners];
-                        counterForBanners++;
-                }
-                else counterForBanners = 0;
-        }, 3000)
-})
-
-// TopBannerImg.addEventListener("mouseout", () => {
-//         clearInterval(ChangeBanners);
-// })
+}) ();
 
 //Section2 Categories
-let counterOfAddedCategories = 0;
 (async function GetCategoriesCollection() {
         const CategoriesSnapshot = await getDocs(collection(db, "categories"));
         CategoriesSnapshot.forEach((doc) => {
-                // title imageUrl
                 //create Image 
                 const img = document.createElement("img");
                 img.src = doc.data()["imageUrl"];
@@ -132,15 +97,12 @@ let counterOfAddedCategories = 0;
                 div.style.position = "relative";
                 div.style.bottom = "10px";
                 div.style.display = "none";
-
                 //create Link 
                 const AForCategory = document.createElement("a");
                 AForCategory.append(div);
                 AForCategory.href = "../category/category.html?categoy=" + doc.data()["title"] + "&UserID=" + savedID;
-
                 //Add div to categories
                 document.getElementById("Categories").append(AForCategory);
-
         });
         for (let i = 0; i < 5; i++) {
                 Categories[i].style.display = "inline-block";
@@ -148,10 +110,8 @@ let counterOfAddedCategories = 0;
 })();
 
 let Categories = document.getElementsByClassName("Categories");
-
 let rightCounterForCategories = 5;
 let leftCounterForCategories = 0;
-
 
 document.getElementById("CircleArrowRight").addEventListener("click", () => {
         if (rightCounterForCategories >= Categories.length) return false;
@@ -171,11 +131,7 @@ document.getElementById("CircleArrowLeft").addEventListener("click", () => {
 
 
 //Section3 Products
-
-
 let counterOfAddedProducts = 0;
-let counterOfAddedProductsRow1 = 0;
-let counterOfAddedProductsRow2 = 0;
 (async function GetAllProducts() {
         const ProductsSnapshot = await getDocs(collection(db, "products"));
         ProductsSnapshot.forEach(doc => {
@@ -189,17 +145,9 @@ let counterOfAddedProductsRow2 = 0;
                 const quantity = doc.data()["quantity"];
                 const title = doc.data()["title"];
 
-                //create display Ditals Icon
-                // const displayDitalsIcon = document.createElement("img");
-                // displayDitalsIcon.src = "./img/eye.png"
-                // displayDitalsIcon.addEventListener("click", () => {
-                //         window.location.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
-                // })
-
-
                 //create Add To  Wishlist Icon
                 const addToWishlistIcon = document.createElement("img");
-                addToWishlistIcon.src = "./img/heart.png"
+                addToWishlistIcon.src = "https://img.icons8.com/ios/50/like--v1.png"
                 addToWishlistIcon.addEventListener('click', async function () {
                         var productExist = false;
                         const favouites = collection(db, 'favourites');
@@ -209,7 +157,7 @@ let counterOfAddedProductsRow2 = 0;
                                         productExist = true;
                                 }
                         });
-                        if (productExist == false && flage) {
+                        if (productExist == false && savedID) {
                                 await addDoc(collection(db, "favourites"), {
                                         userID: savedID,
                                         productID: ProdutcID,
@@ -242,7 +190,7 @@ let counterOfAddedProductsRow2 = 0;
                                 const notification = document.getElementById('notification');
                                 notification.innerHTML = '';
                                 notification.style.backgroundColor = 'red';
-                                if (!flage)
+                                if (!savedID)
                                         notification.appendChild(document.createTextNode(`You must Sign in !!`));
                                 else
                                         notification.appendChild(document.createTextNode(`Product Already Exist in favouites`));
@@ -257,10 +205,8 @@ let counterOfAddedProductsRow2 = 0;
                         }
                 });
 
-
                 // create Div For Icons Of Product
                 const IconsDiv = document.createElement("div");
-                // IconsDiv.append(displayDitalsIcon);
                 IconsDiv.append(addToWishlistIcon);
                 IconsDiv.classList.add("ProductIcons");
 
@@ -276,7 +222,7 @@ let counterOfAddedProductsRow2 = 0;
                                         CartExist = true;
                                 }
                         });
-                        if (!CartExist && flage) {
+                        if (!CartExist && savedID) {
                                 await addDoc(collection(db, "cart"), {
                                         userId: savedID,
                                         quantity: "1",
@@ -310,7 +256,7 @@ let counterOfAddedProductsRow2 = 0;
                                 const notification = document.getElementById('notification');
                                 notification.innerHTML = '';
                                 notification.style.backgroundColor = 'red';
-                                if (!flage)
+                                if (!savedID)
                                         notification.appendChild(document.createTextNode(`You must Sign in !!`));
                                 else
                                         notification.appendChild(document.createTextNode(`Product Already Exist in Cart`));
@@ -365,17 +311,8 @@ let counterOfAddedProductsRow2 = 0;
                 ProductDiv.style.display = "none";
                 //console.log(ProductDiv);
 
-                //create A For Product
-                // const LinkForProduct = document.createElement("a");
-                // LinkForProduct.append(ProductDiv);
-                // LinkForProduct.href = "../../User/product/Product.html?ProdutcID=" + ProdutcID + "&UserID=" + savedID;
-                if (counterOfAddedProducts % 2 == 0) {
-                        document.getElementById("ProductsRow1").appendChild(ProductDiv);
-                        counterOfAddedProductsRow1++;
-                } else {
-                        document.getElementById("ProductsRow2").appendChild(ProductDiv);
-                        counterOfAddedProductsRow2++;
-                }
+                if (counterOfAddedProducts % 2 == 0) document.getElementById("ProductsRow1").appendChild(ProductDiv);
+                else document.getElementById("ProductsRow2").appendChild(ProductDiv);
                 counterOfAddedProducts++;
 
         });
@@ -386,9 +323,7 @@ let counterOfAddedProductsRow2 = 0;
         }
 })();
 
-
 let Products = document.getElementsByClassName("DivProducts");
-
 let CounterOfProducts = 0;
 
 document.getElementById("CircleArrowRightForProdects").addEventListener("click", () => {
@@ -408,4 +343,3 @@ document.getElementById("CircleArrowLeftForProdects").addEventListener("click", 
         Products[CounterOfProducts + Products.length / 2].style.display = "inline-block";
         Products[CounterOfProducts + 5 + Products.length / 2].style.display = "none";
 })
-
