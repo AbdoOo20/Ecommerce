@@ -5,14 +5,6 @@
     margin: auto
 }
 
-
-#move {
-
-    font-size: 20px;
-    border: 1px solid black;
-    float: right;
-}
-
 #wish {
     font-size: 30px;
     font-weight: bold;
@@ -46,16 +38,7 @@ h4 {
     padding: 80px;
 }
 
-.just {
-    font-size: 30px;
-    float: left;
-}
 
-.see-all {
-    font-size: 30px;
-    float: right;
-    border: 1px solid black;
-}
 
 .product {
     background-color: white;
