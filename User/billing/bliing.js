@@ -141,11 +141,9 @@ async function SetBillingData() {
 async function UpdateStatus() {
     for (let i = 0; i < OrderIds.length; i++) {
         const orderRef = doc(db, "orders", OrderIds[i])
-        console.log('00000000000000000000000000000');
         await updateDoc(orderRef, {
             status: "completed"
         });
-        console.log('1111111111111111111111111111');
         const document = await getDoc(orderRef);
         var allProductsID = document.data()['products'];
         var allQuantity = document.data()['quantity'];
