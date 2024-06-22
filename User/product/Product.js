@@ -7,6 +7,7 @@ import {
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const productId = urlParams.get('ProdutcID');
+const userId = urlParams.get('ProdutcID');
 const auth = getAuth();
 ////////////////////get product details from firbase////////////////////
 const productName = document.getElementById("productName");
@@ -21,7 +22,24 @@ const inputOfQuantity = document.getElementById("quantityInput");
 const btnAddToWishlist = document.getElementById("addToWishlist");
 const paragraphAfterNav = document.getElementById("paragraphAfterNav");
 const btnAddToCart = document.getElementById("addToCart");
+const LogeOutIcon = document.getElementById("LogeOutIcon");
+LogeOutIcon.style.display = "none";
 var quantity;
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+         // SingOut  
+        LogeOutIcon.style.display = "inline-block";
+        LogeOutIcon.addEventListener('click', function () {
+            signOut(auth).then(() => {
+                localStorage.clear();
+                window.location.href = '../../Common/Authentication/login.html';
+            }).catch((error) => {
+                alert('Error signing out: ', error);
+            });
+        });
+    }
+})
 
 let productDetails = doc(db, "products", productId);
 const productSnapshot = await getDoc(productDetails);
@@ -78,20 +96,20 @@ btnDecreaseQuantity.addEventListener("click", function () {
 })
 ////////////////////////Add to cart /////////////////////////
 const user = auth.currentUser;
-const uid = user.uid;
+// const uid = user.uid;
 var checkProduct = 0;
 let refCart = collection(db, "cart");
 const productsOfCart = await getDocs(refCart);
 
 function addToCart() {
-    productsOfCart.forEach((doc) => {
-        if ((doc.data().productId == productId) && (doc.data().userId == uid)) {
-            return checkProduct = 1;
-        }
-    });
-
     onAuthStateChanged(auth, (user) => {
         if (user) {
+            const uid = user.uid;
+            productsOfCart.forEach((doc) => {
+                if ((doc.data().productId == productId) && (doc.data().userId == uid)) {
+                    return checkProduct = 1;
+                }
+            });        
             if (!checkProduct) {
                 addDoc(
                     refCart, {
@@ -115,6 +133,7 @@ btnAddToCart.addEventListener("click", addToCart);
 async function addToWishlist() {
     onAuthStateChanged(auth, async (user) => {
         if (user) {
+            const uid = user.uid;
             let refWishList = collection(db, "favourites");
             var productExist = false;
             const snapshot = await getDocs(refWishList);
@@ -240,7 +259,7 @@ submitBtn.addEventListener("click", () => {
         refRating, {
         comment: review,
         productId: productId,
-        userId: uid,
+        userId: userId,
         rating: userRating,
         date: now
     }
@@ -346,14 +365,3 @@ reviewSnapshot.forEach(async (doc) => {
     customerComment.append(comment);
     reviewsDiv.appendChild(customerComment)
 })
- // SingOut
- const LogeOutIcon = document.getElementById("LogeOutIcon");   
- LogeOutIcon.style.display = "inline-block";
- LogeOutIcon.addEventListener('click', function () {
-     signOut(auth).then(() => {
-         localStorage.clear();
-         window.location.href = '../../Common/Authentication/login.html';
-     }).catch((error) => {
-         alert('Error signing out: ', error);
-     });
- });

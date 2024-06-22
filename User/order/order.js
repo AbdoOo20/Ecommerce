@@ -3,6 +3,7 @@ import {
     query, where, signOut
 } from '../../Database/firebase-config.js';
 
+LogeOutIcon.style.display = "none";
 const auth = getAuth();
 ////// Get data from cart
 onAuthStateChanged(auth, async(user) => {
@@ -107,7 +108,7 @@ onAuthStateChanged(auth, async(user) => {
                 + "total=" + total;
         }
         getorderIds(userID);
-
+        ///Signout
         const LogeOutIcon = document.getElementById("LogeOutIcon");   
         LogeOutIcon.style.display = "inline-block";
         LogeOutIcon.addEventListener('click', function () {

@@ -7,6 +7,7 @@ const auth = getAuth();
 var uid;
 var subTotal;
 var total = 0;
+LogeOutIcon.style.display = "none";
 ////// Get data from cart
 onAuthStateChanged(auth, async (user) => {
     if (user) {
