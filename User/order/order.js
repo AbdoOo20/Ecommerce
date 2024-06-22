@@ -105,7 +105,7 @@ onAuthStateChanged(auth, async(user) => {
                 });
                 const arrString = orderIds.join(',');
                 btnBuy.href = '../../User/billing/billing.html?orderIds=' + encodeURIComponent(arrString)
-                + "total=" + total;
+                + "&total=" + total;
         }
         getorderIds(userID);
         ///Signout

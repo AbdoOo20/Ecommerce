@@ -1,4 +1,4 @@
-import { db, collection, addDoc, updateDoc, doc } from '../../Database/firebase-config.js';
+import { db, collection, addDoc, getDoc, updateDoc, doc } from '../../Database/firebase-config.js';
 
 var paypalRadio = document.getElementById("paypal");
 var closePaypal = document.getElementById("closePaypal");
@@ -99,7 +99,6 @@ if (ReqorderIds) {
         OrderIds.push(ReqorderIds)
         console.log(OrderIds);
     }
-
 }
 
 
@@ -142,9 +141,11 @@ async function SetBillingData() {
 async function UpdateStatus() {
     for (let i = 0; i < OrderIds.length; i++) {
         const orderRef = doc(db, "orders", OrderIds[i])
+        console.log('00000000000000000000000000000');
         await updateDoc(orderRef, {
             status: "completed"
         });
+        console.log('1111111111111111111111111111');
         const document = await getDoc(orderRef);
         var allProductsID = document.data()['products'];
         var allQuantity = document.data()['quantity'];

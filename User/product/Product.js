@@ -1,13 +1,13 @@
 import {
     getAuth, db, addDoc, collection, getDoc, getDocs, doc, onAuthStateChanged,
-    query, where, getCountFromServer,signOut
+    query, where, getCountFromServer, signOut
 } from '../../Database/firebase-config.js';
 
 //////////////////////Get ProductID and UserId from url params
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const productId = urlParams.get('ProdutcID');
-const userId = urlParams.get('ProdutcID');
+const userId = urlParams.get('UserID');
 const auth = getAuth();
 ////////////////////get product details from firbase////////////////////
 const productName = document.getElementById("productName");
@@ -28,7 +28,7 @@ var quantity;
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-         // SingOut  
+        // SingOut  
         LogeOutIcon.style.display = "inline-block";
         LogeOutIcon.addEventListener('click', function () {
             signOut(auth).then(() => {
@@ -71,8 +71,7 @@ numberOfReviews.textContent = `( ${snapshot.data().count} Reviews )`
 ////////////////////////Increase Quantity////////////////
 btnIncreaseQuantity.addEventListener("click", function () {
     let quantityValue = inputOfQuantity.value;
-
-    if (quantityValue >= productSnapshot.data().quantity) {
+    if (Number(quantityValue) >= Number(productSnapshot.data().quantity)) {
         btnIncreaseQuantity.disabled = true;
     } else {
         quantityValue++;
@@ -108,7 +107,7 @@ function addToCart() {
                 if ((doc.data().productId == productId) && (doc.data().userId == uid)) {
                     return checkProduct = 1;
                 }
-            });        
+            });
             if (!checkProduct) {
                 addDoc(
                     refCart, {
@@ -340,10 +339,10 @@ reviewSnapshot.forEach(async (doc) => {
     // create rate star
     const rateDiv = document.createElement("div");
     rateDiv.innerText = "";
-    for (var i = 1; i <= rating; i++) { 
+    for (var i = 1; i <= rating; i++) {
         rateDiv.innerText += "★";
-        if (rating == 1) { 
-            rateDiv.classList.add('one'); 
+        if (rating == 1) {
+            rateDiv.classList.add('one');
         }
         if (rating == 2) {
             rateDiv.classList.add('two');

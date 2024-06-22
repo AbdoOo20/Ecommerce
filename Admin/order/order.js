@@ -23,6 +23,10 @@ window.onload = () => {
                     state = 'Rejected';
                     orderImages.style.borderColor = 'red';
                 }
+                if (orderData['status'] == 'completed') {
+                    state = 'Completed';
+                    orderImages.style.borderColor = 'orange';
+                }
                 var p = [];
                 p = orderData['products'];
                  for (let i = 0; i < p.length; i++){
@@ -101,6 +105,9 @@ window.onload = () => {
                 }
                 if (orderData['status'] == 'rejected') {
                     statuslabel.style.backgroundColor = 'red';
+                }
+                if (orderData['status'] == 'completed') {
+                    statuslabel.style.backgroundColor = 'blue';
                 }
                 const s = document.createTextNode(`${state}`);
                 statuslabel.appendChild(s);
