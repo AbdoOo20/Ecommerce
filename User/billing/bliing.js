@@ -46,7 +46,7 @@ function checkValidation(type) {
     let emailPaypalPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     let visaCardPattern = /^4[0-9]{12}(?:[0-9]{3})?(?:[0-9]{3})?$/;
     let cvvPattern = /^[0-9]{3}$/;
-    let expiryDatePattern = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
+    let expiryDatePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     if (!fullNamePattern.test(name.value)) {
         isValid = false;
         alert("Invalid full name. Please enter a valid full name with at least two parts, consisting of alphabetic characters only, separated by spaces.");
@@ -69,6 +69,7 @@ function checkValidation(type) {
     }
     if (type === 'visa' && !expiryDatePattern.test(date.value)) {
         isValid = false;
+        console.log(date.value);
         alert("Invalid expiration date. Please enter a valid expiration date in MM/YY format.");
     }
     if (type === 'visa' && !cvvPattern.test(cvv.value)) {
@@ -76,9 +77,10 @@ function checkValidation(type) {
         alert("Invalid CVV. Please enter a valid 3-digit CVV.");
     }
     if (isValid) {
-        SetBillingData();
-        UpdateStatus();
-        window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
+        console.log('hereeeeeeeeeeeeeeeeeeeeeeeeeee');
+        // SetBillingData();
+        // UpdateStatus();
+        // window.location.href = "../../User/billing/billing.html?orderIds=" + ReqorderIds;
     }
 }
 
