@@ -152,17 +152,6 @@ async function addToWishlist() {
                     }, 500);
                 }, 2000);
             }
-            // SingOut
-            const LogeOutIcon = document.getElementById("LogeOutIcon");   
-            LogeOutIcon.style.display = "inline-block";
-            LogeOutIcon.addEventListener('click', function () {
-                signOut(auth).then(() => {
-                    localStorage.clear();
-                    window.location.href = '../../Common/Authentication/login.html';
-                }).catch((error) => {
-                    alert('Error signing out: ', error);
-                });
-            });
         } else {
             const notification = document.getElementById('notification');
             notification.innerHTML = '';
@@ -357,3 +346,14 @@ reviewSnapshot.forEach(async (doc) => {
     customerComment.append(comment);
     reviewsDiv.appendChild(customerComment)
 })
+ // SingOut
+ const LogeOutIcon = document.getElementById("LogeOutIcon");   
+ LogeOutIcon.style.display = "inline-block";
+ LogeOutIcon.addEventListener('click', function () {
+     signOut(auth).then(() => {
+         localStorage.clear();
+         window.location.href = '../../Common/Authentication/login.html';
+     }).catch((error) => {
+         alert('Error signing out: ', error);
+     });
+ });

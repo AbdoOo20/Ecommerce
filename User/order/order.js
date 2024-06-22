@@ -90,11 +90,9 @@ onAuthStateChanged(auth, async(user) => {
                 quantityCell.appendChild(productQuantity);                
             });
         });
-        console.log(price);
         //// Pass the Ids of orders to billing
         var userID = localStorage.getItem("id");
         var orderIds = [];
-
         async function getorderIds(userID) {
             const q = query(collection(db, "orders"), where("userId", "==", userID));
                 const ordersSnapshot = await getDocs(q);
@@ -104,14 +102,9 @@ onAuthStateChanged(auth, async(user) => {
                         orderIds.push(order.id);
                     }
                 });
-                orderIds.forEach((id) => {
-                    const orderRef = doc(db, "orders", id);
-                    const order = getDoc(orderRef);
-                    console.log(order);
-                })
-
                 const arrString = orderIds.join(',');
-                btnBuy.href = '../../User/billing/billing.html?orderIds=' + encodeURIComponent(arrString);
+                btnBuy.href = '../../User/billing/billing.html?orderIds=' + encodeURIComponent(arrString)
+                + "total=" + total;
         }
         getorderIds(userID);
 
@@ -127,4 +120,3 @@ onAuthStateChanged(auth, async(user) => {
         });
     }
 });
-
