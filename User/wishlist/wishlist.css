@@ -5,6 +5,11 @@
     margin: auto
 }
 
+#wish {
+    font-size: 30px;
+    font-weight: bold;
+}
+
 h3 {
     text-align: center;
     color: black;
